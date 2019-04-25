@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
       <HintPath>..\lib\0Harmony.dll</HintPath>
@@ -61,6 +64,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>XCOPY /Y "$(TargetPath)" "$(SolutionDir)mods\$(ProjectName)\*"</PostBuildEvent>
+    <PostBuildEvent>XCOPY /Y "$(TargetPath)" "$(SolutionDir)mods\$(ProjectName)\*"
+XCOPY /Y "$(ProjectDir)preview.png" "$(SolutionDir)mods\$(ProjectName)\*"</PostBuildEvent>
   </PropertyGroup>
 </Project>
