@@ -5,7 +5,7 @@ namespace Heinermann.Blood
 {
   public static class BloodElement
   {
-    public static readonly Color32 BLOOD_RED = new Color32(77, 7, 7, 0);
+    public static readonly Color32 BLOOD_RED = new Color32(77, 7, 7, 255);
 
     public static readonly SimHashes BloodSimHash = (SimHashes)Hash.SDBMLower("Blood");
     public static readonly SimHashes FrozenBloodSimHash = (SimHashes)Hash.SDBMLower("FrozenBlood");
@@ -95,9 +95,8 @@ elements:
       var pixels = newTexture.GetPixels32();
       for (int i = 0; i < pixels.Length; ++i)
       {
-        pixels[i].r = (byte)(pixels[i].r * (BLOOD_RED.r + 100) / 255);
-        pixels[i].g = (byte)(pixels[i].g * BLOOD_RED.g / 255);
-        pixels[i].b = (byte)(pixels[i].b * BLOOD_RED.b / 255);
+        var gray = ((Color)pixels[i]).grayscale * 1.5f;
+        pixels[i] = (Color)BLOOD_RED * gray;
       }
       newTexture.SetPixels32(pixels);
       newTexture.Apply();
@@ -105,9 +104,9 @@ elements:
       return newTexture;
     }
 
-    static Material CreateFrozenBloodMaterial(Material iceMaterial)
+    static Material CreateFrozenBloodMaterial(Material source)
     {
-      var frozenBloodMaterial = new Material(iceMaterial);
+      var frozenBloodMaterial = new Material(source);
 
       Texture2D newTexture = TintTextureBloodRed(frozenBloodMaterial.mainTexture, "frozenblood");
 
@@ -117,13 +116,13 @@ elements:
       return frozenBloodMaterial;
     }
 
-    public static Substance CreateFrozenBloodSubstance(Substance source)
+    public static Substance CreateFrozenBloodSubstance(Material sourceMaterial, KAnimFile sourceAnim)
     {
       return ModUtil.CreateSubstance(
         name: "FrozenBlood",
         state: Element.State.Solid,
-        kanim: source.anim,
-        material: CreateFrozenBloodMaterial(source.material),
+        kanim: sourceAnim,
+        material: CreateFrozenBloodMaterial(sourceMaterial),
         colour: BLOOD_RED,
         ui_colour: BLOOD_RED,
         conduit_colour: BLOOD_RED

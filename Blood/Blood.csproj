@@ -30,6 +30,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
       <HintPath>..\lib\0Harmony.dll</HintPath>
@@ -55,11 +58,15 @@
   <ItemGroup>
     <Compile Include="BloodElement.cs" />
     <Compile Include="Patches\ElementLoader.cs" />
-    <Compile Include="Patches\SimHashes.cs" />
     <Compile Include="Patches\Health.cs" />
+    <Compile Include="Patches\SimHashes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>XCOPY /Y "$(TargetPath)" "$(SolutionDir)mods\$(ProjectName)\*"
+XCOPY /Y "$(ProjectDir)preview.png" "$(SolutionDir)mods\$(ProjectName)\*"</PostBuildEvent>
+  </PropertyGroup>
 </Project>
