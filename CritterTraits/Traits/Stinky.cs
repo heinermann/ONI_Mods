@@ -2,15 +2,17 @@
 
 namespace Heinermann.CritterTraits.Traits
 {
-  class Stinky
+  class Stinky : TraitBuilder
   {
-    public const string ID = "CritterStinky";
-    public const string NAME = "Stinky";
-    public const string DESCRIPTION = "Gives off a funny smell.";
+    public override string ID => "CritterStinky";
+    public override string Name => "Stinky";
+    public override string Description => "Gives off a funny smell.";
 
-    public static void Init()
+    public override Group Group => Group.SmellGroup;
+
+    protected override void Init()
     {
-      TraitHelpers.CreateTrait(ID, NAME, DESCRIPTION,
+      TraitHelpers.CreateTrait(ID, Name, Description,
         on_add: delegate (GameObject go)
         {
           go.FindOrAddUnityComponent<Components.Stinky>();

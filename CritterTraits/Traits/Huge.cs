@@ -1,14 +1,16 @@
 ﻿namespace Heinermann.CritterTraits.Traits
 {
-  public static class Huge
+  class Huge : TraitBuilder
   {
-    public const string ID = "CritterHuge";
-    public const string NAME = "Huge";
-    public const string DESCRIPTION = "Is 50% larger than average.";
+    public override string ID => "CritterHuge";
+    public override string Name => "Huge";
+    public override string Description => "Is 50% larger than average.";
 
-    public static void Init()
+    public override Group Group => Group.SizeGroup;
+
+    protected override void Init()
     {
-      TraitHelpers.CreateScaleTrait(ID, NAME, DESCRIPTION, 1.5f);
+      TraitHelpers.CreateScaleTrait(ID, Name, Description, 1.5f);
     }
 
   }

@@ -3,21 +3,23 @@ using UnityEngine;
 
 namespace Heinermann.CritterTraits.Traits
 {
-  static class Fertile
+  class Fertile : TraitBuilder
   {
-    public const string ID = "CritterFertile";
-    public const string NAME = "Fertile";
-    public const string DESCRIPTION = "Is very fertile, fertility is improved by 25%.";
+    public override string ID => "CritterFertile";
+    public override string Name => "Fertile";
+    public override string Description => "Is very fertile, fertility is improved by 25%.";
 
-    public static void Init()
+    public override Group Group => Group.FertilityGroup;
+
+    protected override void Init()
     {
-      TraitHelpers.CreateTrait(ID, NAME, DESCRIPTION,
+      TraitHelpers.CreateTrait(ID, Name, Description,
         on_add: delegate (GameObject go)
         {
           var modifiers = go.GetComponent<Modifiers>();
           if (modifiers != null)
           {
-            modifiers.attributes.Add(new AttributeModifier(Db.Get().Amounts.Fertility.deltaAttribute.Id, 0.25f, DESCRIPTION, is_multiplier: true));
+            modifiers.attributes.Add(new AttributeModifier(Db.Get().Amounts.Fertility.deltaAttribute.Id, 0.25f, Description, is_multiplier: true));
           }
         },
         positiveTrait: true

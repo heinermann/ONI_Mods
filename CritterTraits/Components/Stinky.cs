@@ -24,23 +24,21 @@ namespace Heinermann.CritterTraits.Components
       public override void InitializeStates(out BaseState default_state)
       {
         default_state = idle;
-        root.Enter(delegate (StatesInstance smi)
-        {
-          smi.master.stinkyController = FXHelpers.CreateEffect("odor_fx_kanim", smi.master.gameObject.transform.GetPosition(), smi.master.gameObject.transform, true);
-        }).Update("StinkyFX", delegate (StatesInstance smi, float dt)
-        {
-          smi.master.stinkyController?.Play(WorkLoopAnims);
-        }, UpdateRate.SIM_4000ms);
 
-        idle.Enter("ScheduleNextFart", delegate (StatesInstance smi)
-        {
-          smi.ScheduleGoTo(GetNewInterval(), emit);
-        });
+        root
+          .Update("StinkyFX", (smi, dt) => {
+            smi.master.stinkyController?.Play(WorkLoopAnims);
+          }, UpdateRate.SIM_4000ms);
 
-        emit.Enter("Fart", delegate (StatesInstance smi)
-        {
-          smi.master.Emit(smi.master.gameObject);
-        }).ScheduleGoTo(3f, idle);
+        idle
+          .Enter("ScheduleNextFart", smi => {
+            smi.ScheduleGoTo(GetNewInterval(), emit);
+          });
+
+        emit
+          .Enter("Fart", smi => {
+            smi.master.Emit(smi.master.gameObject);
+          }).ScheduleGoTo(3f, idle);
       }
 
       private float GetNewInterval()
@@ -55,6 +53,7 @@ namespace Heinermann.CritterTraits.Components
 
     protected override void OnSpawn()
     {
+      stinkyController = FXHelpers.CreateEffect("odor_fx_kanim", gameObject.transform.GetPosition(), smi.master.gameObject.transform, true);
       base.smi.StartSM();
     }
 
@@ -87,12 +86,12 @@ namespace Heinermann.CritterTraits.Components
 
     private void OnDeath(object data)
     {
-      base.enabled = false;
+      enabled = false;
     }
 
     private void OnRevived(object data)
     {
-      base.enabled = true;
+      enabled = true;
     }
   }
 }

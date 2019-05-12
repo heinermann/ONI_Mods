@@ -2,15 +2,17 @@
 
 namespace Heinermann.CritterTraits.Traits
 {
-  static class Glowing
+  class Glowing : TraitBuilder
   {
-    public const string ID = "CritterGlowing";
-    public const string NAME = "Bioluminescent";
-    public const string DESCRIPTION = "Gives off a faint, steady glow.";
+    public override string ID => "CritterGlowing";
+    public override string Name => "Bioluminescent";
+    public override string Description => "Gives off a faint, steady glow.";
 
-    public static void Init()
+    public override Group Group => Group.GlowGroup;
+
+    protected override void Init()
     {
-      TraitHelpers.CreateTrait(ID, NAME, DESCRIPTION,
+      TraitHelpers.CreateTrait(ID, Name, Description,
         on_add: delegate (GameObject go)
         {
           CritterUtil.AddObjectLight(go, Random.ColorHSV(0f, 1f, 0f, 1f, 0.5f, 0.8f), 2f, 600);

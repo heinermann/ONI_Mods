@@ -1,6 +1,6 @@
 ## CritterTraits
 
-Gives traits to critters. When a critter is spawned, random traits will be assigned. There is no way to influence these traits. The trait chances are varied.
+Gives traits to critters. When a critter is spawned, between 0 and 4 random traits will be assigned. There is no way to influence these traits. Each trait has a different chance of occurring.
 
 ### Positive Traits
 Enduring - Lives 25% longer than usual.
@@ -19,6 +19,5 @@ Stinky - Gives off a funny smell.
 Tiny - Is 40% smaller than average.
 
 ### Known Bugs
-- Baby to Adult transition re-rolls the traits.
 - [Visual only] Size modifiers have animation glitches (scaling causes extra or lack of jump height for example)
 - [Visual only] Dreckos with size modifiers are not offset properly when upside down

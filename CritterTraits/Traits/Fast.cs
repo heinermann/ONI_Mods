@@ -2,15 +2,17 @@
 
 namespace Heinermann.CritterTraits.Traits
 {
-  static class Fast
+  class Fast : TraitBuilder
   {
-    public const string ID = "CritterFast";
-    public const string NAME = "Fast";
-    public const string DESCRIPTION = "Is twice as fast as its peers.";
+    public override string ID => "CritterFast";
+    public override string Name => "Fast";
+    public override string Description => "Is twice as fast as its peers.";
 
-    public static void Init()
+    public override Group Group => Group.SpeedGroup;
+
+    protected override void Init()
     {
-      TraitHelpers.CreateTrait(ID, NAME, DESCRIPTION,
+      TraitHelpers.CreateTrait(ID, Name, Description,
         on_add: delegate (GameObject go)
         {
           var navigator = go.GetComponent<Navigator>();

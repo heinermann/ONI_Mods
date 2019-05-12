@@ -1,7 +1,5 @@
-﻿
-using Harmony;
+﻿using Harmony;
 using Klei.AI;
-using System.Text.RegularExpressions;
 using UnityEngine;
 
 namespace Heinermann.CritterTraits.Patches
@@ -35,7 +33,7 @@ namespace Heinermann.CritterTraits.Patches
         TraitsDrawer.BeginDrawing();
         foreach (Trait trait in target.GetComponent<Klei.AI.Traits>().TraitList)
         {
-          if (Regex.IsMatch(trait.Id, "^.*BaseTrait$")) continue;
+          if (!Traits.AllTraits.IsSupportedTrait(trait.Id)) continue;
 
           var color = trait.PositiveTrait ? Constants.POSITIVE_COLOR : Constants.NEGATIVE_COLOR;
           TraitsDrawer.NewLabel($"<color=#{color.ToHexString()}>{trait.Name}</color>").Tooltip(trait.GetTooltip());

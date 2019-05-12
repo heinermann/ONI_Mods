@@ -58,15 +58,16 @@
     <Compile Include="Components\Noisy.cs" />
     <Compile Include="Components\Stinky.cs" />
     <Compile Include="CritterUtil.cs" />
-    <Compile Include="Patches\Debug.cs" />
     <Compile Include="Patches\EntityTemplates.cs" />
     <Compile Include="Patches\SimpleInfoScreen.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TraitHelpers.cs" />
+    <Compile Include="Traits\AllTraits.cs" />
     <Compile Include="Traits\Enduring.cs" />
     <Compile Include="Traits\Fast.cs" />
     <Compile Include="Traits\Fertile.cs" />
     <Compile Include="Traits\Glowing.cs" />
+    <Compile Include="Traits\Groups.cs" />
     <Compile Include="Traits\Huge.cs" />
     <Compile Include="Traits\Large.cs" />
     <Compile Include="Traits\Noisy.cs" />
@@ -75,6 +76,7 @@
     <Compile Include="Traits\Small.cs" />
     <Compile Include="Traits\Stinky.cs" />
     <Compile Include="Traits\Tiny.cs" />
+    <Compile Include="Traits\TraitBuilder.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

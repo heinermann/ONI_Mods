@@ -1,6 +1,9 @@
 ﻿using Klei.AI;
 using KSerialization;
 using UnityEngine;
+using System.Linq;
+using System;
+using System.Collections.Generic;
 
 namespace Heinermann.CritterTraits.Components
 {
@@ -17,21 +20,38 @@ namespace Heinermann.CritterTraits.Components
 
     protected override void OnPrefabInit()
     {
-      TraitHelpers.InitCritterTraits();
+      Traits.AllTraits.InitAllTraits();
+      gameObject.Subscribe((int)GameHashes.SpawnedFrom, from => transferTraits(from as GameObject));
     }
 
     protected override void OnSpawn()
     {
       if (!appliedCritterTraits)
       {
-        var modifiers = gameObject.AddOrGet<Modifiers>();
-        modifiers.InitializeComponent();
-
-        var traits = gameObject.AddOrGet<Klei.AI.Traits>();
-        TraitHelpers.ChooseTraits(gameObject).ForEach(trait => traits.Add(Db.Get().traits.Get(trait)));
+        var traitsToAdd = Traits.AllTraits.ChooseTraits(gameObject).Select(Db.Get().traits.Get);
+        addTraits(traitsToAdd);
 
         appliedCritterTraits = true;
       }
+    }
+
+    // Transfer critter traits owned by the `from` object to this object
+    private void transferTraits(GameObject from)
+    {
+      var fromTraits = from.GetComponent<Klei.AI.Traits>();
+      if (fromTraits == null) return;
+
+      var traitsToAdd = fromTraits.TraitList.Where(Traits.AllTraits.IsSupportedTrait);
+      addTraits(traitsToAdd);
+
+      appliedCritterTraits = true;
+    }
+
+    // Adds the provided list of traits to this object's Traits component
+    private void addTraits(IEnumerable<Trait> traitsToAdd)
+    {
+      var traits = gameObject.AddOrGet<Klei.AI.Traits>();
+      traitsToAdd.ToList().ForEach(traits.Add);
     }
   }
 }
