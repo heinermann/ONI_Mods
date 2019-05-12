@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResetBuildPriority", "Reset
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blood", "Blood\Blood.csproj", "{4E521FC2-811D-4742-A04B-538E33F92723}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CritterTraits", "CritterTraits\CritterTraits.csproj", "{F53012EE-9957-4DD2-AC75-6F2DF0AD2A77}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{4E521FC2-811D-4742-A04B-538E33F92723}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E521FC2-811D-4742-A04B-538E33F92723}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E521FC2-811D-4742-A04B-538E33F92723}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F53012EE-9957-4DD2-AC75-6F2DF0AD2A77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F53012EE-9957-4DD2-AC75-6F2DF0AD2A77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F53012EE-9957-4DD2-AC75-6F2DF0AD2A77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F53012EE-9957-4DD2-AC75-6F2DF0AD2A77}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
