@@ -49,7 +49,10 @@ namespace Heinermann.CritterTraits.Traits
       var groups = traits.GroupBy(trait => trait.Group);
       foreach (var group in groups)
       {
-        result.Add(ChooseTraitFrom(group));
+        if (group.Key.HasRequirements(inst))
+        {
+          result.Add(ChooseTraitFrom(group));
+        }
       }
 
       // If there are more traits than asked for we don't want to bias to the ones that were chosen first

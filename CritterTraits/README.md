@@ -18,6 +18,12 @@ Small - Is 20% smaller than average.
 Stinky - Gives off a funny smell.
 Tiny - Is 40% smaller than average.
 
+### Additional Notes
+- Size modifiers change the critter's weight, health, and amount of food produced. i.e. Smaller critters produce less food, larger ones produce more food.
+- Noisy critters will wake duplicants up, just like snoring or sneezing would.
+- Stinky is similar to the duplicant Stinky - it gives off some polluted oxygen and duplicants react to it.
+
 ### Known Bugs
 - [Visual only] Size modifiers have animation glitches (scaling causes extra or lack of jump height for example)
 - [Visual only] Dreckos with size modifiers are not offset properly when upside down
+- [Visual only] Hatches with size modifiers don't have their burrows correctly offset, huge hatches' burrows appear to hover

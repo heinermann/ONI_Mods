@@ -2,7 +2,6 @@
 using KSerialization;
 using UnityEngine;
 using System.Linq;
-using System;
 using System.Collections.Generic;
 
 namespace Heinermann.CritterTraits.Components
