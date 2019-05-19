@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CritterTraits", "CritterTra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Floating", "Floating\Floating.csproj", "{E9D5569E-4E7B-484F-BB4B-0DAB9E29596A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DisableSplashScreen", "DisableSplashScreen\DisableSplashScreen.csproj", "{707CE649-2B50-4CCF-81A5-0B823AA2D4F3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{E9D5569E-4E7B-484F-BB4B-0DAB9E29596A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9D5569E-4E7B-484F-BB4B-0DAB9E29596A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E9D5569E-4E7B-484F-BB4B-0DAB9E29596A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{707CE649-2B50-4CCF-81A5-0B823AA2D4F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{707CE649-2B50-4CCF-81A5-0B823AA2D4F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{707CE649-2B50-4CCF-81A5-0B823AA2D4F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{707CE649-2B50-4CCF-81A5-0B823AA2D4F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
