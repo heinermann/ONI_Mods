@@ -8,7 +8,7 @@ namespace Heinermann.CritterTraits.Traits
   {
     public static readonly Group SizeGroup = new Group("SizeGroup", 0.3f);
     public static readonly Group NoiseGroup = new Group("NoiseGroup", 0.05f);
-    public static readonly Group SmellGroup = new Group("SmellGroup", 0.05f);
+    public static readonly Group SmellGroup = new Group("SmellGroup", 0.05f, inst => !inst.HasTag(GameTags.Creatures.Swimmer));
     public static readonly Group GlowGroup = new Group("GlowGroup", 0.08f, inst => inst.GetComponent<Light2D>() == null);
     public static readonly Group SpeedGroup = new Group("SpeedGroup", 0.2f, inst => inst.GetComponent<Navigator>() != null);
     public static readonly Group LifespanGroup = new Group("LifespanGroup", 0.15f, inst => HasAmount(inst, Db.Get().Amounts.Age));
