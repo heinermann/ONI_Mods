@@ -53,6 +53,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collision.cs" />
     <Compile Include="Helpers.cs" />
     <Compile Include="Patches\FallerComponents.cs" />
     <Compile Include="Patches\GravityComponents.cs" />

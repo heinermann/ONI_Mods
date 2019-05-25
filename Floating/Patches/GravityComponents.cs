@@ -1,4 +1,5 @@
 ﻿using Harmony;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Heinermann.Floating.Patches
@@ -6,71 +7,98 @@ namespace Heinermann.Floating.Patches
   [HarmonyPatch(typeof(GravityComponents), "FixedUpdate")]
   class GravityComponents_FixedUpdate
   {
-    private static float randomXVelocity(float sign = 0f)
+    private const float REVERSE_GRAVITY = 9.8f;
+
+    private const float MIN_X_VELOCITY = 2.5f;
+    private const float MAX_X_VELOCITY = 5f;
+
+    private static readonly GravityComponent NULL_COMPONENT = new GravityComponent
     {
-      if (sign == 0f)
+      elapsedTime = -1,
+      landOnFakeFloors = false,
+      onLanded = null,
+      radius = 0,
+      transform = null,
+      velocity = Vector2.zero
+    };
+
+    private static float RandomXVelocity()
+    {
+      float sign = Mathf.Round(UnityEngine.Random.Range(0f, 1f)) * 2 - 1;
+      return UnityEngine.Random.Range(MIN_X_VELOCITY, MAX_X_VELOCITY) * sign;
+    }
+
+    /**
+     * X roaming
+     */
+     // TODO: Bias based on liquid mass in right/left cells
+    private static void ApplyXVelocityChanges(ref GravityComponent grav, float dt)
+    {
+      Vector2 position = grav.transform.GetPosition();
+      Vector2 newChange = new Vector2(grav.velocity.x, grav.velocity.y);
+
+      if (Mathf.Abs(grav.velocity.x) < MIN_X_VELOCITY / 2 * dt)
       {
-        sign = Mathf.Round(Random.Range(0f, 1f)) * 2 - 1;
+        newChange.x += RandomXVelocity() * dt;
       }
-      return Random.Range(3f, 6f) * sign;
+      grav.velocity = newChange;
+    }
+
+    /**
+     * Reverse gravity application (floatation)
+     */
+    private static void ApplyYVelocityChanges(ref GravityComponent grav, float dt)
+    {
+      GravityComponents.Tuning tuning = TuningData<GravityComponents.Tuning>.Get();
+
+      float yExtent = Helpers.GetYExtent(grav);
+      Vector2 position = (Vector2)grav.transform.GetPosition() + Vector2.up * (yExtent + 0.01f);
+
+      float distanceToSurface = Helpers.GetLiquidSurfaceDistanceAbove(position);
+      if (distanceToSurface != float.PositiveInfinity && distanceToSurface > 2 * yExtent)
+      {
+        Vector2 target = position + Vector2.up * distanceToSurface;
+        Mathf.SmoothDamp(position.y, target.y, ref grav.velocity.y, 1f, tuning.maxVelocityInLiquid, dt);
+      }
+      else if (grav.velocity.y > 0)
+      {
+        Mathf.SmoothDamp(position.y, position.y, ref grav.velocity.y, 5f, tuning.maxVelocityInLiquid, dt);
+      }
     }
 
     // TODO: Check for potential bug with 1-tile width water
-    // TODO: Use the width from KCollider2D instead of gravity's radius
-    static void Prefix(ref GravityComponents __instance, float dt)
+    static void Prefix(ref GravityComponents __instance, ref Dictionary<int, GravityComponent> __state, float dt)
     {
-      GravityComponents.Tuning tuning = TuningData<GravityComponents.Tuning>.Get();
-      float maxSqMagnitude = tuning.maxVelocity * tuning.maxVelocity;
+      __state = new Dictionary<int, GravityComponent>();
 
       var data = __instance.GetDataList();
       for (int i = 0; i < data.Count; i++)
       {
         GravityComponent grav = data[i];
+        if (!Helpers.ShouldFloat(grav)) continue;
 
-        // Requirements
-        if (!Helpers.ShouldFloat(grav.transform)) continue;
+        ApplyXVelocityChanges(ref grav, dt);
+        ApplyYVelocityChanges(ref grav, dt);
 
-        Vector2 position = grav.transform.GetPosition();
+        Vector3 pos = grav.transform.GetPosition();
+        Vector2 newPosition = (Vector2)pos + grav.velocity * dt;
 
-        // Calculating the new velocities (compensate for the fact that additional gravity will be applied)
-        float reverseGravityConstant = Helpers.IsSurfaceLiquid(position) && grav.velocity.y > 0f ? 0f : 9.8f / 2f;
-        Vector2 reversedChange = new Vector2(grav.velocity.x, grav.velocity.y + 9.8f * dt);
-        Vector2 newChange = new Vector2(reversedChange.x, reversedChange.y + reverseGravityConstant * dt);
+        Collision.ApplyGuardRails(ref grav, ref newPosition);
+        grav.transform.SetPosition(new Vector3(newPosition.x, newPosition.y, pos.z));
 
-        // X-velocity roaming
-        if (Mathf.Abs(grav.velocity.x) < 0.2f * dt)
-        {
-          newChange.x += randomXVelocity() * dt;
-        }
-        else
-        {
-          float direction = grav.velocity.x / Mathf.Abs(grav.velocity.x);
-          Vector2 expectedPosition = position + newChange * dt;
+        grav.elapsedTime += dt;
 
-          Vector2 wallCheckPositionA = expectedPosition;
-          wallCheckPositionA.x += grav.radius * 1.5f * direction;
-          wallCheckPositionA.y = expectedPosition.y + grav.radius;
+        __state.Add(i, grav);
+        data[i] = NULL_COMPONENT;
+      }
+    }
 
-          Vector2 wallCheckPositionB = wallCheckPositionA;
-          wallCheckPositionB.y = expectedPosition.y - grav.radius;
-
-          if (Helpers.IsSolidCell(wallCheckPositionA) || Helpers.IsSolidCell(wallCheckPositionB))
-          {
-            newChange.x = randomXVelocity(-direction) * dt;
-          }
-        }
-
-        // Limit stuff, copied from Game's implementation
-        float targetSqMagnitude = (newChange - reversedChange).sqrMagnitude;
-        if (targetSqMagnitude > maxSqMagnitude)
-        {
-          newChange = reversedChange + (newChange - reversedChange) * tuning.maxVelocity / Mathf.Sqrt(targetSqMagnitude);
-        }
-
-        grav.elapsedTime = dt; // Prevent sticking to the floor
-        grav.velocity = newChange;
-
-        data[i] = grav;
+    static void Postfix(ref GravityComponents __instance, ref Dictionary<int, GravityComponent> __state)
+    {
+      var data = __instance.GetDataList();
+      foreach (KeyValuePair<int, GravityComponent> newGrav in __state)
+      {
+        data[newGrav.Key] = newGrav.Value;
       }
     }
   }

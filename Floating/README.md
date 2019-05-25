@@ -16,18 +16,14 @@ Changes gravity so that lighter objects will float in liquid instead of sink.
 
 May have interesting synergies with future mods and content.
 
-### Observations
-- I have seen items stack while floating.
-
 ### Known Bugs
-- Items can jump up or down in place while floating.
-- Corpses can float into walls and get stuck.
-- Sometimes items can stick to a floor.
+- Objects stuck to the floor will not leave it.
+- objects in shallow water that attach to the floor may be offset horizontally
+- Duplicants that die on the bottom of water will have their bodies remain at the bottom
 
 ### Potential Bugs
 Things that I didn't test yet:
 - Objects in a 1-cell width area.
-- Potential collision size issues.
 
 ### Future Plans
 - Make items move with bias from higher to lower levels of liquid (pretend that it is the flow of liquid). (Idea from Hanmac)
