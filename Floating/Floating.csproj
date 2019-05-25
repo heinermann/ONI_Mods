@@ -30,6 +30,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <RunPostBuildEvent>Always</RunPostBuildEvent>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="0Harmony">
       <HintPath>..\lib\0Harmony.dll</HintPath>
@@ -54,8 +57,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Collision.cs" />
+    <Compile Include="FloatationChecker.cs" />
     <Compile Include="Helpers.cs" />
-    <Compile Include="Patches\FallerComponents.cs" />
     <Compile Include="Patches\GravityComponents.cs" />
     <Compile Include="Patches\Pickupable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -64,4 +67,8 @@
     <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>XCOPY /Y "$(TargetPath)" "$(SolutionDir)mods\$(ProjectName)\*"
+XCOPY /Y "$(ProjectDir)README.md" "$(SolutionDir)mods\$(ProjectName)\*"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

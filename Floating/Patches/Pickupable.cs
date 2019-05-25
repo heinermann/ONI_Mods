@@ -2,13 +2,13 @@
 
 namespace Heinermann.Floating.Patches
 {
-  /*
-  [HarmonyPatch(typeof(Pickupable), "OnLanded")]
-  class Pickupable_OnLanded
+  
+  [HarmonyPatch(typeof(Pickupable), "OnPrefabInit")]
+  class Pickupable_OnPrefabInit
   {
-    static bool Prefix(Pickupable __instance, object data)
+    static void Postfix(Pickupable __instance)
     {
-      return !Helpers.ShouldFloatLite(__instance.transform);
+      __instance.gameObject.AddOrGet<FloatationChecker>();
     }
-  }*/
+  }
 }

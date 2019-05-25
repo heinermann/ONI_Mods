@@ -60,35 +60,25 @@ namespace Heinermann.Floating
     {
       if (obj?.GetComponent<KPrefabID>() == null) return false;
 
-      if (!obj.HasTag(GameTags.Pickupable)) return false;
+      if (!obj.HasTag(GameTags.Pickupable) || obj.GetComponent<Pickupable>() == null) return false;
 
       if (obj.HasTag(GameTags.Minion) && !obj.HasTag(GameTags.Corpse)) return false;
 
-      if (obj.HasTag(GameTags.Creature)) return false;
+      if (obj.HasTag(GameTags.Creature) || obj.HasTag(GameTags.Egg)) return false;
 
       return true;
     }
 
     public static float GetYExtent(GravityComponent component)
     {
-      return Mathf.Max(0.05f, component.radius);
+      return Mathf.Max(0.2f, component.radius);
     }
 
     /**
      * Checks if this object should float, based on whether it is in liquid and the
      * element mass is low enough.
      */
-    public static bool ShouldFloat(GravityComponent component)
-    {
-      if (!ShouldFloatLite(component.transform)) return false;
-
-      Vector2 position = (Vector2)component.transform.GetPosition() + Vector2.up * GetYExtent(component);
-      if (!IsVisiblyInLiquid(position)) return false;
-
-      return true;
-    }
-
-    public static bool ShouldFloatLite(Transform transform)
+    public static bool ShouldFloat(Transform transform)
     {
       if (transform == null || !HasFloatableTags(transform)) return false;
 

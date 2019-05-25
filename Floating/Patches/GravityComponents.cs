@@ -75,7 +75,7 @@ namespace Heinermann.Floating.Patches
       for (int i = 0; i < data.Count; i++)
       {
         GravityComponent grav = data[i];
-        if (!Helpers.ShouldFloat(grav)) continue;
+        if (!Helpers.ShouldFloat(grav.transform)) continue;
 
         ApplyXVelocityChanges(ref grav, dt);
         ApplyYVelocityChanges(ref grav, dt);
