@@ -66,10 +66,12 @@ namespace Heinermann.Floating.Patches
       }
     }
 
+    private static Dictionary<int, GravityComponent> gravComponentState = new Dictionary<int, GravityComponent>(1024);
+
     // TODO: Check for potential bug with 1-tile width water
-    static void Prefix(ref GravityComponents __instance, ref Dictionary<int, GravityComponent> __state, float dt)
+    static void Prefix(ref GravityComponents __instance, float dt)
     {
-      __state = new Dictionary<int, GravityComponent>();
+      gravComponentState.Clear();
 
       var data = __instance.GetDataList();
       for (int i = 0; i < data.Count; i++)
@@ -88,15 +90,15 @@ namespace Heinermann.Floating.Patches
 
         grav.elapsedTime += dt;
 
-        __state.Add(i, grav);
+        gravComponentState.Add(i, grav);
         data[i] = NULL_COMPONENT;
       }
     }
 
-    static void Postfix(ref GravityComponents __instance, ref Dictionary<int, GravityComponent> __state)
+    static void Postfix(ref GravityComponents __instance)
     {
       var data = __instance.GetDataList();
-      foreach (KeyValuePair<int, GravityComponent> newGrav in __state)
+      foreach (var newGrav in gravComponentState)
       {
         data[newGrav.Key] = newGrav.Value;
       }

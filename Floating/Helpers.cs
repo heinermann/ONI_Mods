@@ -13,6 +13,15 @@ namespace Heinermann.Floating
       return Grid.IsValidCell(cell) ? Grid.Mass[cell] : float.PositiveInfinity;
     }
 
+    /**
+     * Gets the element of a cell at the given position.
+     */
+    public static Element GetElement(Vector2 pos)
+    {
+      int cell = PosToCell(pos);
+      return Grid.IsValidCell(cell) ? Grid.Element[cell] : null;
+    }
+
     public static bool IsSurfaceLiquid(Vector2 pos)
     {
       return IsVisiblyInLiquid(pos) && !IsVisiblyInLiquid(pos + Vector2.up);
@@ -31,11 +40,7 @@ namespace Heinermann.Floating
       }
 
       float positionInCell = pos.y - Mathf.Floor(pos.y);
-      if (GetMass(pos) / 1000f > positionInCell)
-      {
-        return true;
-      }
-      return false;
+      return GetMass(pos) / 1000f > positionInCell;
     }
 
     public static int PosToCell(Vector2 pos)
@@ -76,16 +81,25 @@ namespace Heinermann.Floating
 
     /**
      * Checks if this object should float, based on whether it is in liquid and the
-     * element mass is low enough.
+     * element's mass max is lower than the liquid's mass max.
      */
     public static bool ShouldFloat(Transform transform)
     {
+      // Must have valid tags
       if (transform == null || !HasFloatableTags(transform)) return false;
 
-      PrimaryElement element = transform.GetComponent<PrimaryElement>();
-      if (element == null || element.Mass >= 250f) return false;
-
+      // Must be in liquid
       if (!IsVisiblyInLiquid(transform.GetPosition())) return false;
+
+      // Bottled liquids and gasses always float
+      Element floaterElem = transform.GetComponent<PrimaryElement>()?.Element;
+      if (floaterElem == null) return false;
+      if (floaterElem.IsLiquid || floaterElem.IsGas) return true;
+
+      // Must have less MaxMass than the liquid's MaxMass
+      Element liquidElem = GetElement(transform.GetPosition());
+      float floaterMaxMass = Mathf.Max(floaterElem.defaultValues.mass, floaterElem.maxMass);
+      if (liquidElem == null || floaterMaxMass >= liquidElem.maxMass) return false;
 
       return true;
     }
