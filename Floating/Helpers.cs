@@ -65,6 +65,8 @@ namespace Heinermann.Floating
     {
       if (obj?.GetComponent<KPrefabID>() == null) return false;
 
+      if (obj.HasTag(GameTags.Stored) || obj.HasTag(GameTags.StoredPrivate)) return false;
+
       if (!obj.HasTag(GameTags.Pickupable) || obj.GetComponent<Pickupable>() == null) return false;
 
       if (obj.HasTag(GameTags.Minion) && !obj.HasTag(GameTags.Corpse)) return false;

@@ -27,7 +27,6 @@ May have interesting synergies with other mods and future content. Please share 
 - Objects in shallow water that attach to the floor may be significantly offset horizontally
 - Objects can sometimes be jittery when it is close to the ground or moving to different height levels
 - Occasionally spazzes out when moving up into mesh or any solid tile ceiling
-- Conveyors under water cause the items to float up while being carried
 
 ### Potential Bugs
 I have not tested extremely tight 1-cell areas or other unnatural situations.
