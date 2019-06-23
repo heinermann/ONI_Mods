@@ -57,21 +57,30 @@ namespace Heinermann.Floating
       int cell = PosToCell(pos);
       return Grid.IsSolidCell(cell);
     }
-    
+
+    private static readonly Tag[] nonFloatableTags = new Tag[]{
+      GameTags.Stored,
+      GameTags.StoredPrivate,
+      GameTags.Creature,
+      GameTags.SwimmingCreature,
+      GameTags.Egg,
+      GameTags.IncubatableEgg,
+      GameTags.Entombed,
+      GameTags.Sealed,
+      GameTags.Equipped
+    };
+
     /**
      * Checks if the object meets the tag requirements for floatation.
      */
     public static bool HasFloatableTags(Transform obj)
     {
-      if (obj?.GetComponent<KPrefabID>() == null) return false;
+      KPrefabID prefab = obj?.GetComponent<KPrefabID>();
+      if (prefab == null) return false;
 
-      if (obj.HasTag(GameTags.Stored) || obj.HasTag(GameTags.StoredPrivate)) return false;
+      if (prefab.HasAnyTags(nonFloatableTags) || !prefab.HasTag(GameTags.Pickupable)) return false;
 
-      if (!obj.HasTag(GameTags.Pickupable) || obj.GetComponent<Pickupable>() == null) return false;
-
-      if (obj.HasTag(GameTags.Minion) && !obj.HasTag(GameTags.Corpse)) return false;
-
-      if (obj.HasTag(GameTags.Creature) || obj.HasTag(GameTags.Egg)) return false;
+      if (prefab.HasTag(GameTags.Minion) && !prefab.HasTag(GameTags.Corpse)) return false;
 
       return true;
     }
