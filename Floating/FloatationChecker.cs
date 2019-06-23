@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Reflection;
+using UnityEngine;
 
 namespace Heinermann.Floating
 {
@@ -10,6 +11,9 @@ namespace Heinermann.Floating
       {
         GameComps.Fallers.Add(gameObject, Vector2.zero);
       }
+
+      MethodInfo addGravity = typeof(FallerComponents).GetMethod("AddGravity", BindingFlags.Static | BindingFlags.NonPublic);
+      addGravity.Invoke(null, new object[] { transform, Vector2.zero });
     }
 
     public void Sim4000ms(float dt)

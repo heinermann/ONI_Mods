@@ -25,9 +25,8 @@ May have interesting synergies with other mods and future content. Please share 
 
 ### Known Bugs
 - Objects in shallow water that attach to the floor may be significantly offset horizontally
-- Occasionally some objects might not leave the ground, i.e. corpse on the bottom of a pool
 - Objects can sometimes be jittery when it is close to the ground or moving to different height levels
-- Completely spazzes out when moving up into mesh or any solid tile ceiling
+- Occasionally spazzes out when moving up into mesh or any solid tile ceiling
 - Conveyors under water cause the items to float up while being carried
 
 ### Potential Bugs

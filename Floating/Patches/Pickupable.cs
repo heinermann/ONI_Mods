@@ -2,8 +2,8 @@
 
 namespace Heinermann.Floating.Patches
 {
-  [HarmonyPatch(typeof(Pickupable), "OnSpawn")]
-  class Pickupable_OnSpawn
+  [HarmonyPatch(typeof(Pickupable), "OnPrefabInit")]
+  class Pickupable_OnPrefabInit
   {
     static void Postfix(Pickupable __instance)
     {
