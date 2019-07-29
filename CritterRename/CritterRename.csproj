@@ -54,11 +54,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CritterName.cs" />
-    <Compile Include="Patches\BabyMonitor.cs" />
     <Compile Include="Patches\DetailsScreen.cs" />
     <Compile Include="Patches\EggConfig.cs" />
     <Compile Include="Patches\EntityTemplates.cs" />
-    <Compile Include="Patches\FertilityMonitor.cs" />
     <Compile Include="Patches\IncubationMonitor.cs" />
     <Compile Include="Patches\UtilPatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

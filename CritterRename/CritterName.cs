@@ -13,12 +13,28 @@ namespace Heinermann.CritterRename
     [Serialize]
     private uint generation = 1;
 
+    private static readonly EventSystem.IntraObjectHandler<CritterName> OnSpawnedFromDelegate
+      = new EventSystem.IntraObjectHandler<CritterName>(delegate (CritterName component, object data) {
+      component.OnSpawnedFrom(data);
+    });
+
+    protected override void OnPrefabInit()
+    {
+      Subscribe((int)GameHashes.SpawnedFrom, from => (from as GameObject).GetComponent<CritterName>()?.TransferTo(this));
+      Subscribe((int)GameHashes.LayEgg, egg => TransferTo((egg as GameObject).GetComponent<CritterName>()));
+    }
+
     protected override void OnSpawn()
     {
       if (!Util.IsNullOrWhitespace(critterName))
       {
         ApplyName();
       }
+    }
+
+    private void OnSpawnedFrom(object data)
+    {
+
     }
 
     private bool IsCritter()
@@ -71,7 +87,7 @@ namespace Heinermann.CritterRename
 
     public void TransferTo(CritterName other)
     {
-      if (Util.IsNullOrWhitespace(critterName)) return;
+      if (other == null || Util.IsNullOrWhitespace(critterName)) return;
 
       other.critterName = critterName;
       other.generation = generation;
