@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Floating", "Floating\Floati
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DisableSplashScreen", "DisableSplashScreen\DisableSplashScreen.csproj", "{707CE649-2B50-4CCF-81A5-0B823AA2D4F3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagHelper", "TagHelper\TagHelper.csproj", "{897AE045-B452-44A7-A941-79750BB15D61}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CritterRename", "CritterRename\CritterRename.csproj", "{D5456564-F691-4FB7-A4F0-F11280B53DCB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{707CE649-2B50-4CCF-81A5-0B823AA2D4F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{707CE649-2B50-4CCF-81A5-0B823AA2D4F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{707CE649-2B50-4CCF-81A5-0B823AA2D4F3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{897AE045-B452-44A7-A941-79750BB15D61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{897AE045-B452-44A7-A941-79750BB15D61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{897AE045-B452-44A7-A941-79750BB15D61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{897AE045-B452-44A7-A941-79750BB15D61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D5456564-F691-4FB7-A4F0-F11280B53DCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D5456564-F691-4FB7-A4F0-F11280B53DCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D5456564-F691-4FB7-A4F0-F11280B53DCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D5456564-F691-4FB7-A4F0-F11280B53DCB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
