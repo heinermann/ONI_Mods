@@ -13,15 +13,16 @@ namespace Heinermann.CritterRename
     [Serialize]
     private uint generation = 1;
 
-    private static readonly EventSystem.IntraObjectHandler<CritterName> OnSpawnedFromDelegate
-      = new EventSystem.IntraObjectHandler<CritterName>(delegate (CritterName component, object data) {
-      component.OnSpawnedFrom(data);
-    });
+    private static readonly EventSystem.IntraObjectHandler<CritterName> OnSpawnedFromDelegate =
+      new EventSystem.IntraObjectHandler<CritterName>(OnSpawnedFrom);
+
+    private static readonly EventSystem.IntraObjectHandler<CritterName> OnLayEggDelegate =
+      new EventSystem.IntraObjectHandler<CritterName>(OnLayEgg);
 
     protected override void OnPrefabInit()
     {
-      Subscribe((int)GameHashes.SpawnedFrom, from => (from as GameObject).GetComponent<CritterName>()?.TransferTo(this));
-      Subscribe((int)GameHashes.LayEgg, egg => TransferTo((egg as GameObject).GetComponent<CritterName>()));
+      Subscribe((int)GameHashes.SpawnedFrom, OnSpawnedFromDelegate);
+      Subscribe((int)GameHashes.LayEgg, OnLayEggDelegate);
     }
 
     protected override void OnSpawn()
@@ -32,9 +33,14 @@ namespace Heinermann.CritterRename
       }
     }
 
-    private void OnSpawnedFrom(object data)
+    private static void OnSpawnedFrom(CritterName component, object data)
     {
+      (data as GameObject).GetComponent<CritterName>()?.TransferTo(component);
+    }
 
+    private static void OnLayEgg(CritterName component, object data)
+    {
+      component.TransferTo((data as GameObject).GetComponent<CritterName>());
     }
 
     private bool IsCritter()
@@ -85,9 +91,14 @@ namespace Heinermann.CritterRename
       setGameObjectName(newName);
     }
 
+    public bool HasName()
+    {
+      return !Util.IsNullOrWhitespace(critterName);
+    }
+
     public void TransferTo(CritterName other)
     {
-      if (other == null || Util.IsNullOrWhitespace(critterName)) return;
+      if (other == null || !HasName()) return;
 
       other.critterName = critterName;
       other.generation = generation;

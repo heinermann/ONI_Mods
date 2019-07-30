@@ -55,10 +55,11 @@
   <ItemGroup>
     <Compile Include="CritterName.cs" />
     <Compile Include="Patches\DetailsScreen.cs" />
+    <Compile Include="Patches\EditableTitleBar.cs" />
     <Compile Include="Patches\EggConfig.cs" />
     <Compile Include="Patches\EntityTemplates.cs" />
+    <Compile Include="Patches\GameUtil.cs" />
     <Compile Include="Patches\IncubationMonitor.cs" />
-    <Compile Include="Patches\UtilPatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util.cs" />
   </ItemGroup>

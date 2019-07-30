@@ -1,13 +1,21 @@
 ﻿using Harmony;
+using Klei.AI;
+using System.Diagnostics;
+using UnityEngine;
 
 namespace Heinermann.CritterRename.Patches
 {
-  [HarmonyPatch(typeof(IncubationMonitor), "SpawnBaby")]
-  static class IncubationMonitor_SpawnBaby
+  [HarmonyPatch(typeof(Amount), "Copy")]
+  static class Amount_Copy
   {
-    static void Prefix(IncubationMonitor.Instance smi)
+    static void Prefix(GameObject to, GameObject from)
     {
-      Util_KInstantiate.spawner = smi.gameObject;
+      string callingMethod = new StackFrame(2).GetMethod().Name;
+      Debug.LogWarning(callingMethod);
+      if (callingMethod == "SpawnBaby")
+      {
+        from.GetComponent<CritterName>()?.TransferTo(to.AddOrGet<CritterName>());
+      }
     }
   }
 }

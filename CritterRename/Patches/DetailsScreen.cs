@@ -16,9 +16,8 @@ namespace Heinermann.CritterRename.Patches
       {
         ___TabTitle.SetUserEditable(true);
 
-        // These don't need to be set, but I'm leaving them here in case any logic changes
-        // ___TabTitle.SetTitle(target.GetProperName());
-        // ___TabTitle.SetSubText("");
+        ___TabTitle.SetTitle(target.GetProperName());
+        ___TabTitle.SetSubText("");
 
         string properName = UI.StripLinkFormatting(target.GetProperName());
         string originalProperName = UI.StripLinkFormatting(TagManager.GetProperName(prefab.PrefabTag));

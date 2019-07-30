@@ -16,8 +16,4 @@ Blinky -> Blinky Jr. -> Blinky III -> Blinky IV -> ...
 
 ## Known Bugs
 - The edit tooltip says "Give this Duplicant a new name". The same tooltip is used for naming compactors as well so it's not specific to this mod.
-- An empty name causes the UI to lock up, click off to close it, then back on the critter, and edit the name again to unlock it. This is a bug in ONI itself and not with the mod.
-- An empty name doesn't remove the name.
-- A single space removes the name but doesn't update with the original critter name until you click off and back on the critter.
-- The world tooltip will say "CritterName x 1", I'd rather it not have x 1.
-- There's a bug where names aren't being transferred to the correct critters
+- When an egg is selected and it hatches, the selected baby will show as unnamed, but it is actually named if you re-select it.
