@@ -1,3 +1,5 @@
+"I wish you could name your pets" - Brothgar
+
 ## CritterRename
 Gives the ability to rename critters, both domestic and wild. Critter names will transfer to the next generation.
 

@@ -67,4 +67,9 @@
     <None Include="README.md" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>XCOPY /Y "$(TargetPath)" "$(SolutionDir)mods\$(ProjectName)\*"
+XCOPY /Y "$(ProjectDir)preview.png" "$(SolutionDir)mods\$(ProjectName)\*"
+XCOPY /Y "$(ProjectDir)README.md" "$(SolutionDir)mods\$(ProjectName)\*"</PostBuildEvent>
+  </PropertyGroup>
 </Project>
