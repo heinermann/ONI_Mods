@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 namespace Heinermann.Blood
 {
@@ -10,11 +11,14 @@ namespace Heinermann.Blood
     public static readonly SimHashes BloodSimHash = (SimHashes)Hash.SDBMLower("Blood");
     public static readonly SimHashes FrozenBloodSimHash = (SimHashes)Hash.SDBMLower("FrozenBlood");
 
-    public static Dictionary<SimHashes, string> SimHashNameLookup = new Dictionary<SimHashes, string>
+    public static readonly Dictionary<SimHashes, string> SimHashNameLookup = new Dictionary<SimHashes, string>
     {
       { BloodSimHash, "Blood" },
       { FrozenBloodSimHash, "FrozenBlood" }
     };
+
+    public static readonly Dictionary<string, object> ReverseSimHashNameLookup =
+      SimHashNameLookup.ToDictionary(x => x.Value, x => x.Key as object);
 
     // iron mass = 0.5 mg/mL blood (0.0005g/1.13g = 0.00044)
     public const string CONFIG = @"

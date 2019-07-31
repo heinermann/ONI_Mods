@@ -12,21 +12,14 @@ namespace Heinermann.Blood.Patches
       return !BloodElement.SimHashNameLookup.TryGetValue((SimHashes)__instance, out __result);
     }
   }
-  /*
-  TODO: include this
+
   [HarmonyPatch(typeof(Enum), nameof(Enum.Parse), new Type[] { typeof(Type), typeof(string), typeof(bool) })]
   class SimHashes_Parse
   {
-      static bool Prefix(Type enumType, string value, ref object __result)
-      {
-          if (!enumType.Equals(typeof(SimHashes))) return true;
-          if (SimHashReverseTable.ContainsKey(value))
-          {
-              __result = SimHashReverseTable[value];
-              return false;
-          }
-          return true;
-      }
+    static bool Prefix(Type enumType, string value, ref object __result)
+    {
+      if (!enumType.Equals(typeof(SimHashes))) return true;
+      return !BloodElement.ReverseSimHashNameLookup.TryGetValue(value, out __result);
+    }
   }
-  */
 }

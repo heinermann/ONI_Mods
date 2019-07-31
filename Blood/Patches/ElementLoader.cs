@@ -16,7 +16,7 @@ namespace Heinermann.Blood.Patches
       Strings.Add("STRINGS.ELEMENTS.FROZENBLOOD.NAME", STRINGS.UI.FormatAsLink("Frozen Blood", "FROZENBLOOD"));
       Strings.Add("STRINGS.ELEMENTS.FROZENBLOOD.DESC", $"Blood that has been frozen. {containsIron}");
 
-      var elementCollection = YamlIO<ElementLoader.ElementEntryCollection>.Parse(BloodElement.CONFIG);
+      var elementCollection = YamlIO.Parse<ElementLoader.ElementEntryCollection>(BloodElement.CONFIG, "ElementLoader.cs");
       __result.AddRange(elementCollection.elements);
     }
   }
