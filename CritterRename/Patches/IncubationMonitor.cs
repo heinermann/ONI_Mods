@@ -11,7 +11,6 @@ namespace Heinermann.CritterRename.Patches
     static void Prefix(GameObject to, GameObject from)
     {
       string callingMethod = new StackFrame(2).GetMethod().Name;
-      Debug.LogWarning(callingMethod);
       if (callingMethod == "SpawnBaby")
       {
         from.GetComponent<CritterName>()?.TransferTo(to.AddOrGet<CritterName>());

@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagHelper", "TagHelper\TagH
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CritterRename", "CritterRename\CritterRename.csproj", "{D5456564-F691-4FB7-A4F0-F11280B53DCB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShadowMinion", "ShadowMinion\ShadowMinion.csproj", "{C316DCAA-F625-4C9E-AE86-2E259E390F1D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{D5456564-F691-4FB7-A4F0-F11280B53DCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5456564-F691-4FB7-A4F0-F11280B53DCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5456564-F691-4FB7-A4F0-F11280B53DCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C316DCAA-F625-4C9E-AE86-2E259E390F1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C316DCAA-F625-4C9E-AE86-2E259E390F1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C316DCAA-F625-4C9E-AE86-2E259E390F1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C316DCAA-F625-4C9E-AE86-2E259E390F1D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
