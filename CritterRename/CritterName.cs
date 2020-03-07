@@ -1,4 +1,5 @@
 ﻿using KSerialization;
+using STRINGS;
 using UnityEngine;
 
 namespace Heinermann.CritterRename
@@ -56,7 +57,7 @@ namespace Heinermann.CritterRename
     public void SetName(string newName)
     {
       generation = 1;
-      if (Util.IsNullOrWhitespace(newName))
+      if (Util.IsNullOrWhitespace(newName) || newName.ToLower() == UI.StripLinkFormatting(GetPrefabName()).ToLower())
       {
         ResetToPrefabName();
         return;
@@ -111,13 +112,23 @@ namespace Heinermann.CritterRename
       other.ApplyName();
     }
 
-    public void ResetToPrefabName()
+    public string GetPrefabName()
     {
       KPrefabID prefab = GetComponent<KPrefabID>();
       if (prefab != null)
       {
+        return TagManager.GetProperName(prefab.PrefabTag);
+      }
+      return null;
+    }
+
+    public void ResetToPrefabName()
+    {
+      string prefabName = GetPrefabName();
+      if (prefabName != null)
+      {
         critterName = "";
-        setGameObjectName(TagManager.GetProperName(prefab.PrefabTag));
+        setGameObjectName(prefabName);
       }
     }
   }
