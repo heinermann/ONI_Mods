@@ -1,4 +1,5 @@
 ﻿using Harmony;
+using System;
 
 namespace Heinermann.ResetBuildPriority.Patches
 {
@@ -9,11 +10,11 @@ namespace Heinermann.ResetBuildPriority.Patches
     [HarmonyPatch(typeof(PlanScreen), "CloseCategoryPanel")]
     public static class PlanScreen_CloseCategoryPanel
     {
-      static void Postfix(ref ProductInfoScreen ___productInfoScreen)
+      static void Prefix(ref ProductInfoScreen ___productInfoScreen, bool playSound)
       {
-        if (!ignoreCategoryClose)
+        if (!ignoreCategoryClose || playSound)
         {
-          ___productInfoScreen.materialSelectionPanel.PriorityScreen.ResetPriority();
+          ___productInfoScreen?.materialSelectionPanel?.PriorityScreen?.ResetPriority();
         }
       }
     }
