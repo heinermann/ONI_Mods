@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.572
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResetBuildPriority", "ResetBuildPriority\ResetBuildPriority.csproj", "{1EAE3DE0-2650-4DD1-95B8-6B6207EC4E26}"
 EndProject
@@ -10,8 +10,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CritterTraits", "CritterTraits\CritterTraits.csproj", "{F53012EE-9957-4DD2-AC75-6F2DF0AD2A77}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Floating", "Floating\Floating.csproj", "{E9D5569E-4E7B-484F-BB4B-0DAB9E29596A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TagHelper", "TagHelper\TagHelper.csproj", "{897AE045-B452-44A7-A941-79750BB15D61}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CritterRename", "CritterRename\CritterRename.csproj", "{D5456564-F691-4FB7-A4F0-F11280B53DCB}"
 EndProject
@@ -39,10 +37,6 @@ Global
 		{E9D5569E-4E7B-484F-BB4B-0DAB9E29596A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E9D5569E-4E7B-484F-BB4B-0DAB9E29596A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E9D5569E-4E7B-484F-BB4B-0DAB9E29596A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{897AE045-B452-44A7-A941-79750BB15D61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{897AE045-B452-44A7-A941-79750BB15D61}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{897AE045-B452-44A7-A941-79750BB15D61}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{897AE045-B452-44A7-A941-79750BB15D61}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D5456564-F691-4FB7-A4F0-F11280B53DCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D5456564-F691-4FB7-A4F0-F11280B53DCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5456564-F691-4FB7-A4F0-F11280B53DCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
