@@ -15,12 +15,13 @@ namespace Heinermann.CritterRename.Patches
       if (prefab != null && prefab.HasTag(GameTags.Creature))
       {
         ___TabTitle.SetUserEditable(true);
+        
+        string properName = UI.StripLinkFormatting(target.GetProperName());
 
-        ___TabTitle.SetTitle(target.GetProperName());
+        ___TabTitle.SetTitle(properName);
         ___TabTitle.SetSubText("");
 
-        string properName = UI.StripLinkFormatting(target.GetProperName());
-        string originalProperName = UI.StripLinkFormatting(TagManager.GetProperName(prefab.PrefabTag));
+        string originalProperName = TagManager.GetProperName(prefab.PrefabTag, stripLink: true);
         if (properName != originalProperName)
         {
           ___TabTitle.SetSubText(originalProperName);
