@@ -40,7 +40,7 @@ elements:
     lowTempTransitionTarget: FrozenBlood
     highTempTransitionTarget: Steam
     highTempTransitionOreId: Iron
-    highTempTransitionOreMassConversion: 0.0005
+    highTempTransitionOreMassConversion: 0.001
     defaultTemperature: 310
     defaultMass: 1000
     molarMass: 30
@@ -65,7 +65,6 @@ elements:
     defaultTemperature: 230
     defaultMass: 500
     maxMass: 800
-    hardnessTier: 2
     hardness: 10
     molarMass: 35
     lightAbsorptionFactor: 0.8
