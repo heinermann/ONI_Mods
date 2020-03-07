@@ -23,7 +23,10 @@ namespace Heinermann.CritterTraits.Patches
 
     static void Prefix(ref SimpleInfoScreen __instance, GameObject target)
     {
-      if (target != null && target.GetComponent<Klei.AI.Traits>() != null && target.HasTag(GameTags.Creature))
+      if (target != null &&
+        target.GetComponent<Klei.AI.Traits>() != null &&
+        target.GetComponent<KPrefabID>() != null &&
+        target.HasTag(GameTags.Creature))
       {
         InitTraitsPanel(__instance);
 

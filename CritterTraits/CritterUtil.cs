@@ -85,6 +85,8 @@ namespace Heinermann.CritterTraits
      */
     public static void AddObjectLight(GameObject go, Color color, float range, int lux)
     {
+      if (go == null) return;
+
       Light2D light = go.GetComponent<Light2D>();
       if (light == null)
       {

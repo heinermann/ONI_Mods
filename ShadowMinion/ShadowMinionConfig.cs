@@ -20,10 +20,10 @@ namespace Heinermann.ShadowMinion
 		gameObject.AddOrGet<StateMachineController>();
 		MinionModifiers modifiers = gameObject.AddOrGet<MinionModifiers>();
 		AddMinionAmounts(modifiers);
-		AddMinionTraits(name, modifiers);
-		gameObject.AddOrGet<MinionBrain>();
+		AddMinionTraits(name);
+		gameObject.AddOrGet<ShadowBrain>();
 		gameObject.AddOrGet<KPrefabID>().AddTag(GameTags.DupeBrain);
-		gameObject.AddOrGet<Worker>();
+		//gameObject.AddOrGet<Worker>();
 		gameObject.AddOrGet<ChoreConsumer>();
 		Storage storage = gameObject.AddOrGet<Storage>();
 		storage.fxPrefix = Storage.FXPrefix.PickedUp;
@@ -34,6 +34,7 @@ namespace Heinermann.ShadowMinion
 			Storage.StoredItemModifier.Seal
 		});
 		gameObject.AddOrGet<Health>();
+      
 		OxygenBreather oxygenBreather = gameObject.AddOrGet<OxygenBreather>();
 		oxygenBreather.O2toCO2conversion = 0.02f;
 		oxygenBreather.lowOxygenThreshold = 0.52f;
@@ -49,15 +50,20 @@ namespace Heinermann.ShadowMinion
 			new CellOffset(1, 0),
 			new CellOffset(-1, 0)
 		};
-		gameObject.AddOrGet<WarmBlooded>();
-		gameObject.AddOrGet<MinionIdentity>();
+
+        //gameObject.AddOrGet<WarmBlooded>();
+        //gameObject.AddOrGet<MinionIdentity>();
+        gameObject.AddOrGet<NullIdentity>();
 		GridVisibility gridVisibility = gameObject.AddOrGet<GridVisibility>();
 		gridVisibility.radius = 30f;
 		gridVisibility.innerRadius = 20f;
-		gameObject.AddOrGet<MiningSounds>();
+		//gameObject.AddOrGet<MiningSounds>();
 		gameObject.AddOrGet<SaveLoadRoot>();
 		gameObject.AddOrGet<AntiCluster>();
-		Navigator navigator = gameObject.AddOrGet<Navigator>();
+
+        //gameObject.AddOrGetDef<CreatureFallMonitor.Def>();
+
+        Navigator navigator = gameObject.AddOrGet<Navigator>();
 		navigator.NavGridName = "MinionNavGrid";
 		navigator.CurrentNavType = NavType.Floor;
 		KBatchedAnimController kBatchedAnimController = gameObject.AddOrGet<KBatchedAnimController>();
@@ -225,18 +231,18 @@ namespace Heinermann.ShadowMinion
 		primaryElement.InternalTemperature = 310.15f;
 		primaryElement.MassPerUnit = 30f;
 		primaryElement.ElementID = SimHashes.Creature;
-		gameObject.AddOrGet<ChoreProvider>();
+		//gameObject.AddOrGet<ChoreProvider>();
 		gameObject.AddOrGetDef<DebugGoToMonitor.Def>();
-		gameObject.AddOrGetDef<SpeechMonitor.Def>();
+		//gameObject.AddOrGetDef<SpeechMonitor.Def>();
 		gameObject.AddOrGetDef<BlinkMonitor.Def>();
-		gameObject.AddOrGetDef<ConversationMonitor.Def>();
+		//gameObject.AddOrGetDef<ConversationMonitor.Def>();
 		gameObject.AddOrGet<Sensors>();
 		gameObject.AddOrGet<Chattable>();
 		gameObject.AddOrGet<FaceGraph>();
 		gameObject.AddOrGet<Accessorizer>();
-		gameObject.AddOrGet<Schedulable>();
-		LoopingSounds loopingSounds = gameObject.AddOrGet<LoopingSounds>();
-		loopingSounds.updatePosition = true;
+		//gameObject.AddOrGet<Schedulable>();
+		//LoopingSounds loopingSounds = gameObject.AddOrGet<LoopingSounds>();
+		//loopingSounds.updatePosition = true;
 		gameObject.AddOrGet<AnimEventHandler>();
 		FactionAlignment factionAlignment = gameObject.AddOrGet<FactionAlignment>();
 		factionAlignment.Alignment = FactionManager.FactionID.Friendly;
@@ -251,20 +257,20 @@ namespace Heinermann.ShadowMinion
 			new CellOffset(0, 0),
 			new CellOffset(0, 1)
 		};
-		gameObject.AddOrGet<Pickupable>();
+		//gameObject.AddOrGet<Pickupable>();
 		CreatureSimTemperatureTransfer creatureSimTemperatureTransfer = gameObject.AddOrGet<CreatureSimTemperatureTransfer>();
 		creatureSimTemperatureTransfer.SurfaceArea = 10f;
 		creatureSimTemperatureTransfer.Thickness = 0.01f;
-		gameObject.AddOrGet<SicknessTrigger>();
-		gameObject.AddOrGet<ClothingWearer>();
-		gameObject.AddOrGet<SuitEquipper>();
+		//gameObject.AddOrGet<SicknessTrigger>();
+		//gameObject.AddOrGet<ClothingWearer>();
+		//gameObject.AddOrGet<SuitEquipper>();
 		DecorProvider decorProvider = gameObject.AddOrGet<DecorProvider>();
 		decorProvider.baseRadius = 3f;
 		decorProvider.isMovable = true;
 		gameObject.AddOrGet<ConsumableConsumer>();
-		gameObject.AddOrGet<NoiseListener>();
-		gameObject.AddOrGet<MinionResume>();
-		DuplicantNoiseLevels.SetupNoiseLevels();
+		//gameObject.AddOrGet<NoiseListener>();
+		//gameObject.AddOrGet<MinionResume>();
+		//DuplicantNoiseLevels.SetupNoiseLevels();
 		SetupLaserEffects(gameObject);
 		SymbolOverrideController symbolOverrideController = SymbolOverrideControllerUtil.AddToPrefab(gameObject);
 		symbolOverrideController.applySymbolOverridesEveryFrame = true;
@@ -406,40 +412,43 @@ namespace Heinermann.ShadowMinion
 
 	public void OnPrefabInit(GameObject go)
 	{
-		AmountInstance amountInstance = Db.Get().Amounts.ImmuneLevel.Lookup(go);
-		amountInstance.value = amountInstance.GetMax();
-		AmountInstance amountInstance2 = Db.Get().Amounts.Bladder.Lookup(go);
-		amountInstance2.value = UnityEngine.Random.Range(0f, 10f);
-		AmountInstance amountInstance3 = Db.Get().Amounts.Stress.Lookup(go);
-		amountInstance3.value = 5f;
-		AmountInstance amountInstance4 = Db.Get().Amounts.Temperature.Lookup(go);
-		amountInstance4.value = 310.15f;
-		AmountInstance amountInstance5 = Db.Get().Amounts.Stamina.Lookup(go);
-		amountInstance5.value = amountInstance5.GetMax();
-		AmountInstance amountInstance6 = Db.Get().Amounts.Breath.Lookup(go);
-		amountInstance6.value = amountInstance6.GetMax();
-		AmountInstance amountInstance7 = Db.Get().Amounts.Calories.Lookup(go);
-		amountInstance7.value = 0.8875f * amountInstance7.GetMax();
+	  AmountInstance amountInstance = Db.Get().Amounts.ImmuneLevel.Lookup(go);
+	  amountInstance.value = amountInstance.GetMax();
+	  AmountInstance amountInstance2 = Db.Get().Amounts.Bladder.Lookup(go);
+	  amountInstance2.value = UnityEngine.Random.Range(0f, 10f);
+	  AmountInstance amountInstance3 = Db.Get().Amounts.Stress.Lookup(go);
+	  amountInstance3.value = 5f;
+	  AmountInstance amountInstance4 = Db.Get().Amounts.Temperature.Lookup(go);
+	  amountInstance4.value = 310.15f;
+	  AmountInstance amountInstance5 = Db.Get().Amounts.Stamina.Lookup(go);
+	  amountInstance5.value = amountInstance5.GetMax();
+	  AmountInstance amountInstance6 = Db.Get().Amounts.Breath.Lookup(go);
+	  amountInstance6.value = amountInstance6.GetMax();
+	  AmountInstance amountInstance7 = Db.Get().Amounts.Calories.Lookup(go);
+	  amountInstance7.value = 0.8875f * amountInstance7.GetMax();
+
+      AmountInstance amountInstance8 = Db.Get().Amounts.HitPoints.Lookup(go);
+      amountInstance8.value = amountInstance8.GetMax();
 	}
 
 	public void OnSpawn(GameObject go)
 	{
 		Sensors component = go.GetComponent<Sensors>();
 		component.Add(new PathProberSensor(component));
-		component.Add(new SafeCellSensor(component));
+		//component.Add(new SafeCellSensor(component));
 		component.Add(new IdleCellSensor(component));
-		component.Add(new PickupableSensor(component));
-		component.Add(new ClosestEdibleSensor(component));
+		//component.Add(new PickupableSensor(component));
+		//component.Add(new ClosestEdibleSensor(component));
 		component.Add(new BreathableAreaSensor(component));
-		component.Add(new AssignableReachabilitySensor(component));
-		component.Add(new ToiletSensor(component));
+		//component.Add(new AssignableReachabilitySensor(component));
+		//component.Add(new ToiletSensor(component));
 		component.Add(new MingleCellSensor(component));
 		StateMachineController component2 = go.GetComponent<StateMachineController>();
-		RationalAi.Instance instance = new RationalAi.Instance(component2);
+		ShadowAi.Instance instance = new ShadowAi.Instance(component2);
 		instance.StartSM();
 		if (go.GetComponent<OxygenBreather>().GetGasProvider() == null)
 		{
-			go.GetComponent<OxygenBreather>().SetGasProvider(new GasBreatherFromWorldProvider());
+			go.GetComponent<OxygenBreather>().SetGasProvider(new NullGasBreather());
 		}
 		Navigator component3 = go.GetComponent<Navigator>();
 		component3.transitionDriver.overrideLayers.Add(new BipedTransitionLayer(component3, 3.325f, 2.5f));
@@ -471,7 +480,7 @@ namespace Heinermann.ShadowMinion
 		modifiers.initialAmounts.Add(Db.Get().Amounts.Decor.Id);
 	}
 
-	public static void AddMinionTraits(string name, Modifiers modifiers)
+	public static void AddMinionTraits(string name)
 	{
 		Trait trait = Db.Get().CreateTrait(MINION_BASE_TRAIT_ID, name, name, null, false, null, true, true);
 		trait.Add(new AttributeModifier(Db.Get().Amounts.Stamina.deltaAttribute.Id, -7f / 60f, name));
