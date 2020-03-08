@@ -83,11 +83,18 @@ namespace Heinermann.Floating.Patches
         ApplyYVelocityChanges(ref grav, dt);
 
         Vector3 pos = grav.transform.GetPosition();
-        Vector2 newPosition = (Vector2)pos + grav.velocity * dt;
+        Vector3 newPosition = (Vector2)pos + grav.velocity * dt;
 
-        Collision.ApplyGuardRails(ref grav, ref newPosition);
-        grav.transform.SetPosition(new Vector3(newPosition.x, newPosition.y, pos.z));
+        // Resolve collisions
+        CollisionResolver resolver = new CollisionResolver(grav, newPosition);
+        resolver.ResolveCollisions();
 
+        // Apply the new gravity/position
+        newPosition = resolver.bestPosition;
+        newPosition.z = pos.z;
+        grav = resolver.grav;
+
+        grav.transform.SetPosition(newPosition);
         grav.elapsedTime += dt;
 
         gravComponentState.Add(i, grav);

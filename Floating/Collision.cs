@@ -2,160 +2,124 @@
 
 namespace Heinermann.Floating
 {
-  public static class Collision
+  public class CollisionResolver
   {
-    public static void ApplyBoxColliderRestrictionsX(ref GravityComponent grav, ref Vector2 newPosition)
+    public GravityComponent grav;
+    Vector2 desiredPosition;
+    Vector2 currentPosition;
+
+    public Vector2 bestPosition;
+    float bestDistance;
+
+    Bounds bounds;
+
+    public CollisionResolver(GravityComponent grav, Vector2 desiredPosition)
     {
-      KBoxCollider2D collider = grav.transform.GetComponent<KBoxCollider2D>();
+      this.grav = grav;
+      this.currentPosition = grav.transform.position;
+      this.desiredPosition = desiredPosition;
 
-      Vector2 oldPosition = grav.transform.position;
-      Vector2 diffPosition = newPosition - oldPosition;
+      bestDistance = float.PositiveInfinity;
+      bestPosition = currentPosition;
 
-      float xDirection = Mathf.Sign(diffPosition.x);
-
-      Bounds bounds = collider.bounds;
-      bounds.center += (Vector3)diffPosition;
-
-      Vector2 min = bounds.min;
-      Vector2 max = bounds.max;
-
-      float extentX = collider.bounds.extents.x + 0.01f;
-      for (
-        Vector2 iterator = new Vector2(xDirection < 0 ? min.x : max.x, Mathf.Floor(min.y));
-        iterator.y <= max.y;
-        iterator.y += 1f)
+      KCollider2D collider = grav.transform.GetComponent<KCollider2D>();
+      if (collider != null)
       {
-        if (Helpers.IsSolidCell(iterator))
-        {
-          grav.velocity.x = 0f;
+        this.bounds = collider.bounds;
+        bounds.Expand(0.05f); // Apply breathing room
+      }
+    }
 
-          float offset = xDirection < 0 ? 1f + extentX : -extentX;
-          newPosition.x = Mathf.Floor(iterator.x) + offset;
-          break;
+    /**
+     * Checks if bounds intersects a solid cell.
+     */
+    bool IntersectsSolidCell(Vector2 target)
+    {
+      bounds.center = target;
+      Vector3 min = bounds.min;
+      Vector3 max = bounds.max;
+
+      if (Helpers.IsSolidCell(min) ||
+        Helpers.IsSolidCell(max) ||
+        Helpers.IsSolidCell(new Vector2(min.x, max.y)) ||
+        Helpers.IsSolidCell(new Vector2(max.x, min.y)))
+      {
+        return true;
+      }
+
+      // If the length is greater than one tile, it's possible to have a body get stuck
+      // because none of the 4 corners hit the tile.
+      // They look like beefy loops but won't even fire 99% of the time.
+      for (float x = min.x + 1f; x < max.x; x += 1f)
+      {
+        if (Helpers.IsSolidCell(new Vector2(x, min.y)) || Helpers.IsSolidCell(new Vector2(x, max.y)))
+        {
+          return true;
         }
       }
-    }
-
-    public static void ApplyBoxColliderRestrictionsY(ref GravityComponent grav, ref Vector2 newPosition)
-    {
-      KBoxCollider2D collider = grav.transform.GetComponent<KBoxCollider2D>();
-
-      Vector2 oldPosition = grav.transform.position;
-      Vector2 diffPosition = newPosition - oldPosition;
-
-      float yDirection = Mathf.Sign(diffPosition.y);
-
-      Bounds bounds = collider.bounds;
-      bounds.center += (Vector3)diffPosition;
-
-      float extentY = Helpers.GetYExtent(grav);
-      float minY = bounds.center.y - extentY;
-      float maxY = bounds.center.y + extentY;
-
-      for (
-        Vector2 iterator = new Vector2(Mathf.Floor(bounds.min.x), yDirection < 0 ? minY : maxY);
-        iterator.x <= bounds.max.x;
-        iterator.x += 1f)
+      for (float y = min.y + 1f; y < max.y; y += 1f)
       {
-        if (Helpers.IsSolidCell(iterator))
+        if (Helpers.IsSolidCell(new Vector2(min.x, y)) || Helpers.IsSolidCell(new Vector2(max.x, y)))
         {
-          grav.velocity.y = 0f;
-
-          float offset = yDirection < 0 ? 1f + extentY : -extentY;
-          newPosition.y = Mathf.Floor(iterator.y) + offset;
-          break;
+          return true;
         }
       }
+      return false;
     }
 
-    public static void ApplyBoxColliderRestrictions(ref GravityComponent grav, ref Vector2 newPosition)
+    bool CheckResolves(Vector2 target)
     {
-      Vector2 proposalA = newPosition;
-      ApplyBoxColliderRestrictionsX(ref grav, ref proposalA);
-      ApplyBoxColliderRestrictionsY(ref grav, ref proposalA);
-
-      Vector2 proposalB = newPosition;
-      ApplyBoxColliderRestrictionsY(ref grav, ref proposalB);
-      ApplyBoxColliderRestrictionsX(ref grav, ref proposalB);
-
-      if ((proposalA - newPosition).sqrMagnitude < (proposalB - newPosition).sqrMagnitude)
+      float newDist = (target - currentPosition).sqrMagnitude;
+      if (newDist < bestDistance && !IntersectsSolidCell(target))
       {
-        newPosition = proposalA;
+        bestPosition = target;
+        bestDistance = newDist;
+        return true;
       }
-      else
-      {
-        newPosition = proposalB;
-      }
+      return false;
     }
 
-    public static void ApplyRadiusRestrictionsX(ref GravityComponent grav, ref Vector2 newPosition)
+    bool SpiralSearchCollision()
     {
-      float radius = Helpers.GetYExtent(grav) + 0.001f;
+      Vector2 search = Vector2.zero;
+      Vector2 dir = new Vector2(1f, 0f);
+      Vector2 total = Vector2.zero;
+      float limit = 0.1f;
+      while (limit <= 2f)
+      {
+        search += dir * 0.1f;
+        total += dir * 0.1f;
+        if (CheckResolves(currentPosition + search)) return true;
 
-      Vector2 left = newPosition + Vector2.left * radius;
-      Vector2 right = newPosition + Vector2.right * radius;
-      if (Helpers.IsSolidCell(left))
-      {
-        newPosition.x = Mathf.Floor(left.x) + 1f + radius;
-        grav.velocity.x = 0f;
+        if (total.magnitude >= limit)
+        {
+          dir = Vector2.Perpendicular(dir);
+          if (Mathf.Abs(total.y) >= limit)
+          {
+            limit += 0.1f;
+          }
+          total = Vector2.zero;
+        }
       }
-      else if (Helpers.IsSolidCell(right))
-      {
-        newPosition.x = Mathf.Floor(right.x) - radius;
-        grav.velocity.x = 0f;
-      }
+      return false;
     }
 
-    public static void ApplyRadiusRestrictionsY(ref GravityComponent grav, ref Vector2 newPosition)
+    public void ResolveCollisions()
     {
-      float radius = Helpers.GetYExtent(grav) + 0.001f;
+      if (CheckResolves(desiredPosition)) return;
 
-      Vector2 up = newPosition + Vector2.up * radius;
-      Vector2 down = newPosition + Vector2.down * radius;
-      if (Helpers.IsSolidCell(up))
-      {
-        Vector2 sourcePos = newPosition;
-        newPosition.y = Mathf.Floor(up.y) - radius;
-        grav.velocity.y = 0f;
-      }
-      else if (Helpers.IsSolidCell(down))
-      {
-        newPosition.y = Mathf.Floor(down.y) + 1f + radius;
-        grav.velocity.y = 0f;
-      }
-    }
+      bool canMoveX = CheckResolves(new Vector2(desiredPosition.x, currentPosition.y));
+      bool canMoveY = CheckResolves(new Vector2(currentPosition.x, desiredPosition.y));
+      
+      if (!canMoveY) grav.velocity.y = 0;
+      if (!canMoveX) grav.velocity.x = 0;
+      if (canMoveX || canMoveY) return;
 
-    public static void ApplyRadiusRestrictions(ref GravityComponent grav, ref Vector2 newPosition)
-    {
-      Vector2 proposalA = newPosition;
-      ApplyRadiusRestrictionsX(ref grav, ref proposalA);
-      ApplyRadiusRestrictionsY(ref grav, ref proposalA);
+      if (CheckResolves(currentPosition)) return;
 
-      Vector2 proposalB = newPosition;
-      ApplyRadiusRestrictionsY(ref grav, ref proposalB);
-      ApplyRadiusRestrictionsX(ref grav, ref proposalB);
+      if (SpiralSearchCollision()) return;
 
-      if ((proposalA - newPosition).sqrMagnitude < (proposalB - newPosition).sqrMagnitude)
-      {
-        newPosition = proposalA;
-      }
-      else
-      {
-        newPosition = proposalB;
-      }
-    }
-
-    // TODO: Better resolution, since bad axis can trigger and shift things weirdly
-    public static void ApplyGuardRails(ref GravityComponent grav, ref Vector2 newPosition)
-    {
-      if (grav.transform.GetComponent<KBoxCollider2D>() != null)
-      {
-        ApplyBoxColliderRestrictions(ref grav, ref newPosition);
-      }
-      else
-      {
-        ApplyRadiusRestrictions(ref grav, ref newPosition);
-      }
+      Debug.LogWarning("[Floatation] FAILED to resolve object collision - object is stuck.");
     }
   }
 }
