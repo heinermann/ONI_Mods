@@ -14,7 +14,7 @@ namespace Heinermann.ONIProfiler
     {
       Thread thread = Thread.CurrentThread;
       string threadName = thread.Name ?? $"thread{thread.ManagedThreadId}";
-      return $"{dumpDirectory}/{dumpTimePrefix}_{threadName}_profile.csv";
+      return $"{dumpDirectory}/{dumpTimePrefix}_{threadName}_profile.folded";
     }
 
     public abstract void DoOnLoad();

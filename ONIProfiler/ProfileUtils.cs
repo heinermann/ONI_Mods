@@ -23,8 +23,6 @@ namespace Heinermann.ONIProfiler
         Debug.LogError("Failed to find assembly");
       }
 
-      char[] invalidChars = new[] { '<', '>' };
-
       return assembly.GetTypes()
         .Where(type => type.IsClass && !type.IsInterface )
         .SelectMany(type => AccessTools.GetDeclaredMethods(type))
@@ -45,10 +43,7 @@ namespace Heinermann.ONIProfiler
           !method.Attributes.HasFlag(MethodAttributes.Abstract) &&
           !method.Attributes.HasFlag(MethodAttributes.UnmanagedExport) &&
           !method.Attributes.HasFlag(MethodAttributes.Virtual) &&
-          !isDllImport; /*&&
-          !method.Name.Any(invalidChars.Contains) &&
-          !method.DeclaringType.FullName.Any(invalidChars.Contains) &&
-          !method.Name.StartsWith("get_") && !method.Name.StartsWith("set_");*/
+          !isDllImport;
         })
         .Cast<MethodBase>();
     }
