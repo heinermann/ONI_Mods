@@ -1,9 +1,7 @@
 ﻿using Harmony;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
@@ -28,7 +26,7 @@ namespace Heinermann.ONIProfiler
       char[] invalidChars = new[] { '<', '>' };
 
       return assembly.GetTypes()
-        .Where(type => type.IsClass )
+        .Where(type => type.IsClass && !type.IsInterface )
         .SelectMany(type => AccessTools.GetDeclaredMethods(type))
         .Where(method => {
           bool isDllImport = false;
@@ -38,11 +36,15 @@ namespace Heinermann.ONIProfiler
           }
           return !method.ContainsGenericParameters &&
           !method.IsAbstract &&
+          !method.IsVirtual &&
           !method.GetMethodImplementationFlags().HasFlag(MethodImplAttributes.InternalCall) &&
           !method.GetMethodImplementationFlags().HasFlag(MethodImplAttributes.Native) &&
           !method.GetMethodImplementationFlags().HasFlag(MethodImplAttributes.Unmanaged) &&
+          !method.GetMethodImplementationFlags().HasFlag(MethodImplAttributes.InternalCall) &&
           !method.Attributes.HasFlag(MethodAttributes.PinvokeImpl) &&
           !method.Attributes.HasFlag(MethodAttributes.Abstract) &&
+          !method.Attributes.HasFlag(MethodAttributes.UnmanagedExport) &&
+          !method.Attributes.HasFlag(MethodAttributes.Virtual) &&
           !isDllImport; /*&&
           !method.Name.Any(invalidChars.Contains) &&
           !method.DeclaringType.FullName.Any(invalidChars.Contains) &&

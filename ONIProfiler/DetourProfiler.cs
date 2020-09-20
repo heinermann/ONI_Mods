@@ -8,6 +8,7 @@ using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Text;
+using System.Threading;
 
 namespace Heinermann.ONIProfiler
 {
@@ -19,9 +20,15 @@ namespace Heinermann.ONIProfiler
       public ulong totalTime = 0;
     }
 
-    static Dictionary<string, ProfileStats> profileData = new Dictionary<String, ProfileStats>();
+    struct Totals
+    {
+      public double totalMs;
+      public ulong totalCalls;
+    }
 
-    static Stopwatch dumpTimer = new Stopwatch();
+    static ThreadLocal<Dictionary<string, ProfileStats>> profileData = new ThreadLocal<Dictionary<string, ProfileStats>>(() => new Dictionary<string, ProfileStats>());
+
+    static ThreadLocal<Stopwatch> dumpTimer = new ThreadLocal<Stopwatch>(() => Stopwatch.StartNew());
 
     public override void DoOnLoad()
     {
@@ -46,11 +53,10 @@ namespace Heinermann.ONIProfiler
         DynamicMethod patched = harmony.Patch(method, prefix, postfix);
 
         // We assume this is unique, if not it will throw
-        profileData.Add(method.FullDescription(), new ProfileStats());
+        //profileData.Add(method.FullDescription(), new ProfileStats());
       }
 
-      Debug.Log($"[ONIProfiler] PrePatch took {timer.ElapsedMilliseconds}ms");
-      dumpTimer.Start();
+      Debug.Log($"[ONIProfiler] PrePatch took {timer.ElapsedMilliseconds}ms. Patched {targetMethods.Count} methods.");
     }
 
     static void DetourPrefix(out long __state)
@@ -64,49 +70,63 @@ namespace Heinermann.ONIProfiler
 
       string decoratedName = __originalMethod.FullDescription();
 
-      // Again, assume what we patched is in here. Let it throw if not.
-      ProfileStats stats = profileData[decoratedName];
+      ProfileStats stats;
+      if (!profileData.Value.TryGetValue(decoratedName, out stats)) {
+        profileData.Value[decoratedName] = stats = new ProfileStats();
+      }
 
       stats.calls++;
       stats.totalTime += Convert.ToUInt64(nanoTime);
 
-      if (dumpTimer.ElapsedMilliseconds > 30000)
+      if (dumpTimer.Value.ElapsedMilliseconds > 30000)
       {
-        dumpTimer.Restart();
+        dumpTimer.Value.Restart();
         DumpData();
       }
     }
 
-    static void DumpData()
+    static Totals GetDumpTotals()
     {
-      Stopwatch timer = Stopwatch.StartNew();
-
-      Debug.Log($"[ONIProfiler] Dumping data to {dumpPath}");
-
-      double totalMs = 0.0;
-      ulong totalCalls = 0;
-      foreach (ProfileStats stats in profileData.Values)
+      Totals result = new Totals();
+      result.totalMs = 0.0;
+      result.totalCalls = 0;
+      foreach (ProfileStats stats in profileData.Value.Values)
       {
-        totalMs += stats.totalTime / 1000000.0;
-        totalCalls += stats.calls;
+        result.totalMs += stats.totalTime / 1000000.0;
+        result.totalCalls += stats.calls;
       }
 
+      return result;
+    }
 
-      StringBuilder csv = new StringBuilder(profileData.Count * 256);
+    static string CreateDumpCsv()
+    {
+      Totals totals = GetDumpTotals();
+
+      StringBuilder csv = new StringBuilder(profileData.Value.Count * 256);
       csv.AppendLine("name,totalMs,numCalls,avgMsPerCall,time%,call%");
 
-      foreach (KeyValuePair<string, ProfileStats> item in profileData)
+      foreach (KeyValuePair<string, ProfileStats> item in profileData.Value)
       {
         ProfileStats stats = item.Value;
         if (stats.calls == 0) continue;
 
         double ms = stats.totalTime / 1000000.0;
-        csv.AppendLine($"{item.Key.Replace(',', ';')},{ms},{stats.calls},{ms / stats.calls},{100.0 * ms / totalMs},{100.0 * stats.calls / totalCalls}");
+        csv.AppendLine($"{item.Key.Replace(',', ';')},{ms},{stats.calls},{ms / stats.calls},{100.0 * ms / totals.totalMs},{100.0 * stats.calls / totals.totalCalls}");
       }
+      return csv.ToString();
+    }
 
-      try // This can fail with a Sharing violation if the CSV is opened in another app while profiling is still happening
+    static void DumpData()
+    {
+      Stopwatch timer = Stopwatch.StartNew();
+      
+      string dumpPath = getDumpPath();
+      Debug.Log($"[ONIProfiler] Dumping data to {dumpPath}");
+
+      try   // This can fail with a Sharing violation if the CSV is opened in another app while profiling is still happening
       {
-        File.WriteAllText(dumpPath, csv.ToString());
+        File.WriteAllText(dumpPath, CreateDumpCsv().ToString());
       } catch
       {
         Debug.LogError($"[ONIProfiler] Failed to write dump: {dumpPath}");
