@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Floating", "Floating\Floati
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CritterRename", "CritterRename\CritterRename.csproj", "{D5456564-F691-4FB7-A4F0-F11280B53DCB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ONIProfiler", "ONIProfiler\ONIProfiler.csproj", "{7A1217C9-9509-4696-A2A1-D16CC2C78B72}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{D5456564-F691-4FB7-A4F0-F11280B53DCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D5456564-F691-4FB7-A4F0-F11280B53DCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D5456564-F691-4FB7-A4F0-F11280B53DCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A1217C9-9509-4696-A2A1-D16CC2C78B72}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A1217C9-9509-4696-A2A1-D16CC2C78B72}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A1217C9-9509-4696-A2A1-D16CC2C78B72}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A1217C9-9509-4696-A2A1-D16CC2C78B72}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
