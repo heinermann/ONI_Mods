@@ -1,12 +1,11 @@
 ﻿
 using Harmony;
-using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Reflection.Emit;
 using System.Text;
 using System.Threading;
 
@@ -20,55 +19,26 @@ namespace Heinermann.ONIProfiler
     static ThreadLocal<Stopwatch> traceTimer = new ThreadLocal<Stopwatch>(() => Stopwatch.StartNew());
     static ThreadLocal<Stopwatch> dumpTimer = new ThreadLocal<Stopwatch>(() => Stopwatch.StartNew());
 
-    static readonly long nanosecondsPerTick = (1000L * 1000L * 1000L) / Stopwatch.Frequency;
-
-    static readonly MethodInfo GetStackTraces = typeof(Thread).GetMethod("Mono_GetStackTraces", BindingFlags.NonPublic | BindingFlags.Static);
-
-    static readonly long NANOSECONDS_PER_TRACE = 200000;
+    static readonly long TICKS_PER_MS = Stopwatch.Frequency / 1000;
+    static readonly long TICKS_PER_TRACE = 50 /* ms */ * TICKS_PER_MS;
     static readonly long MILLISECONDS_PER_DUMP = 30000;
 
 
     public override void DoOnLoad()
     {
+      Debug.Log($"[ONIProfiler] TICKS_PER_MS = {TICKS_PER_MS}");
+      Debug.Log($"[ONIProfiler] TICKS_PER_TRACE = {TICKS_PER_TRACE}");
+      Debug.Log($"[ONIProfiler] MILLISECONDS_PER_DUMP = {MILLISECONDS_PER_DUMP}");
     }
 
     public override void DoPrePatch(HarmonyInstance harmony)
     {
       Stopwatch timer = Stopwatch.StartNew();
+      traceTimer.Value.Reset();
 
       HarmonyMethod postfix = new HarmonyMethod(typeof(DetourProfiler), nameof(DetourPostfix));
 
-      // TODO: Move these to ProfileUtils, to the Type filter (duh!)
-      List<MethodBase> targetMethods = ProfileUtils.GetTargetMethods()
-        .Where(method => 
-          !method.DeclaringType.Name.Equals("Expectations") &&
-          !method.DeclaringType.Name.Equals("KleiAccount") &&
-          !method.DeclaringType.Name.Equals("KleiMetrics") &&
-          !method.DeclaringType.Name.Equals("ThreadedHttps`1[T]") &&
-          !method.DeclaringType.FullName.Equals("System.Enum") &&
-          !method.DeclaringType.FullName.Equals("System.Number") &&
-          !method.DeclaringType.FullName.Equals("System.SharedStatics") &&
-          !method.DeclaringType.FullName.StartsWith("LibNoiseDotNet.") &&
-          !method.DeclaringType.FullName.StartsWith("Mono.") &&
-          !method.DeclaringType.FullName.StartsWith("System.Reflection.") &&
-          !method.DeclaringType.FullName.StartsWith("System.IO.IsolatedStorage.") &&
-          !method.DeclaringType.FullName.StartsWith("System.Threading.") &&
-          !method.DeclaringType.FullName.StartsWith("System.Security.") &&
-          !method.DeclaringType.FullName.StartsWith("System.Runtime.") &&
-          !method.DeclaringType.FullName.StartsWith("System.Diagnostics.") &&
-          !method.DeclaringType.FullName.StartsWith("System.Configuration.") &&
-          !method.DeclaringType.FullName.StartsWith("System.IO.Ports.") &&
-          !method.DeclaringType.FullName.StartsWith("System.IO.Compression.") &&
-          !method.DeclaringType.FullName.StartsWith("System.Net.") &&
-          !method.DeclaringType.FullName.StartsWith("System.CodeDom.") &&
-          !method.DeclaringType.FullName.StartsWith("Microsoft.") &&
-          !method.DeclaringType.FullName.Equals("System.IO.WindowsWatcher") &&
-          !method.DeclaringType.FullName.Equals("System.Buffers.Binary.BinaryPrimitives") &&
-          !method.DeclaringType.FullName.Equals("System.Environment") &&
-          !method.Name.Equals("ReadUInt64")
-        )
-        .ToList();
-
+      List<MethodBase> targetMethods = ProfileUtils.GetTargetMethods().ToList();
       PatchProcessor processor = new PatchProcessor(harmony, targetMethods, null, postfix);
       processor.Patch();
 
@@ -86,16 +56,17 @@ namespace Heinermann.ONIProfiler
       }*/
 
       Debug.Log($"[ONIProfiler] PrePatch took {timer.ElapsedMilliseconds}ms. Patched {targetMethods.Count} methods.");
+      traceTimer.Value.Start();
     }
 
     static void DetourPostfix()
     {
-      if (traceTimer.Value.ElapsedTicks / nanosecondsPerTick > NANOSECONDS_PER_TRACE)
+      if (traceTimer.Value.ElapsedTicks > TICKS_PER_TRACE)
       {
         traceTimer.Value.Restart();
 
         string traceStr = GetFlatStackTrace();
-
+        
         profileData.Value.TryGetValue(traceStr, out ulong count);
         profileData.Value[traceStr] = count + 1;
 
@@ -107,32 +78,34 @@ namespace Heinermann.ONIProfiler
       }
     }
 
-    static StackTrace GetStackTrace()
-    {
-      Dictionary<Thread, StackTrace> result = GetStackTraces.Invoke(null, new object[] { }) as Dictionary<Thread, StackTrace>;
-      return result[Thread.CurrentThread];
-    }
-
     static string GetFlatStackTrace()
     {
-      List<string> result = new List<string>();
-      foreach (StackFrame frame in GetStackTrace().GetFrames().Skip(11))
+      ArrayList result = new ArrayList();
+      for (int frameNo = 2; ; frameNo++)
       {
-        string methodDescription = frame.GetMethod()?.FullDescription()?.Replace("_Patch1", "");
-        if (methodDescription == null)
-        {
-          methodDescription = $"<{frame.GetILOffset():X}:{frame.GetNativeOffset():X}> <Unknown method>";
-        }
+        StackFrame frame = new StackFrame(frameNo, false);
+        MethodBase method = frame.GetMethod();
 
-        result.Insert(0, methodDescription);
+        if (method == null) break;
+
+        string methodDescription = method.FullDescription();
+        result.Add(methodDescription);
       }
       
-      return string.Join(";", result);
+      return string.Join(";", result.Cast<string>().Reverse());
     }
 
     static string CreateFlatFile()
     {
-      return profileData.Value.Join(pair => $"{pair.Key} {pair.Value}", "\n");
+      StringBuilder result = new StringBuilder();
+      foreach (var pair in profileData.Value)
+      {
+        result.Append(pair.Key);
+        result.Append(' ');
+        result.Append(pair.Value);
+        result.Append('\n');
+      }
+      return result.ToString();
     }
 
     static void DumpData()

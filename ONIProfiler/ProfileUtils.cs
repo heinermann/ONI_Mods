@@ -17,6 +17,39 @@ namespace Heinermann.ONIProfiler
              SingleOrDefault(assembly => assembly.GetName().Name == name);
     }
 
+    static readonly string[] BANNED_TYPES = {
+      "Expectations",
+      "KleiAccount",
+      "KleiMetrics",
+      "ThreadedHttps`1[T]",
+      "System.Enum",
+      "System.Number",
+      "System.SharedStatics",
+      "System.IO.WindowsWatcher",
+      "System.Buffers.Binary.BinaryPrimitives",
+      "System.Environment",
+      "LibNoiseDotNet.",
+      "Mono.",
+      "System.Reflection.",
+      "System.IO.IsolatedStorage.",
+      "System.Threading.",
+      "System.Security.",
+      "System.Runtime.",
+      "System.Diagnostics.",
+      "System.Configuration.",
+      "System.IO.Ports.",
+      "System.IO.Compression.",
+      "System.Net.",
+      "System.CodeDom.",
+      "Microsoft."
+    };
+
+    static readonly string[] PROFILED_ASSEMBLIES = {
+      "Assembly-CSharp",
+      "UnityEngine",
+      "UnityEngine.CoreModule"
+    };
+
     public static IEnumerable<MethodBase> GetTargetMethodsForAssembly(string assemblyName)
     {
       Assembly assembly = GetAssemblyByName(assemblyName);
@@ -25,15 +58,19 @@ namespace Heinermann.ONIProfiler
         Debug.LogError("Failed to find assembly");
       }
 
-      return assembly.GetTypes()
-        .Where(type => type.IsClass &&
+      var assemblyTypes = assembly.GetTypes()
+        .Where(type =>
+          type.IsClass &&
           !type.Attributes.HasFlag(TypeAttributes.HasSecurity) &&
           !type.Attributes.HasFlag(TypeAttributes.Import) &&
           !type.Attributes.HasFlag(TypeAttributes.Interface) &&
           !type.IsImport &&
           !type.IsInterface &&
-          !type.IsSecurityCritical
-        )
+          !type.IsSecurityCritical &&
+          !BANNED_TYPES.Any(type.FullName.StartsWith)
+        );
+
+      var assemblyMethods = assemblyTypes
         .SelectMany(type => AccessTools.GetDeclaredMethods(type))
         .Where(method => {
           foreach (object attr in method.GetCustomAttributes(false))
@@ -49,7 +86,7 @@ namespace Heinermann.ONIProfiler
             }
           }
 
-          if (method.GetMethodBody() == null) return false;
+          if (method.GetMethodBody() == null || method.Name.Equals("ReadUInt64")) return false;
 
           return !method.ContainsGenericParameters &&
           !method.IsAbstract &&
@@ -60,18 +97,14 @@ namespace Heinermann.ONIProfiler
           !method.Attributes.HasFlag(MethodAttributes.PinvokeImpl) &&
           !method.Attributes.HasFlag(MethodAttributes.Abstract) &&
           !method.Attributes.HasFlag(MethodAttributes.UnmanagedExport);
-        })
-        .Cast<MethodBase>();
+        });
+        
+      return assemblyMethods.Cast<MethodBase>();
     }
 
     public static IEnumerable<MethodBase> GetTargetMethods()
     {
-      return GetTargetMethodsForAssembly("Assembly-CSharp")
-        //.Concat(GetTargetMethodsForAssembly("Assembly-CSharp-firstpass"))
-        //.Concat(GetTargetMethodsForAssembly("System"))
-        .Concat(GetTargetMethodsForAssembly("UnityEngine"))
-        .Concat(GetTargetMethodsForAssembly("UnityEngine.CoreModule"));
-        //.Concat(GetTargetMethodsForAssembly("mscorlib"));
+      return PROFILED_ASSEMBLIES.SelectMany(GetTargetMethodsForAssembly);
     }
     public static long ticksToNanoTime(long ticks)
     {
