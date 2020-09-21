@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Security;
 
 namespace Heinermann.ONIProfiler
 {
@@ -15,37 +17,61 @@ namespace Heinermann.ONIProfiler
              SingleOrDefault(assembly => assembly.GetName().Name == name);
     }
 
-    public static IEnumerable<MethodBase> GetTargetMethods()
+    public static IEnumerable<MethodBase> GetTargetMethodsForAssembly(string assemblyName)
     {
-      Assembly assembly = GetAssemblyByName("Assembly-CSharp");
+      Assembly assembly = GetAssemblyByName(assemblyName);
       if (assembly == null)
       {
         Debug.LogError("Failed to find assembly");
       }
 
       return assembly.GetTypes()
-        .Where(type => type.IsClass && !type.IsInterface )
+        .Where(type => type.IsClass &&
+          !type.Attributes.HasFlag(TypeAttributes.HasSecurity) &&
+          !type.Attributes.HasFlag(TypeAttributes.Import) &&
+          !type.Attributes.HasFlag(TypeAttributes.Interface) &&
+          !type.IsImport &&
+          !type.IsInterface &&
+          !type.IsSecurityCritical
+        )
         .SelectMany(type => AccessTools.GetDeclaredMethods(type))
         .Where(method => {
-          bool isDllImport = false;
           foreach (object attr in method.GetCustomAttributes(false))
           {
-            if (attr is DllImportAttribute) isDllImport = true;
+            if ((attr is DllImportAttribute) ||
+              (attr is MethodImplAttribute) ||
+              (attr is CLSCompliantAttribute) ||
+              (attr is SecurityCriticalAttribute) ||
+              (attr is ObsoleteAttribute)
+            )
+            {
+              return false;
+            }
           }
+
+          if (method.GetMethodBody() == null) return false;
+
           return !method.ContainsGenericParameters &&
           !method.IsAbstract &&
           !method.IsVirtual &&
-          !method.GetMethodImplementationFlags().HasFlag(MethodImplAttributes.InternalCall) &&
           !method.GetMethodImplementationFlags().HasFlag(MethodImplAttributes.Native) &&
           !method.GetMethodImplementationFlags().HasFlag(MethodImplAttributes.Unmanaged) &&
           !method.GetMethodImplementationFlags().HasFlag(MethodImplAttributes.InternalCall) &&
           !method.Attributes.HasFlag(MethodAttributes.PinvokeImpl) &&
           !method.Attributes.HasFlag(MethodAttributes.Abstract) &&
-          !method.Attributes.HasFlag(MethodAttributes.UnmanagedExport) &&
-          !method.Attributes.HasFlag(MethodAttributes.Virtual) &&
-          !isDllImport;
+          !method.Attributes.HasFlag(MethodAttributes.UnmanagedExport);
         })
         .Cast<MethodBase>();
+    }
+
+    public static IEnumerable<MethodBase> GetTargetMethods()
+    {
+      return GetTargetMethodsForAssembly("Assembly-CSharp")
+        //.Concat(GetTargetMethodsForAssembly("Assembly-CSharp-firstpass"))
+        //.Concat(GetTargetMethodsForAssembly("System"))
+        .Concat(GetTargetMethodsForAssembly("UnityEngine"))
+        .Concat(GetTargetMethodsForAssembly("UnityEngine.CoreModule"));
+        //.Concat(GetTargetMethodsForAssembly("mscorlib"));
     }
     public static long ticksToNanoTime(long ticks)
     {
