@@ -1,0 +1,49 @@
+name: feature_dump_battery
+info:
+  size:
+    X: 1
+    Y: 2
+  area: 10
+cells:
+- element: Dirt
+  location_x: 0
+  location_y: -2
+  mass: 535
+- element: Dirt
+  location_x: 1
+  location_y: -2
+  mass: 516
+- element: Dirt
+  location_x: -1
+  location_y: -2
+  mass: 561
+- element: Vacuum
+  location_x: 0
+  location_y: -1
+- element: Vacuum
+  location_x: 1
+  location_y: -1
+- element: Vacuum
+  location_x: 0
+  location_y: 0
+- element: Vacuum
+  location_x: 1
+  location_y: 0
+- element: Vacuum
+  location_x: -1
+  location_y: -1
+- element: Vacuum
+  location_x: -1
+  location_y: 0
+buildings:
+- id: Battery
+  location_y: -1
+  element: Cuprite
+  temperature: 300
+  storage: []
+  rottable: {}
+  other_values: []
+  amounts: []
+pickupables: []
+elementalOres: []
+otherEntities: []

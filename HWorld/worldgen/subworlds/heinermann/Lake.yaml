@@ -1,0 +1,16 @@
+biomeNoise: noise/heinermann/Lake
+temperatureRange: Mild
+minChildCount: 2
+density:
+  min: 5
+  max: 10
+avoidRadius: 40.0
+sampleBehaviour: PoissonDisk
+biomes:
+  - name: biomes/heinermann/Lake/Lake
+    weight: 1
+    tags:
+      - PacuFew
+tags:
+- IgnoreCaveOverride
+zoneType: Sandstone

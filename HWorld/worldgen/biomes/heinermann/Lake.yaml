@@ -1,0 +1,14 @@
+TerrainBiomeLookupTable:
+  # keys to remove from in-memory structure when this file is loaded
+  remove: [] 
+  # elements to add from in-memory structure when this file is loaded
+  add:
+    Lake:
+    - content: Water
+      bandSize: 2.0
+      overrides:
+        massOverride: 1000
+    - content: Algae
+      bandSize: 1.0
+    - content: Katairite
+      bandSize: 2.0

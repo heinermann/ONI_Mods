@@ -1,0 +1,46 @@
+biomeNoise: noise/heinermann/DumpWorld
+temperatureRange: HumanWarm
+minChildCount: 2
+density:
+  min: 3
+  max: 5
+avoidRadius: 2.0
+sampleBehaviour: UniformSquare
+biomes:
+  - name: biomes/heinermann/Dump/Dry
+    weight: 5
+    tags:
+      - Glom
+      - BasicForagePlant
+      - BasicForagePlantPlanted
+      - PrickleGrassSeed
+      - BasicFabricPlantCleared
+      - RotPileSolid
+      - Plastic
+      - PickledMeal
+  - name: biomes/heinermann/Dump/Wet
+    weight: 1
+    tags:
+      - PacuMany
+      - BasicForagePlant
+      - PrickleGrassSeed
+      - BasicFabricPlantCleared
+      - BasicFabricPlantClearedWater
+      - RotPileSolid
+      - Algae
+tags:
+- IgnoreCaveOverride
+featureTemplates:
+  feature_dump_outhouse: 5
+  feature_dump_battery: 6
+  feature_dump_compost: 8
+  feature_dump_compactor: 5
+  feature_dump_plastic_bundle: 20
+  feature_dump_water_bottle: 20
+  feature_dump_petrol_can: 20
+  feature_dump_poisoned_fruit_cake: 20
+  feature_dump_poisoned_field_ration: 30
+pointsOfInterest:
+  geyser:
+    - poi_dump_filthy_water_geyser
+zoneType: Sandstone

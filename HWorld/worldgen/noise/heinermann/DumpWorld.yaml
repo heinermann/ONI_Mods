@@ -1,0 +1,65 @@
+settings:
+  zoom: 2
+  normalise: true
+  lowerBound:
+    X: 4
+    Y: 4
+  upperBound:
+    X: 7
+    Y: 7
+  name: DumpWorld
+links:
+- target:
+    type: Filter
+    name: DumpAreaFilter
+  source0:
+    type: Primitive
+    name: DefaultSimplexPerlinPrimative
+- target:
+    type: Terminator
+    name: TERMINATOR
+  source0:
+    type: Modifier
+    name: LayerSqueue
+- target:
+    type: Modifier
+    name: LayerSqueue
+  source0:
+    type: Filter
+    name: DumpAreaFilter
+primitives:
+  DefaultSimplexPerlinPrimative:
+    primative: SimplexPerlin
+    quality: Best
+    seed: 5
+    offset: 1
+    name: DefaultSimplexPerlinPrimative
+    pos:
+      X: -1000
+      Y: -60
+filters:
+  DumpAreaFilter:
+    filter: RidgedMultiFractal
+    frequency: 0.08
+    lacunarity: 0.1
+    octaves: 16
+    offset: -0.2
+    exponent: 1.2
+    name: DumpAreaFilter
+    pos:
+      X: -699
+      Y: -60
+modifiers:
+  LayerSqueue:
+    modifyType: Scale2d
+    lower: -1
+    upper: 1
+    exponent: 0.02
+    scale: 1
+    scale2d:
+      X: 0.1
+      Y: 0.8
+    name: LayerSqueue
+    pos:
+      X: -348
+      Y: -54

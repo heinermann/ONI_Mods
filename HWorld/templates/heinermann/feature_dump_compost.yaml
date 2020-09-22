@@ -1,0 +1,65 @@
+name: feature_dump_compost
+info:
+  size:
+    X: 3
+    Y: 3
+  area: 15
+cells:
+- element: Dirt
+  location_x: 0
+  location_y: -2
+  mass: 567
+- element: Dirt
+  location_x: 1
+  location_y: -2
+  mass: 497
+- element: Dirt
+  location_x: 2
+  location_y: -2
+  mass: 569
+- element: Dirt
+  location_x: -1
+  location_y: -2
+  mass: 594
+- element: Vacuum
+  location_x: 0
+  location_y: -1
+- element: Vacuum
+  location_x: 1
+  location_y: -1
+- element: Vacuum
+  location_x: 2
+  location_y: -1
+- element: Vacuum
+  location_x: 0
+  location_y: 0
+- element: Vacuum
+  location_x: 1
+  location_y: 0
+- element: Vacuum
+  location_x: 2
+  location_y: 0
+- element: Vacuum
+  location_x: -1
+  location_y: -1
+- element: Vacuum
+  location_x: -1
+  location_y: 0
+buildings:
+- id: Compost
+  location_y: -1
+  element: Dirt
+  temperature: 300
+  storage:
+  - id: ToxicSand
+    element: ToxicSand
+    units: 10
+    isOre: true
+    temperature: 300
+    rottable: {}
+  rottable: {}
+  other_values: []
+  amounts: []
+pickupables: []
+elementalOres: []
+otherEntities: []

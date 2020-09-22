@@ -1,0 +1,79 @@
+name: feature_dump_outhouse
+info:
+  size:
+    X: 2
+    Y: 4
+  area: 20
+cells:
+- element: Dirt
+  location_x: 0
+  location_y: -2
+  mass: 501
+- element: Dirt
+  location_x: 1
+  location_y: -2
+  mass: 556
+- element: Dirt
+  location_x: -1
+  location_y: -2
+  mass: 539
+- element: Dirt
+  location_x: 2
+  location_y: -2
+  mass: 577
+- element: Vacuum
+  location_x: 0
+  location_y: -1
+- element: Vacuum
+  location_x: 1
+  location_y: -1
+- element: Vacuum
+  location_x: 0
+  location_y: 0
+- element: Vacuum
+  location_x: 1
+  location_y: 0
+- element: Vacuum
+  location_x: 0
+  location_y: 1
+- element: Vacuum
+  location_x: 1
+  location_y: 1
+- element: Vacuum
+  location_x: -1
+  location_y: -1
+- element: Vacuum
+  location_x: 2
+  location_y: -1
+- element: Vacuum
+  location_x: -1
+  location_y: 0
+- element: Vacuum
+  location_x: 2
+  location_y: 0
+- element: Vacuum
+  location_x: -1
+  location_y: 1
+- element: Vacuum
+  location_x: 2
+  location_y: 1
+buildings:
+- id: Outhouse
+  location_y: -1
+  element: SandStone
+  temperature: 300
+  storage:
+  - id: ToxicSand
+    element: ToxicSand
+    units: 100
+    isOre: true
+    temperature: 300
+    diseaseName: FoodPoisoning
+    diseaseCount: 100000
+    rottable: {}
+  rottable: {}
+  other_values: []
+  amounts: []
+pickupables: []
+elementalOres: []
+otherEntities: []

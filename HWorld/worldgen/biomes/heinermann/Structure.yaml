@@ -1,0 +1,15 @@
+TerrainBiomeLookupTable:
+  # keys to remove from in-memory structure when this file is loaded
+  remove: [] 
+  # elements to add from in-memory structure when this file is loaded
+  add:
+    Basic:
+    - content: Vacuum
+      bandSize: 1
+    - content: Vacuum
+      bandSize: 1
+    - content: Vacuum
+      bandSize: 1
+    - content: Vacuum
+      bandSize: 1
+

@@ -1,0 +1,35 @@
+name: feature_dump_water_bottle
+info:
+  size:
+    X: 3
+    Y: 3
+  area: 9
+cells:
+- element: Vacuum
+  location_x: 1
+  location_y: -1
+- element: Vacuum
+  location_y: -1
+- element: Vacuum
+  location_x: -1
+  location_y: -1
+- element: Vacuum
+  location_x: -1
+- element: Vacuum
+- element: Vacuum
+  location_x: 1
+- element: Vacuum
+  location_y: 2
+buildings: []
+pickupables: []
+elementalOres:
+- id: DirtyWater
+  element: DirtyWater
+  temperature: 300
+  units: 1000
+  diseaseName: FoodPoisoning
+  diseaseCount: 2000000
+  storage: []
+  type: Ore
+  rottable: {}
+otherEntities: []

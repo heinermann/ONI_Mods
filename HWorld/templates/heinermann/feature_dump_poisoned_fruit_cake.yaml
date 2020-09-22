@@ -1,0 +1,20 @@
+name: feature_dump_poisoned_fruit_cake
+info:
+  size:
+    X: 1
+    Y: 1
+  area: 1
+cells: []
+buildings: []
+pickupables:
+- id: FruitCake
+  element: Creature
+  temperature: 300
+  units: 1
+  storage: []
+  type: Pickupable
+  rottable: {}
+  diseaseName: FoodPoisoning
+  diseaseCount: 4000
+elementalOres: []
+otherEntities: []
