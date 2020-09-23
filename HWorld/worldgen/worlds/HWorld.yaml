@@ -1,5 +1,5 @@
-name: H World
-description: Smells weird.
+name: STRINGS.WORLDS.HEINERMANN.NAME
+description: STRINGS.WORLDS.HEINERMANN.DESCRIPTION
 spriteName: Asteroid_sandstone
 coordinatePrefix: HEIN
 difficulty: 3
