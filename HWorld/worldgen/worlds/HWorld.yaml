@@ -21,6 +21,7 @@ subworldFiles:
   - name: subworlds/space/Space
   - name: subworlds/space/Surface
   - name: subworlds/heinermann/Dump
+  - name: subworlds/heinermann/Mesa
   - name: subworlds/heinermann/Lake
     weight: 0.1
 
@@ -47,6 +48,7 @@ unknownCellsAllowedSubworlds:
     command: Replace
     subworldNames:
       - subworlds/heinermann/Dump
+      - subworlds/heinermann/Mesa
       - subworlds/heinermann/Lake
   - tagcommand: AtTag
     tag: AtDepths

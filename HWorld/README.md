@@ -18,11 +18,8 @@ This biome resembles a dump, with trash and various spoiled goods littering the 
 **Germs:** Food Poisoning
 **Features:** Poisoned food, Storage Bins, Batteries, Outhouses, Composts, Petroleum Cans, Bottled Polluted Water
 
-#### Clear Lake
-A basic clear lake. Water, Algae, Pacu.
-
-May get rid of this.
-
+TODO: Add Archaic Tech (1), Rubik's Cube (0), Sink (0), Wrist Watch (2), Strange Brick (2), Encrusted Teapot (2), Mangled Saxophone (1), Blender (1), Office Mug (0)
+Maybe some clothes hidden in the junk too?
 
 #### Dark Cave
 Darkness themed cave. Featuring hatch-sized tunnels. Watch out for Zombie Spores.
@@ -32,7 +29,7 @@ Darkness themed cave. Featuring hatch-sized tunnels. Watch out for Zombie Spores
 **Primary Gasses:** Carbon Dioxide
 **Primary Solids:** Obsidian, Crushed Rock, Igneous Rock
 **Primary Liquid:** Crude Oil
-**Other Materials:** Coal
+**Other Materials:** Coal, Iron Ore
 **Flora:** Dusk Cap, Sprechid
 **Fauna:** Abyss Bug, Hatch, Sage Hatch
 **Germs:** Zombie Spores
@@ -44,15 +41,19 @@ TODO
 
 **Other Materials:** Aluminum
 
-Data Bank, Vacillator Recharge.
-
+Pickups: Data Bank, Vacillator Recharge, Atmo Suit, Jet Suit
+Artifacts: Robot Arm (2), Old X-Ray (1), Shield Generator (2)
 
 #### Bristle Forest
 TODO
 
 Gas must be O2, PO2, or CO2.
 
-**Danger:** Little to None
+Algae, Clay, Fertilizer
+Water
+Lime
+
+**Danger:** None
 **Temperature:** 20 to 30C
 **Flora:** Bristle Blossom, Buddy Bud
 **Fauna:** Coral Bug, Shine Bug
@@ -60,16 +61,11 @@ Gas must be O2, PO2, or CO2.
 
 Maybe hidden eggs or something?
 
-#### Artist Retreat
-TODO
-
-Mini-biome with artist theme? May or may not do this, doesn't really fit.
-
 #### Salty Tundra
 TODO
 
 **Danger:** Little (Non-breathable, falling hazard, cold)
-**Temperature:** -15 to -0.6C
+**Temperature:** -15 to -0.6C (Cool)
 **Flora:** Wheezewort, Dasha Saltvine
 **Fauna:** Gulp Fish, Squeaky Puft
 **Primary Solids:** Crushed Ice, Salt, Snow
@@ -84,7 +80,18 @@ TODO
 
 Fossil, bunch of layered terrain with holes punched out. Maybe Tasteful memorial (grave). Shells.
 
+Artifacts: Sandstone (0)
+
+Jumping Joya, Sand, CO2, Oil, Slicksters,  Oil Reservoir
+
+50C to 100C
+
+**Danger:** Moderate (Non-breathable, falling hazard, hot)
+**Temperature:** 50 to 100C (Hot)
+
+
 
 #### Other ideas
 
-Something that uses Ethanol or Petroleum as the liquid bodies
+Something that uses Ethanol or Petroleum as the liquid bodies. Need a hot, very hot, and very cold biome (maybe structure can be freezing since it will have really good items).
+

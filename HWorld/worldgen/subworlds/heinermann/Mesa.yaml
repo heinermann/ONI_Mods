@@ -1,0 +1,24 @@
+biomeNoise: noise/heinermann/Mesa
+temperatureRange: Hot
+minChildCount: 2
+density:
+  min: 3
+  max: 5
+avoidRadius: 2.0
+sampleBehaviour: UniformSquare
+biomes:
+  - name: biomes/heinermann/Mesa/Dry
+    weight: 3
+    tags:
+      - CactusPlant
+      - CactusPlantSeed
+      - SandstoneArtifact
+  - name: biomes/heinermann/Mesa/Wet
+    weight: 1
+    tags:
+      - OilFloater
+tags:
+- IgnoreCaveOverride
+features:
+  - type: features/oilpockets/OilWell
+zoneType: Rust

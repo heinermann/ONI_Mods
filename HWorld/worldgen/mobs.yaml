@@ -74,3 +74,12 @@ MobLookupTable:
         max: 0.04
       width: 1
       height: 1
+    SandstoneArtifact:
+      location: Solid
+      prefabName: Sandstone
+      selectMethod: Centroid
+      density:
+        min: 0.01
+        max: 0.04
+      width: 1
+      height: 1
