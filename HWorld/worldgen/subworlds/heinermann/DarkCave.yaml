@@ -1,0 +1,17 @@
+biomeNoise: noise/heinermann/DarkCave
+temperatureRange: Mild
+minChildCount: 2
+density:
+  min: 3
+  max: 5
+avoidRadius: 2.0
+sampleBehaviour: UniformSquare
+biomes:
+  - name: biomes/heinermann/DarkCave/Cave
+    weight: 1
+    tags: []
+tags:
+- IgnoreCaveOverride
+featureTemplates: {}
+pointsOfInterest: {}
+zoneType: CrystalCaverns

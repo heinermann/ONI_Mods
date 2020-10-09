@@ -1,0 +1,46 @@
+TerrainBiomeLookupTable:
+  # keys to remove from in-memory structure when this file is loaded
+  remove: [] 
+  # elements to add from in-memory structure when this file is loaded
+  add:
+    # ZombieSpores
+    Cave:
+      #.27
+    - content: Obsidian
+      bandSize: 0.1
+    - content: CrushedRock
+      bandSize: 0.075
+    - content: IronOre
+      bandSize: 0.1
+    - content: CrushedRock
+      bandSize: 0.075
+
+      #.22
+    - content: Carbon
+      bandSize: 0.1
+    - content: CrushedRock
+      bandSize: 0.075
+
+      #.16
+    - content: CrudeOil
+      bandSize: 0.15
+      overrides:
+        massOverride: 870
+    - content: CrushedRock
+      bandSize: 0.075
+    - content: IgneousRock
+      bandSize: 0.1
+
+    - content: CarbonDioxide
+      bandSize: 0.1
+    #- content: ContaminatedOxygen
+    #  bandSize: 0.2
+    #  overrides:
+    #    massMultiplier: 0.4
+    #    diseaseOverride: ZombieSpores
+    #    diseaseAmountOverride: 100
+   # - content: ToxicSand
+   #   bandSize: 0.3
+   #   overrides:
+   #     diseaseOverride: FoodPoisoning
+   #     diseaseAmountOverride: 1000000

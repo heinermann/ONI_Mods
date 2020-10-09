@@ -1,0 +1,108 @@
+settings:
+  zoom: 0.01
+  normalise: true
+  lowerBound:
+    X: 4
+    Y: 4
+  upperBound:
+    X: 7
+    Y: 7
+  name: DarkCave
+links:
+- source0:
+    type: Primitive
+    name: CaveGradient
+  target:
+    type: Modifier
+    name: CaveStripes
+
+- source0:
+    type: Primitive
+    name: CaveNoiseInput
+  source1:
+    type: Primitive
+    name: CaveWildnessMultiplier
+  target:
+    type: Combiner
+    name: Multiplier
+
+- source0:
+    type: Modifier
+    name: CaveStripes
+  source1:
+    type: Combiner
+    name: Multiplier
+  source2:
+    type: Primitive
+    name: Const0
+  source3:
+    type: Combiner
+    name: Multiplier
+  target:
+    type: Transformer
+    name: Turbulence
+
+- source0:
+    type: Transformer
+    name: Turbulence
+  target:
+    type: Terminator
+    name: TERMINATOR
+
+primitives:
+  CaveGradient:
+    primative: BevinsGradient
+    quality: Fast
+    seed: 0
+    name: CaveGradient
+    pos:
+      X: 0
+      Y: 0
+  CaveNoiseInput:
+    primative: SimplexPerlin
+    quality: Fast
+    seed: 0
+    name: CaveNoiseInput
+    pos:
+      X: 0
+      Y: 0
+  Const0:
+    primative: Constant
+    quality: Fast
+    offset: 0
+    name: Const0
+    pos:
+      X: 0
+      Y: 0
+  CaveWildnessMultiplier:
+    primative: Constant
+    quality: Fast
+    offset: 0.1
+    name: CaveWildnessMultiplier
+    pos:
+      X: 0
+      Y: 0
+modifiers:
+  CaveStripes:
+    modifyType: Scale2d
+    scale2d:
+      X: 0
+      Y: 16
+    name: CaveStripes
+    pos:
+      X: 0
+      Y: 0
+transformers:
+  Turbulence:
+    transformerType: Displace
+    name: Turbulence
+    pos:
+      X: 0
+      Y: 0
+combiners:
+  Multiplier:
+    combineType: Multiply
+    name: Multiplier
+    pos:
+      X: 0
+      Y: 0

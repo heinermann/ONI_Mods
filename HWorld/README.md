@@ -25,7 +25,7 @@ Maybe some clothes hidden in the junk too?
 Darkness themed cave. Featuring hatch-sized tunnels. Watch out for Zombie Spores.
 
 **Danger:** Moderate (Non-breathable, Zombie Spores, falling hazard)
-**Temperature:** 10 to 20C
+**Temperature:** 10 to 20C (Mild)
 **Primary Gasses:** Carbon Dioxide
 **Primary Solids:** Obsidian, Crushed Rock, Igneous Rock
 **Primary Liquid:** Crude Oil
