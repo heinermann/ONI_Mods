@@ -14,11 +14,11 @@ This biome resembles a dump, with trash and various spoiled goods littering the 
 **Primary Liquid:** Polluted Water
 **Other Materials:** Rust, Lead, Plastic
 **Flora:** Muckroot, Thimble Reed
-**Fauna:** Morb, Pacu
+**Fauna:** Morb
 **Germs:** Food Poisoning
-**Features:** Poisoned food, Storage Bins, Batteries, Outhouses, Composts, Petroleum Cans, Bottled Polluted Water
+**Features:** Poisoned food, Storage Bins, Batteries, Outhouses, Composts, Petroleum Cans, Bottled Polluted Water, Plastic
 
-TODO: Add Archaic Tech (1), Rubik's Cube (0), Sink (0), Wrist Watch (2), Strange Brick (2), Encrusted Teapot (2), Mangled Saxophone (1), Blender (1), Office Mug (0)
+TODO: Add Rubik's Cube (0), Sink (0), Office Mug (0)
 Maybe some clothes hidden in the junk too?
 
 #### Dark Cave

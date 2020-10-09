@@ -8,17 +8,28 @@ avoidRadius: 2.0
 sampleBehaviour: UniformSquare
 biomes:
   - name: biomes/heinermann/Mesa/Dry
-    weight: 3
+    weight: 4
     tags:
       - CactusPlant
-      - CactusPlantSeed
+      - CactusPlantSeedCommon
       - SandstoneArtifact
+      - SandstoneArtifactHidden
+      - BuriedShell1
+      - BuriedShell2
+      - BuriedShell3
   - name: biomes/heinermann/Mesa/Wet
     weight: 1
     tags:
-      - OilFloater
+      - OilFloaterLiquid
+      - CactusPlantSeedCommon
+      - SandstoneArtifactHidden
+      - BuriedShell1
+      - BuriedShell2
+      - BuriedShell3
 tags:
 - IgnoreCaveOverride
+featureTemplates:
+  feature_mesa_grave_empty: 10
 features:
   - type: features/oilpockets/OilWell
-zoneType: Rust
+zoneType: Sandstone

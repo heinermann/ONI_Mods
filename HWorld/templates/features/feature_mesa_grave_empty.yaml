@@ -1,0 +1,49 @@
+name: feature_mesa_grave_empty
+info:
+  size:
+    X: 1
+    Y: 2
+  area: 10
+cells:
+- element: SandStone
+  location_x: 0
+  location_y: -2
+  mass: 619
+- element: SandStone
+  location_x: 1
+  location_y: -2
+  mass: 554
+- element: SandStone
+  location_x: -1
+  location_y: -2
+  mass: 593
+- element: Vacuum
+  location_x: 0
+  location_y: -1
+- element: Vacuum
+  location_x: 1
+  location_y: -1
+- element: Vacuum
+  location_x: 0
+  location_y: 0
+- element: Vacuum
+  location_x: 1
+  location_y: 0
+- element: Vacuum
+  location_x: -1
+  location_y: -1
+- element: Vacuum
+  location_x: -1
+  location_y: 0
+buildings:
+- id: Grave
+  location_y: -1
+  element: SandStone
+  temperature: 345
+  storage: []
+  rottable: {}
+  other_values: []
+  amounts: []
+pickupables: []
+elementalOres: []
+otherEntities: []

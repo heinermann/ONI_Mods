@@ -5,81 +5,144 @@ MobLookupTable:
   add:
     BasicFabricPlantCleared:
       prefabName: BasicFabricPlant
-      location: Floor
+      location: AnyFloor
       selectMethod: Centroid
       density:
-        min: 0.05
+        min: 0.06
         max: 0.1
       width: 1
       height: 3
     BasicFabricPlantClearedWater:
       prefabName: BasicFabricPlant
-      location: Water
+      location: AnyFloor
+      selectMethod: Centroid
+      density:
+        min: 0.25
+        max: 0.3
+      width: 1
+      height: 3
+    RotPileSolid:
+      location: Air
+      prefabName: RotPile
+      selectMethod: Centroid
+      density:
+        min: 0.02
+        max: 0.04
+      width: 1
+      height: 1
+    Plastic:
+      location: Air
+      prefabName: Polypropylene
+      selectMethod: Centroid
+      density:
+        min: 0.025
+        max: 0.04
+      width: 1
+      height: 1
+    PickledMeal:
+      location: AnyFloor
       selectMethod: Centroid
       density:
         min: 0.05
         max: 0.1
       width: 1
-      height: 3
-    RotPileSolid:
+      height: 1
+    CactusPlantSeedCommon:
+      prefabName: CactusPlantSeed
       location: Solid
-      prefabName: RotPile
+      selectMethod: Centroid
+      density:
+        min: 0.015
+        max: 0.02
+      width: 1
+      height: 1
+    SandstoneArtifact:
+      location: AnyFloor
+      prefabName: artifact_sandstone
+      selectMethod: Centroid
+      density:
+        min: 0.08
+        max: 0.15
+      width: 1
+      height: 1
+    SandstoneArtifactHidden:
+      location: Solid
+      prefabName: artifact_sandstone
+      selectMethod: Centroid
+      density:
+        min: 0.005
+        max: 0.015
+      width: 1
+      height: 1
+    RubiksCubeHidden:
+      location: Solid
+      prefabName: artifact_rubikscube
       selectMethod: Centroid
       density:
         min: 0.01
         max: 0.04
       width: 1
       height: 1
-    Plastic:
-      location: Floor
-      prefabName: Polypropylene
+    SinkArtifact:
+      location: AnyFloor
+      prefabName: artifact_sink
+      selectMethod: Centroid
+      density:
+        min: 0.04
+        max: 0.08
+      width: 1
+      height: 1
+    SinkArtifactHidden:
+      location: Solid
+      prefabName: artifact_sink
+      selectMethod: Centroid
+      density:
+        min: 0.01
+        max: 0.03
+      width: 1
+      height: 1
+    OfficeMugHidden:
+      location: Solid
+      prefabName: artifact_officemug
+      selectMethod: Centroid
+      density:
+        min: 0.01
+        max: 0.04
+      width: 1
+      height: 1
+    OilFloaterLiquid:
+      prefabName: OilFloater
+      location: AnyFloor
       selectMethod: Centroid
       density:
         min: 0.1
         max: 0.2
       width: 1
       height: 1
-    Algae:
-      location: Water
-      prefabName: Algae
-      selectMethod: Centroid
-      density:
-        min: 0.2
-        max: 0.4
-      width: 1
-      height: 1
-    PickledMeal:
-      location: Floor
+    BuriedShell1:
+      prefabName: EggShell
+      location: Solid
       selectMethod: Centroid
       density:
         min: 0.02
-        max: 0.06
+        max: 0.03
       width: 1
       height: 1
-    PacuMany:
-      location: Water
-      prefabName: Pacu
-      selectMethod: Centroid
-      density:
-        min: 0.1
-        max: 0.16
-      width: 1
-      height: 1
-    PacuFew:
-      location: Water
-      prefabName: Pacu
-      selectMethod: Centroid
-      density:
-        min: 0.01
-        max: 0.04
-      width: 1
-      height: 1
-    SandstoneArtifact:
+    BuriedShell2:
+      prefabName: CrabShell
       location: Solid
-      prefabName: Sandstone
       selectMethod: Centroid
       density:
-        min: 0.01
-        max: 0.04
+        min: 0.02
+        max: 0.03
+      width: 1
+      height: 1
+    BuriedShell3:
+      prefabName: BabyCrabShell
+      location: Solid
+      selectMethod: Centroid
+      density:
+        min: 0.02
+        max: 0.03
       width: 1
       height: 1

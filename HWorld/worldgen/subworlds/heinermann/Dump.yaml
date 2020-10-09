@@ -10,24 +10,26 @@ biomes:
   - name: biomes/heinermann/Dump/Dry
     weight: 5
     tags:
-      - Glom
-      - BasicForagePlant
-      - BasicForagePlantPlanted
-      - PrickleGrassSeed
       - BasicFabricPlantCleared
       - RotPileSolid
+      - SinkArtifact
       - Plastic
       - PickledMeal
+      - PrickleGrassSeed
+      - RubiksCubeHidden
+      - SinkArtifactHidden
+      - OfficeMugHidden
   - name: biomes/heinermann/Dump/Wet
     weight: 1
     tags:
-      - PacuMany
-      - BasicForagePlant
-      - PrickleGrassSeed
       - BasicFabricPlantCleared
       - BasicFabricPlantClearedWater
       - RotPileSolid
-      - Algae
+      - SinkArtifact
+      - PrickleGrassSeed
+      - RubiksCubeHidden
+      - SinkArtifactHidden
+      - OfficeMugHidden
 tags:
 - IgnoreCaveOverride
 featureTemplates:
@@ -43,4 +45,4 @@ featureTemplates:
 pointsOfInterest:
   geyser:
     - poi_dump_filthy_water_geyser
-zoneType: Sandstone
+zoneType: Rust
