@@ -5,34 +5,26 @@ TerrainBiomeLookupTable:
   add:
     # ZombieSpores
     Cave:
-      #.27
     - content: Obsidian
       bandSize: 0.1
     - content: CrushedRock
-      bandSize: 0.075
+      bandSize: 0.2
     - content: IronOre
-      bandSize: 0.1
-    - content: CrushedRock
-      bandSize: 0.075
-
-      #.22
+      bandSize: 0.4
     - content: Carbon
-      bandSize: 0.1
-    - content: CrushedRock
-      bandSize: 0.075
+      bandSize: 2
 
-      #.16
-    - content: CrudeOil
-      bandSize: 0.15
-      overrides:
-        massOverride: 870
-    - content: CrushedRock
-      bandSize: 0.075
-    - content: IgneousRock
-      bandSize: 0.1
+    #- content: CrudeOil
+    #  bandSize: 0.6
+    #  overrides:
+    #    massOverride: 999
+#    - content: CrushedRock
+#      bandSize: 0.1
+#    - content: IgneousRock
+#      bandSize: 0.1
 
     - content: CarbonDioxide
-      bandSize: 0.1
+      bandSize: 0
     #- content: ContaminatedOxygen
     #  bandSize: 0.2
     #  overrides:

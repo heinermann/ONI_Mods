@@ -1,6 +1,6 @@
 settings:
   zoom: 0.01
-  normalise: true
+  normalise: false
   lowerBound:
     X: 4
     Y: 4
@@ -46,6 +46,58 @@ links:
     type: Transformer
     name: Turbulence
   target:
+    type: Modifier
+    name: ClampCaveLimiter
+
+- source0:
+    type: Modifier
+    name: ClampCaveLimiter
+  source1:
+    type: Primitive
+    name: ConstCaveLimiterOffset
+  target:
+    type: Combiner
+    name: Add
+
+- source0:
+    type: Combiner
+    name: Add
+  source1:
+    type: Primitive
+    name: Const10k
+  target:
+    type: Combiner
+    name: Multiply10k
+# end of cavern stripes
+
+- source0:
+    type: Primitive
+    name: CaveNoiseInput
+  target:
+    type: Filter
+    name: RockFormationGen
+
+- source0:
+    type: Filter
+    name: RockFormationGen
+  target:
+    type: Modifier
+    name: CaveSolidStretcher
+
+- source0:
+    type: Modifier
+    name: CaveSolidStretcher
+  source1:
+    type: Combiner
+    name: Multiply10k
+  target:
+    type: Combiner
+    name: Max
+
+- source0:
+    type: Combiner
+    name: Max
+  target:
     type: Terminator
     name: TERMINATOR
 
@@ -82,13 +134,66 @@ primitives:
     pos:
       X: 0
       Y: 0
+  ConstCaveLimiterOffset:
+    primative: Constant
+    quality: Fast
+    offset: -0.1
+    name: ConstCaveLimiterOffset
+    pos:
+      X: 0
+      Y: 0
+  Const10k:
+    primative: Constant
+    quality: Fast
+    offset: 10000
+    name: Const10k
+    pos:
+      X: 0
+      Y: 0
+filters:
+  RockFormationGen:
+    filter: RidgedMultiFractal
+    lacunarity: 0
+    frequency: 8
+    octaves: 1
+    offset: 0
+    gain: 0
+    name: RockFormationGen
+    pos:
+      X: 0
+      Y: 0
 modifiers:
   CaveStripes:
     modifyType: Scale2d
     scale2d:
       X: 0
-      Y: 16
+      Y: 20
     name: CaveStripes
+    pos:
+      X: 0
+      Y: 0
+  ClampCaveLimiter:
+    modifyType: Clamp
+    lower: 0.1
+    upper: 1.1
+    name: ClampCaveLimiter
+    pos:
+      X: 0
+      Y: 0
+  ClampResultOverlapper:
+    modifyType: Clamp
+    lower: 0
+    upper: 2
+    name: ClampResultOverlapper
+    pos:
+      X: 0
+      Y: 0
+  CaveSolidStretcher:
+    modifyType: Scale2d
+    scale2d:
+      X: 0.4
+      Y: 1
+    name: CaveSolidStretcher
     pos:
       X: 0
       Y: 0
@@ -106,3 +211,22 @@ combiners:
     pos:
       X: 0
       Y: 0
+  Multiply10k:
+    combineType: Multiply
+    name: Multiply10k
+    pos:
+      X: 0
+      Y: 0
+  Add:
+    combineType: Add
+    name: Add
+    pos:
+      X: 0
+      Y: 0
+  Max:
+    combineType: Max
+    name: Max
+    pos:
+      X: 0
+      Y: 0
+

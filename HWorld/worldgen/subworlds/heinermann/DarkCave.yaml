@@ -9,7 +9,15 @@ sampleBehaviour: UniformSquare
 biomes:
   - name: biomes/heinermann/DarkCave/Cave
     weight: 1
-    tags: []
+    tags:
+      - SageHatch
+      - NormalHatch
+      - HatchBuried
+      - EvilFlowerCommon
+      - EvilFlowerSeed
+      - MushroomPlantFew
+      - MushroomSeed
+      - VoidBug
 tags:
 - IgnoreCaveOverride
 featureTemplates: {}
