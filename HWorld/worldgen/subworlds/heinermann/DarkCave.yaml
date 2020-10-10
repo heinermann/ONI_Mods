@@ -10,14 +10,15 @@ biomes:
   - name: biomes/heinermann/DarkCave/Cave
     weight: 1
     tags:
-      - SageHatch
-      - NormalHatch
+      - SageHatchEgg
+      - NormalHatchEgg
       - HatchBuried
+      - SageHatchBuried
       - EvilFlowerCommon
       - EvilFlowerSeed
       - MushroomPlantFew
       - MushroomSeed
-      - VoidBug
+      - RockSprinkle
 tags:
 - IgnoreCaveOverride
 featureTemplates: {}

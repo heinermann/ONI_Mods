@@ -7,7 +7,7 @@ settings:
   upperBound:
     X: 7
     Y: 7
-  name: DarkCave
+  name: SaltyTundra
 links:
 - source0:
     type: Primitive

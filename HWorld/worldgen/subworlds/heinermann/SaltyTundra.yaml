@@ -1,0 +1,17 @@
+biomeNoise: noise/heinermann/SaltyTundra
+temperatureRange: Cool
+minChildCount: 2
+density:
+  min: 3
+  max: 5
+avoidRadius: 2.0
+sampleBehaviour: UniformSquare
+biomes:
+  - name: biomes/heinermann/SaltyTundra/Dry
+    weight: 1
+    tags: []
+tags:
+- IgnoreCaveOverride
+featureTemplates: {}
+pointsOfInterest: {}
+zoneType: FrozenWastes

@@ -16,10 +16,9 @@ This biome resembles a dump, with trash and various spoiled goods littering the 
 **Flora:** Muckroot, Thimble Reed
 **Fauna:** Morb
 **Germs:** Food Poisoning
-**Features:** Poisoned food, Storage Bins, Batteries, Outhouses, Composts, Petroleum Cans, Bottled Polluted Water, Plastic
+**Features:** Poisoned food, Storage Bins, Batteries, Outhouses, Composts, Petroleum Cans, Bottled Polluted Water, Plastic, low level artifacts
 
-TODO: Add Rubik's Cube (0), Sink (0), Office Mug (0)
-Maybe some clothes hidden in the junk too?
+Maybe some clothes and other items hidden in the junk too?
 
 #### Dark Cave
 Darkness themed cave. Featuring hatch-sized tunnels. Watch out for Zombie Spores.
@@ -28,12 +27,11 @@ Darkness themed cave. Featuring hatch-sized tunnels. Watch out for Zombie Spores
 **Temperature:** 10 to 20C (Mild)
 **Primary Gasses:** Carbon Dioxide
 **Primary Solids:** Obsidian, Crushed Rock, Igneous Rock
-**Primary Liquid:** Crude Oil
+**Primary Liquid:** None
 **Other Materials:** Coal, Iron Ore
-**Flora:** Dusk Cap, Sprechid
-**Fauna:** Abyss Bug, Hatch, Sage Hatch
+**Flora:** Dusk Cap, Sporechid
+**Fauna:** Hatch, Sage Hatch
 **Germs:** Zombie Spores
-**Features:** Sculpting Block
 
 
 #### Structure
@@ -44,35 +42,38 @@ TODO
 Pickups: Data Bank, Vacillator Recharge, Atmo Suit, Jet Suit
 Artifacts: Robot Arm (2), Old X-Ray (1), Shield Generator (2)
 
-#### Bristle Forest
+#### Blossom Forest
 TODO
 
-Gas must be O2, PO2, or CO2.
-
-Algae, Clay, Fertilizer
+Algae, Clay, Slime, Radium, Gold Amalgum
 Water
-Lime
+O2, CO2
 
 **Danger:** None
 **Temperature:** 20 to 30C
-**Flora:** Bristle Blossom, Buddy Bud
+**Flora:** Bristle Blossom, Buddy Bud, Arbor Tree, Oxyfern, Hexalent
 **Fauna:** Coral Bug, Shine Bug
 **Germs:** Floral Scent
 
 Maybe hidden eggs or something?
+
+Debating on moving Sage Hatch from dark cave to here instead, and adding rock hatch to dark cave.
+
+May be starter biome or very rare...
 
 #### Salty Tundra
 TODO
 
 **Danger:** Little (Non-breathable, falling hazard, cold)
 **Temperature:** -15 to -0.6C (Cool)
-**Flora:** Wheezewort, Dasha Saltvine
+**Flora:** Wheezewort, Dasha Saltvine, Nosh Sprout
 **Fauna:** Gulp Fish, Squeaky Puft
 **Primary Solids:** Crushed Ice, Salt, Snow
-**Primary Gasses:** Chlorine
+**Primary Gasses:** Chlorine, Oxygen
 **Primary Liquid:** Brine
 **Other Materials:** Bleach Stone
-**Features:** Ice Blocks
+**Features:** Ice Sculpture Blocks?
+
 
 
 #### Inverted Mesa
@@ -89,7 +90,7 @@ Jumping Joya, Sand, CO2, Oil, Slicksters,  Oil Reservoir
 **Danger:** Moderate (Non-breathable, falling hazard, hot)
 **Temperature:** 50 to 100C (Hot)
 
-
+Should add pincha pepperplant, drecko, and another gas (hydrogen, propane, or nat gas, probably nat gas)?
 
 #### Other ideas
 
