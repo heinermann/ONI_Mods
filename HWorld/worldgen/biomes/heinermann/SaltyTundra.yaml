@@ -7,14 +7,14 @@ TerrainBiomeLookupTable:
     - content: Salt
       bandSize: 0.1
     - content: Snow
-      bandSize: 0.2
+      bandSize: 0.1
     - content: CrushedIce
-      bandSize: 0.4
+      bandSize: 0.1
     - content: ChlorineGas
-      bandSize: 1
+      bandSize: 0.1
+    - content: Oxygen
+      bandSize: 0.1
     - content: Brine
-      bandSize: 1
+      bandSize: 0.1
     - content: BleachStone
-      bandSize: 0
-      overrides:
-        massMultiplier: 2
+      bandSize: 0.1

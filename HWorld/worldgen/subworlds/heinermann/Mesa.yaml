@@ -17,6 +17,9 @@ biomes:
       - BuriedShell1
       - BuriedShell2
       - BuriedShell3
+      - SpiceVine
+      - SpiceVineSeed
+      - DreckoCommon
   - name: biomes/heinermann/Mesa/Wet
     weight: 1
     tags:
@@ -26,6 +29,9 @@ biomes:
       - BuriedShell1
       - BuriedShell2
       - BuriedShell3
+      - SpiceVine
+      - SpiceVineSeed
+      - DreckoCommon
 tags:
 - IgnoreCaveOverride
 featureTemplates:

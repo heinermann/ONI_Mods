@@ -30,6 +30,8 @@ TerrainBiomeLookupTable:
       bandSize: 1
     - content: CarbonDioxide
       bandSize: 0
+      overrides:
+        massMultiplier: 0.5
     Wet:
     - content: Fossil
       bandSize: 0.07
@@ -55,6 +57,10 @@ TerrainBiomeLookupTable:
       bandSize: 0.07
     - content: CrudeOil
       bandSize: 1
+      overrides:
+        massMultiplier: 3
     - content: CarbonDioxide
       bandSize: 0
+      overrides:
+        massMultiplier: 0.5
 
