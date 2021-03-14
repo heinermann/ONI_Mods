@@ -1,6 +1,5 @@
 ﻿using Harmony;
 using Klei;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Heinermann.Blood.Patches
@@ -21,15 +20,30 @@ namespace Heinermann.Blood.Patches
     }
   }
 
+  [HarmonyPatch(typeof(Assets), "SubstanceListHookup")]
+  class Assets_SubstanceListHookup
+  {
+    static void Prefix(Assets __instance)
+    {
+      SubstanceTable table = __instance.substanceTable;
+      var water = table.GetSubstance(SimHashes.Water);
+      var ice = table.GetSubstance(SimHashes.Ice);
+      
+      table.GetList().Add(BloodElement.CreateBloodSubstance(water));
+      table.GetList().Add(BloodElement.CreateFrozenBloodSubstance(ice.material, water.anim));
+    }
+  }
+
+  /*
   [HarmonyPatch(typeof(ElementLoader), "Load")]
   class ElementLoader_Load
   {
-    static void Prefix(ref Hashtable substanceList, SubstanceTable substanceTable)
+    static void Prefix(ref Hashtable substanceList, Dictionary<string, SubstanceTable> substanceTable)
     {
-      var water = substanceTable.GetSubstance(SimHashes.Water);
-      var ice = substanceTable.GetSubstance(SimHashes.Ice);
+      var water = substanceTable[""].GetSubstance(SimHashes.Water);
+      var ice = substanceTable[""].GetSubstance(SimHashes.Ice);
       substanceList[BloodElement.BloodSimHash] = BloodElement.CreateBloodSubstance(water);
       substanceList[BloodElement.FrozenBloodSimHash] = BloodElement.CreateFrozenBloodSubstance(ice.material, water.anim);
     }
-  }
+  }*/
 }

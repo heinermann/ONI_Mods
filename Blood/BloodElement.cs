@@ -52,6 +52,7 @@ elements:
     isDisabled: false
     state: Liquid
     localizationID: STRINGS.ELEMENTS.BLOOD.NAME
+    dlcId: """"
 
   - elementId: FrozenBlood
     specificHeatCapacity: 3.05
@@ -77,6 +78,7 @@ elements:
     isDisabled: false
     state: Solid
     localizationID: STRINGS.ELEMENTS.FROZENBLOOD.NAME
+    dlcId: """"
 ";
 
     public static Substance CreateBloodSubstance(Substance source)
