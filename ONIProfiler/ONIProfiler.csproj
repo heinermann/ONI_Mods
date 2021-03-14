@@ -76,6 +76,7 @@
   <PropertyGroup>
     <PostBuildEvent>XCOPY /Y "$(TargetPath)" "$(SolutionDir)mods\$(ProjectName)\*"
 XCOPY /Y "$(ProjectDir)preview.png" "$(SolutionDir)mods\$(ProjectName)\*"
-XCOPY /Y "$(ProjectDir)README.md" "$(SolutionDir)mods\$(ProjectName)\*"</PostBuildEvent>
+XCOPY /Y "$(ProjectDir)README.md" "$(SolutionDir)mods\$(ProjectName)\*"
+XCOPY /Y "$(ProjectDir)mod_info.yaml" "$(SolutionDir)mods\$(ProjectName)\*"</PostBuildEvent>
   </PropertyGroup>
 </Project>
