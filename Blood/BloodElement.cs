@@ -20,67 +20,6 @@ namespace Heinermann.Blood
     public static readonly Dictionary<string, object> ReverseSimHashNameLookup =
       SimHashNameLookup.ToDictionary(x => x.Value, x => x.Key as object);
 
-    // iron mass = 0.5 mg/mL blood (0.0005g/1.13g = 0.00044)
-    public const string CONFIG = @"
----
-elements:
-  - elementId: Blood
-    maxMass: 1000
-    liquidCompression: 1.02
-    speed: 100
-    minHorizontalFlow: 0.1
-    minVerticalFlow: 0.01
-    specificHeatCapacity: 3.49
-    thermalConductivity: 0.58
-    solidSurfaceAreaMultiplier: 1
-    liquidSurfaceAreaMultiplier: 25
-    gasSurfaceAreaMultiplier: 1
-    lowTemp: 272.5
-    highTemp: 372.5
-    lowTempTransitionTarget: FrozenBlood
-    highTempTransitionTarget: Steam
-    highTempTransitionOreId: Iron
-    highTempTransitionOreMassConversion: 0.001
-    defaultTemperature: 310
-    defaultMass: 1000
-    molarMass: 30
-    toxicity: 0.1
-    lightAbsorptionFactor: 0.8
-    tags:
-    - Mixture
-    - AnyWater
-    isDisabled: false
-    state: Liquid
-    localizationID: STRINGS.ELEMENTS.BLOOD.NAME
-    dlcId: """"
-
-  - elementId: FrozenBlood
-    specificHeatCapacity: 3.05
-    thermalConductivity: 1
-    solidSurfaceAreaMultiplier: 1
-    liquidSurfaceAreaMultiplier: 1
-    gasSurfaceAreaMultiplier: 1
-    strength: 1
-    highTemp: 272.5
-    highTempTransitionTarget: Blood
-    defaultTemperature: 230
-    defaultMass: 500
-    maxMass: 800
-    hardness: 10
-    molarMass: 35
-    lightAbsorptionFactor: 0.8
-    materialCategory: Liquifiable
-    tags:
-    - IceOre
-    - Mixture
-    - BuildableAny
-    buildMenuSort: 5
-    isDisabled: false
-    state: Solid
-    localizationID: STRINGS.ELEMENTS.FROZENBLOOD.NAME
-    dlcId: """"
-";
-
     public static Substance CreateBloodSubstance(Substance source)
     {
       return ModUtil.CreateSubstance(

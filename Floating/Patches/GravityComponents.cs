@@ -61,6 +61,7 @@ namespace Heinermann.Floating.Patches
     }
 
     private static List<GravityComponent> processAsNormalGravity = new List<GravityComponent>(1024);
+    private static List<GravityComponent> originalGravityList;
 
     // TODO: Check for potential bug with 1-tile width water
     static void Prefix(ref GravityComponents __instance, ref List<GravityComponent> ___data, float dt)
@@ -94,12 +95,15 @@ namespace Heinermann.Floating.Patches
         grav.transform.SetPosition(newPosition);
         grav.elapsedTime += dt;
       }
-      Exchange(ref ___data, ref processAsNormalGravity);
+      originalGravityList = ___data;
+      ___data = processAsNormalGravity;
+      //Exchange(ref ___data, ref processAsNormalGravity);
     }
 
     static void Postfix(ref List<GravityComponent> ___data)
     {
-      Exchange(ref ___data, ref processAsNormalGravity);
+      //Exchange(ref ___data, ref processAsNormalGravity);
+      ___data = originalGravityList;
     }
   }
 }
