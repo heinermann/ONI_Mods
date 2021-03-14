@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using Harmony;
+using System.Reflection;
 using UnityEngine;
 
 namespace Heinermann.Floating
@@ -21,7 +22,7 @@ namespace Heinermann.Floating
         GameComps.Fallers.Add(gameObject, Vector2.zero);
       }
 
-      MethodInfo addGravity = typeof(FallerComponents).GetMethod("AddGravity", BindingFlags.Static | BindingFlags.NonPublic);
+      MethodInfo addGravity = AccessTools.Method(typeof(FallerComponents), "AddGravity");
       addGravity.Invoke(null, new object[] { transform, Vector2.zero });
     }
 

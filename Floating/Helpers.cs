@@ -87,7 +87,7 @@ namespace Heinermann.Floating
 
     public static float GetYExtent(GravityComponent component)
     {
-      return Mathf.Max(0.2f, component.radius);
+      return Mathf.Max(0.2f, component.extents.y);
     }
 
     /**

@@ -7,20 +7,8 @@ namespace Heinermann.Floating.Patches
   [HarmonyPatch(typeof(GravityComponents), "FixedUpdate")]
   class GravityComponents_FixedUpdate
   {
-    private const float REVERSE_GRAVITY = 9.8f;
-
     private const float MIN_X_VELOCITY = 2.5f;
     private const float MAX_X_VELOCITY = 5f;
-
-    private static readonly GravityComponent NULL_COMPONENT = new GravityComponent
-    {
-      elapsedTime = -1,
-      landOnFakeFloors = false,
-      onLanded = null,
-      radius = 0,
-      transform = null,
-      velocity = Vector2.zero
-    };
 
     private static float RandomXVelocity()
     {
@@ -34,7 +22,6 @@ namespace Heinermann.Floating.Patches
      // TODO: Bias based on liquid mass in right/left cells
     private static void ApplyXVelocityChanges(ref GravityComponent grav, float dt)
     {
-      Vector2 position = grav.transform.GetPosition();
       Vector2 newChange = new Vector2(grav.velocity.x, grav.velocity.y);
 
       if (Mathf.Abs(grav.velocity.x) < MIN_X_VELOCITY / 2 * dt)
@@ -66,18 +53,28 @@ namespace Heinermann.Floating.Patches
       }
     }
 
-    private static Dictionary<int, GravityComponent> gravComponentState = new Dictionary<int, GravityComponent>(1024);
+    private static void Exchange<T>(ref T a, ref T b)
+    {
+      T temp = a;
+      a = b;
+      b = temp;
+    }
+
+    private static List<GravityComponent> processAsNormalGravity = new List<GravityComponent>(1024);
 
     // TODO: Check for potential bug with 1-tile width water
-    static void Prefix(ref GravityComponents __instance, float dt)
+    static void Prefix(ref GravityComponents __instance, ref List<GravityComponent> ___data, float dt)
     {
-      gravComponentState.Clear();
+      processAsNormalGravity.Clear();
 
-      var data = __instance.GetDataList();
-      for (int i = 0; i < data.Count; i++)
+      for (int i = 0; i < ___data.Count; i++)
       {
-        GravityComponent grav = data[i];
-        if (!Helpers.ShouldFloat(grav.transform)) continue;
+        GravityComponent grav = ___data[i];
+        if (!Helpers.ShouldFloat(grav.transform))
+        {
+          processAsNormalGravity.Add(grav);
+          continue;
+        }
 
         ApplyXVelocityChanges(ref grav, dt);
         ApplyYVelocityChanges(ref grav, dt);
@@ -96,19 +93,13 @@ namespace Heinermann.Floating.Patches
 
         grav.transform.SetPosition(newPosition);
         grav.elapsedTime += dt;
-
-        gravComponentState.Add(i, grav);
-        data[i] = NULL_COMPONENT;
       }
+      Exchange(ref ___data, ref processAsNormalGravity);
     }
 
-    static void Postfix(ref GravityComponents __instance)
+    static void Postfix(ref List<GravityComponent> ___data)
     {
-      var data = __instance.GetDataList();
-      foreach (var newGrav in gravComponentState)
-      {
-        data[newGrav.Key] = newGrav.Value;
-      }
+      Exchange(ref ___data, ref processAsNormalGravity);
     }
   }
 }
