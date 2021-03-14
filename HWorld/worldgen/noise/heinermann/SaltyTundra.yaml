@@ -1,232 +1,477 @@
 settings:
-  zoom: 0.01
-  normalise: false
+  zoom: 1
+  normalise: true
+  seamless: false
   lowerBound:
-    X: 4
-    Y: 4
+    X: 0
+    Y: 0
   upperBound:
-    X: 7
-    Y: 7
+    X: 4
+    Y: 6
   name: SaltyTundra
+  pos:
+    X: 0
+    Y: 0
 links:
-- source0:
-    type: Primitive
-    name: CaveGradient
-  target:
-    type: Modifier
-    name: CaveStripes
-
-- source0:
-    type: Primitive
-    name: CaveNoiseInput
+- target:
+    type: Combiner
+    name: Add_9e/RKEb1
+  source0:
+    type: Filter
+    name: MultiFractal_YM46yFq/
   source1:
     type: Primitive
-    name: CaveWildnessMultiplier
-  target:
+    name: Constant_4Hx9UPXg
+- target:
     type: Combiner
-    name: Multiplier
-
-- source0:
+    name: Multiply_HNZFnJEK
+  source0:
+    type: Combiner
+    name: Add_9e/RKEb1
+  source1:
+    type: Primitive
+    name: Constant_qDL1gDwU
+- target:
+    type: Combiner
+    name: Max_WzXgEfEG
+  source0:
     type: Modifier
-    name: CaveStripes
+    name: Scale2D_RhIXIeGy
+  source1:
+    type: Modifier
+    name: Scale2D_Yh6OpZ/n
+- target:
+    type: Combiner
+    name: Add_syIZu+ny
+  source0:
+    type: Filter
+    name: Pipe_skiyWijq
+  source1:
+    type: Primitive
+    name: Constant_4miPND6V_2_2
+- target:
+    type: Combiner
+    name: Multiply_XSUesAIh
+  source0:
+    type: Combiner
+    name: Add_syIZu+ny
+  source1:
+    type: Primitive
+    name: Constant_Q1G9mdUf
+- target:
+    type: Combiner
+    name: Min_PM17NtHY
+  source0:
+    type: Modifier
+    name: Scale2D_RhIXIeGy
+  source1:
+    type: Modifier
+    name: Clamp_7T4FWNu1
+- target:
+    type: Combiner
+    name: Add_cshEVPij
+  source0:
+    type: Transformer
+    name: Displace_d61jTi7B
   source1:
     type: Combiner
-    name: Multiplier
+    name: Min_PM17NtHY
+- target:
+    type: Combiner
+    name: Add_hWTIV/7K
+  source0:
+    type: Modifier
+    name: Scale2D_RhIXIeGy
+  source1:
+    type: Combiner
+    name: Add_cshEVPij
+- target:
+    type: Combiner
+    name: Add_wFbKw0IX
+  source0:
+    type: Filter
+    name: Voronoi_MyzI/RVB
+  source1:
+    type: Primitive
+    name: Constant_ZLuULcGl
+- target:
+    type: Combiner
+    name: Multiply_zAeTVU4X
+  source0:
+    type: Combiner
+    name: Add_wFbKw0IX
+  source1:
+    type: Primitive
+    name: Constant_ZLuULcGl_2
+- target:
+    type: Combiner
+    name: Add_EyAYXyLO
+  source0:
+    type: Combiner
+    name: Add_hWTIV/7K
+  source1:
+    type: Combiner
+    name: Multiply_zAeTVU4X
+- target:
+    type: Modifier
+    name: Clamp_QfsRm+nB
+  source0:
+    type: Combiner
+    name: Multiply_HNZFnJEK
+- target:
+    type: Modifier
+    name: Scale2D_RhIXIeGy
+  source0:
+    type: Modifier
+    name: Clamp_QfsRm+nB
+- target:
+    type: Modifier
+    name: Scale2D_Yh6OpZ/n
+  source0:
+    type: Primitive
+    name: Cylinders_JD2HYCpQ
+- target:
+    type: Modifier
+    name: Clamp_7T4FWNu1
+  source0:
+    type: Transformer
+    name: Displace_wpzP4bU5
+- target:
+    type: Transformer
+    name: Displace_wpzP4bU5
+  source0:
+    type: Combiner
+    name: Max_WzXgEfEG
+  source1:
+    type: Primitive
+    name: Constant_4miPND6V_2
   source2:
     type: Primitive
-    name: Const0
+    name: Constant_4miPND6V_2
   source3:
     type: Combiner
-    name: Multiplier
-  target:
+    name: Multiply_XSUesAIh
+- target:
     type: Transformer
-    name: Turbulence
-
-- source0:
-    type: Transformer
-    name: Turbulence
-  target:
+    name: Displace_d61jTi7B
+  source0:
     type: Modifier
-    name: ClampCaveLimiter
-
-- source0:
-    type: Modifier
-    name: ClampCaveLimiter
+    name: Scale2D_RhIXIeGy
   source1:
     type: Primitive
-    name: ConstCaveLimiterOffset
-  target:
-    type: Combiner
-    name: Add
-
-- source0:
-    type: Combiner
-    name: Add
-  source1:
+    name: Constant_vaCf5EXV
+  source2:
     type: Primitive
-    name: Const10k
-  target:
-    type: Combiner
-    name: Multiply10k
-# end of cavern stripes
-
-- source0:
+    name: Constant_vaCf5EXV
+  source3:
     type: Primitive
-    name: CaveNoiseInput
-  target:
+    name: Constant_e0yVQ4Fh
+- target:
     type: Filter
-    name: RockFormationGen
-
-- source0:
+    name: Voronoi_MyzI/RVB
+  source0:
+    type: Primitive
+    name: BevinsValue_kXU5j13V
+- target:
     type: Filter
-    name: RockFormationGen
-  target:
-    type: Modifier
-    name: CaveSolidStretcher
-
-- source0:
-    type: Modifier
-    name: CaveSolidStretcher
-  source1:
-    type: Combiner
-    name: Multiply10k
-  target:
-    type: Combiner
-    name: Max
-
-- source0:
-    type: Combiner
-    name: Max
-  target:
+    name: MultiFractal_YM46yFq/
+  source0:
+    type: Primitive
+    name: ImprovedPerlin_fJEmHY/S
+- target:
+    type: Filter
+    name: Pipe_skiyWijq
+  source0:
+    type: Primitive
+    name: BevinsGradient_ObTnH8er
+- target:
     type: Terminator
     name: TERMINATOR
-
+  source0:
+    type: Combiner
+    name: Add_EyAYXyLO
 primitives:
-  CaveGradient:
+  ImprovedPerlin_fJEmHY/S:
+    primative: ImprovedPerlin
+    quality: Fast
+    seed: 0
+    offset: 1
+    name: ImprovedPerlin_fJEmHY/S
+    pos:
+      X: 2274.5071534032868
+      Y: 953.64617738365939
+  Constant_4Hx9UPXg:
+    primative: Constant
+    quality: Fast
+    seed: 0
+    offset: -0.200000003
+    name: Constant_4Hx9UPXg
+    pos:
+      X: 2772.0966321448691
+      Y: 1388.7745935144628
+  Constant_qDL1gDwU:
+    primative: Constant
+    quality: Fast
+    seed: 0
+    offset: 10000
+    name: Constant_qDL1gDwU
+    pos:
+      X: 3047.0894681998416
+      Y: 1466.4631525793202
+  Cylinders_JD2HYCpQ:
+    primative: Cylinders
+    quality: Fast
+    seed: 0
+    offset: 1
+    name: Cylinders_JD2HYCpQ
+    pos:
+      X: 3036.7126531790636
+      Y: 2352.5498181379694
+  Constant_4miPND6V_2:
+    primative: Constant
+    quality: Fast
+    seed: 0
+    offset: 0
+    name: Constant_4miPND6V_2
+    pos:
+      X: 3713.609352285876
+      Y: 2609.1736623132765
+  BevinsGradient_ObTnH8er:
     primative: BevinsGradient
     quality: Fast
     seed: 0
-    name: CaveGradient
+    offset: 1
+    name: BevinsGradient_ObTnH8er
     pos:
-      X: 0
-      Y: 0
-  CaveNoiseInput:
-    primative: SimplexPerlin
+      X: 2868.1354612187561
+      Y: 2688.0251983001012
+  Constant_4miPND6V_2_2:
+    primative: Constant
     quality: Fast
     seed: 0
-    name: CaveNoiseInput
+    offset: -1
+    name: Constant_4miPND6V_2_2
     pos:
-      X: 0
-      Y: 0
-  Const0:
+      X: 3202.8460354633062
+      Y: 3059.9994672321968
+  Constant_Q1G9mdUf:
     primative: Constant
     quality: Fast
+    seed: 0
+    offset: 2.5
+    name: Constant_Q1G9mdUf
+    pos:
+      X: 3518.1057495122063
+      Y: 3133.3877402088706
+  Constant_vaCf5EXV:
+    primative: Constant
+    quality: Fast
+    seed: 0
     offset: 0
-    name: Const0
+    name: Constant_vaCf5EXV
     pos:
-      X: 0
-      Y: 0
-  CaveWildnessMultiplier:
+      X: 4464.6250282403489
+      Y: 1422.6466460358579
+  Constant_e0yVQ4Fh:
     primative: Constant
     quality: Fast
-    offset: 0.1
-    name: CaveWildnessMultiplier
+    seed: 0
+    offset: -7
+    name: Constant_e0yVQ4Fh
     pos:
-      X: 0
-      Y: 0
-  ConstCaveLimiterOffset:
+      X: 4485.4291221242693
+      Y: 1569.7613099292867
+  BevinsValue_kXU5j13V:
+    primative: BevinsValue
+    quality: Fast
+    seed: 0
+    offset: 1
+    name: BevinsValue_kXU5j13V
+    pos:
+      X: 5065.2857593252284
+      Y: 2202.426450735461
+  Constant_ZLuULcGl:
     primative: Constant
     quality: Fast
-    offset: -0.05
-    name: ConstCaveLimiterOffset
+    seed: 0
+    offset: 1
+    name: Constant_ZLuULcGl
     pos:
-      X: 0
-      Y: 0
-  Const10k:
+      X: 5343.4365868064306
+      Y: 2554.2888262261508
+  Constant_ZLuULcGl_2:
     primative: Constant
     quality: Fast
-    offset: 10000
-    name: Const10k
+    seed: 0
+    offset: 0.25
+    name: Constant_ZLuULcGl_2
     pos:
-      X: 0
-      Y: 0
+      X: 5645.9177121399698
+      Y: 2525.5432028407217
 filters:
-  RockFormationGen:
-    filter: RidgedMultiFractal
-    lacunarity: 0
-    frequency: 8
+  MultiFractal_YM46yFq/:
+    filter: MultiFractal
+    frequency: 0.100000001
+    lacunarity: 3
     octaves: 1
     offset: 0
     gain: 0
-    name: RockFormationGen
+    exponent: 1
+    name: MultiFractal_YM46yFq/
     pos:
+      X: 2680.8434040369407
+      Y: 927.57584605007003
+  Voronoi_MyzI/RVB:
+    filter: Voronoi
+    frequency: 0.200000003
+    lacunarity: 3
+    octaves: 10
+    offset: 1
+    gain: 0
+    exponent: 1
+    name: Voronoi_MyzI/RVB
+    pos:
+      X: 5360.8861096091105
+      Y: 2251.7394928102476
+  Pipe_skiyWijq:
+    filter: Pipe
+    frequency: 0.100000001
+    lacunarity: 3
+    octaves: 10
+    offset: 1
+    gain: 0
+    exponent: 1
+    name: Pipe_skiyWijq
+    pos:
+      X: 3258.7758638962264
+      Y: 2717.5355895899165
+transformers:
+  Displace_wpzP4bU5:
+    transformerType: Displace
+    rotation:
       X: 0
       Y: 0
+    name: Displace_wpzP4bU5
+    pos:
+      X: 4069.6398295113186
+      Y: 2256.4487830117914
+  Displace_d61jTi7B:
+    transformerType: Displace
+    rotation:
+      X: 0
+      Y: 0
+    name: Displace_d61jTi7B
+    pos:
+      X: 4836.1267047389074
+      Y: 1291.8780559083659
+selectors: {}
 modifiers:
-  CaveStripes:
-    modifyType: Scale2d
-    scale2d:
-      X: 0
-      Y: 20
-    name: CaveStripes
-    pos:
-      X: 0
-      Y: 0
-  ClampCaveLimiter:
-    modifyType: Clamp
-    lower: 0.05
-    upper: 1.05
-    name: ClampCaveLimiter
-    pos:
-      X: 0
-      Y: 0
-  ClampResultOverlapper:
+  Clamp_QfsRm+nB:
     modifyType: Clamp
     lower: 0
-    upper: 2
-    name: ClampResultOverlapper
-    pos:
+    upper: 1
+    scale2d:
       X: 0
       Y: 0
-  CaveSolidStretcher:
+    name: Clamp_QfsRm+nB
+    pos:
+      X: 3596.8783796234338
+      Y: 1298.1972221096962
+  Scale2D_RhIXIeGy:
     modifyType: Scale2d
     scale2d:
-      X: 0.4
-      Y: 1
-    name: CaveSolidStretcher
+      X: 0.200000003
+      Y: 2
+    name: Scale2D_RhIXIeGy
     pos:
+      X: 3871.0095143985336
+      Y: 1358.9293430404709
+  Scale2D_Yh6OpZ/n:
+    modifyType: Scale2d
+    scale2d:
+      X: 0.5
+      Y: 0
+    name: Scale2D_Yh6OpZ/n
+    pos:
+      X: 3334.4351453430672
+      Y: 2354.3620732017207
+  Clamp_7T4FWNu1:
+    modifyType: Clamp
+    lower: 0.5
+    upper: 1
+    scale2d:
       X: 0
       Y: 0
-transformers:
-  Turbulence:
-    transformerType: Displace
-    name: Turbulence
+    name: Clamp_7T4FWNu1
     pos:
-      X: 0
-      Y: 0
+      X: 4413.2809972105624
+      Y: 2210.9414826558127
 combiners:
-  Multiplier:
-    combineType: Multiply
-    name: Multiplier
-    pos:
-      X: 0
-      Y: 0
-  Multiply10k:
-    combineType: Multiply
-    name: Multiply10k
-    pos:
-      X: 0
-      Y: 0
-  Add:
+  Add_9e/RKEb1:
     combineType: Add
-    name: Add
+    name: Add_9e/RKEb1
     pos:
-      X: 0
-      Y: 0
-  Max:
+      X: 3027.359040500829
+      Y: 1113.7817574594906
+  Multiply_HNZFnJEK:
+    combineType: Multiply
+    name: Multiply_HNZFnJEK
+    pos:
+      X: 3318.3828490612486
+      Y: 1140.9110955456313
+  Max_WzXgEfEG:
     combineType: Max
-    name: Max
+    name: Max_WzXgEfEG
     pos:
-      X: 0
-      Y: 0
-
+      X: 3727.6643589913833
+      Y: 2215.732869183882
+  Add_syIZu+ny:
+    combineType: Add
+    name: Add_syIZu+ny
+    pos:
+      X: 3583.77467426768
+      Y: 2824.0261991471748
+  Multiply_XSUesAIh:
+    combineType: Multiply
+    name: Multiply_XSUesAIh
+    pos:
+      X: 3817.3092455682581
+      Y: 2864.014004505696
+  Min_PM17NtHY:
+    combineType: Min
+    name: Min_PM17NtHY
+    pos:
+      X: 4678.5782758838968
+      Y: 1861.0160557958172
+  Add_cshEVPij:
+    combineType: Add
+    name: Add_cshEVPij
+    pos:
+      X: 5060.0957991536925
+      Y: 1802.4703922098709
+  Add_hWTIV/7K:
+    combineType: Add
+    name: Add_hWTIV/7K
+    pos:
+      X: 5404.7566387743727
+      Y: 1780.0456113597427
+  Add_wFbKw0IX:
+    combineType: Add
+    name: Add_wFbKw0IX
+    pos:
+      X: 5609.6138218504448
+      Y: 2203.7139312901327
+  Multiply_zAeTVU4X:
+    combineType: Multiply
+    name: Multiply_zAeTVU4X
+    pos:
+      X: 5828.9809555135707
+      Y: 2234.015616545048
+  Add_EyAYXyLO:
+    combineType: Add
+    name: Add_EyAYXyLO
+    pos:
+      X: 6206.0446842859055
+      Y: 1984.0949395874088
+floats: {}
+controlpoints: {}

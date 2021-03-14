@@ -4,17 +4,29 @@ TerrainBiomeLookupTable:
   # elements to add from in-memory structure when this file is loaded
   add:
     Dry:
-    - content: Salt
-      bandSize: 0.1
-    - content: Snow
-      bandSize: 0.1
-    - content: CrushedIce
-      bandSize: 0.1
-    - content: ChlorineGas
-      bandSize: 0.1
-    - content: Oxygen
-      bandSize: 0.1
-    - content: Brine
+    # 0-1 / 6: Guaranteed solid layer
+    # 1-2 / 6: Unused
+    - content: Wolframite
       bandSize: 0.1
     - content: BleachStone
+      bandSize: 0.4
+
+    # 2-3 / 6: Ground and lakes
+    - content: Brine
       bandSize: 0.1
+    - content: Snow
+      bandSize: 0.2
+    - content: CrushedIce
+      bandSize: 0.1
+
+    # 4 / 6: Salt stalactites
+    - content: Salt
+      bandSize: 0.1
+
+    # 5 / 6: Oxygen (buffer to prevent total chlorine depletion)
+    - content: Oxygen
+      bandSize: 0.05
+
+    # 6 / 6: Chlorine gas
+    - content: ChlorineGas
+      bandSize: 0.001

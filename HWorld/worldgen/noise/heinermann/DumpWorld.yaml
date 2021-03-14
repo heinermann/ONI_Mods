@@ -1,6 +1,7 @@
 settings:
   zoom: 2
   normalise: true
+  seamless: false
   lowerBound:
     X: 4
     Y: 4
@@ -8,6 +9,9 @@ settings:
     X: 7
     Y: 7
   name: DumpWorld
+  pos:
+    X: 0
+    Y: 0
 links:
 - target:
     type: Filter
@@ -40,26 +44,27 @@ primitives:
 filters:
   DumpAreaFilter:
     filter: RidgedMultiFractal
-    frequency: 0.08
-    lacunarity: 0.1
+    frequency: 0.0799999982
+    lacunarity: 0.100000001
     octaves: 16
-    offset: -0.2
-    exponent: 1.2
+    offset: -0.200000003
+    exponent: 1
     name: DumpAreaFilter
     pos:
-      X: -699
-      Y: -60
+      X: -613.24136954906089
+      Y: -96.209199523729808
+transformers: {}
+selectors: {}
 modifiers:
   LayerSqueue:
     modifyType: Scale2d
-    lower: -1
-    upper: 1
-    exponent: 0.02
-    scale: 1
     scale2d:
-      X: 0.1
-      Y: 0.8
+      X: 0.100000001
+      Y: 0.800000012
     name: LayerSqueue
     pos:
       X: -348
       Y: -54
+combiners: {}
+floats: {}
+controlpoints: {}

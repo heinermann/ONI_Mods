@@ -1,6 +1,7 @@
 settings:
-  zoom: 0.01
+  zoom: 0.00999999978
   normalise: false
+  seamless: false
   lowerBound:
     X: 4
     Y: 4
@@ -8,25 +9,68 @@ settings:
     X: 7
     Y: 7
   name: DarkCave
+  pos:
+    X: 0
+    Y: 0
 links:
-- source0:
-    type: Primitive
-    name: CaveGradient
-  target:
+- target:
     type: Modifier
     name: CaveStripes
-
-- source0:
+  source0:
+    type: Primitive
+    name: CaveGradient
+- target:
+    type: Modifier
+    name: ClampCaveLimiter
+  source0:
+    type: Transformer
+    name: Turbulence
+- target:
+    type: Modifier
+    name: CaveSolidStretcher
+  source0:
+    type: Filter
+    name: RockFormationGen
+- target:
+    type: Combiner
+    name: Multiplier
+  source0:
     type: Primitive
     name: CaveNoiseInput
   source1:
     type: Primitive
     name: CaveWildnessMultiplier
-  target:
+- target:
     type: Combiner
-    name: Multiplier
-
-- source0:
+    name: Add
+  source0:
+    type: Modifier
+    name: ClampCaveLimiter
+  source1:
+    type: Primitive
+    name: ConstCaveLimiterOffset
+- target:
+    type: Combiner
+    name: Multiply10k
+  source0:
+    type: Combiner
+    name: Add
+  source1:
+    type: Primitive
+    name: Const10k
+- target:
+    type: Combiner
+    name: Max
+  source0:
+    type: Modifier
+    name: CaveSolidStretcher
+  source1:
+    type: Combiner
+    name: Multiply10k
+- target:
+    type: Transformer
+    name: Turbulence
+  source0:
     type: Modifier
     name: CaveStripes
   source1:
@@ -38,69 +82,18 @@ links:
   source3:
     type: Combiner
     name: Multiplier
-  target:
-    type: Transformer
-    name: Turbulence
-
-- source0:
-    type: Transformer
-    name: Turbulence
-  target:
-    type: Modifier
-    name: ClampCaveLimiter
-
-- source0:
-    type: Modifier
-    name: ClampCaveLimiter
-  source1:
-    type: Primitive
-    name: ConstCaveLimiterOffset
-  target:
-    type: Combiner
-    name: Add
-
-- source0:
-    type: Combiner
-    name: Add
-  source1:
-    type: Primitive
-    name: Const10k
-  target:
-    type: Combiner
-    name: Multiply10k
-# end of cavern stripes
-
-- source0:
+- target:
+    type: Filter
+    name: RockFormationGen
+  source0:
     type: Primitive
     name: CaveNoiseInput
-  target:
-    type: Filter
-    name: RockFormationGen
-
-- source0:
-    type: Filter
-    name: RockFormationGen
-  target:
-    type: Modifier
-    name: CaveSolidStretcher
-
-- source0:
-    type: Modifier
-    name: CaveSolidStretcher
-  source1:
-    type: Combiner
-    name: Multiply10k
-  target:
-    type: Combiner
-    name: Max
-
-- source0:
-    type: Combiner
-    name: Max
-  target:
+- target:
     type: Terminator
     name: TERMINATOR
-
+  source0:
+    type: Combiner
+    name: Max
 primitives:
   CaveGradient:
     primative: BevinsGradient
@@ -108,60 +101,72 @@ primitives:
     seed: 0
     name: CaveGradient
     pos:
-      X: 0
-      Y: 0
+      X: -615.55639190340685
+      Y: 272.52187009965093
   CaveNoiseInput:
     primative: SimplexPerlin
     quality: Fast
     seed: 0
     name: CaveNoiseInput
     pos:
-      X: 0
-      Y: 0
+      X: -964.30815573722555
+      Y: 480.24833052525872
   Const0:
     primative: Constant
     quality: Fast
     offset: 0
     name: Const0
     pos:
-      X: 0
-      Y: 0
+      X: -343.03452180375621
+      Y: 888.07826200305726
   CaveWildnessMultiplier:
     primative: Constant
     quality: Fast
-    offset: 0.1
+    offset: 0.100000001
     name: CaveWildnessMultiplier
     pos:
-      X: 0
-      Y: 0
+      X: -960.49666105051688
+      Y: 832.81158904578547
   ConstCaveLimiterOffset:
     primative: Constant
     quality: Fast
-    offset: -0.05
+    offset: -0.0500000007
     name: ConstCaveLimiterOffset
     pos:
-      X: 0
-      Y: 0
+      X: 87.664377794293273
+      Y: 939.53344027362095
   Const10k:
     primative: Constant
     quality: Fast
     offset: 10000
     name: Const10k
     pos:
-      X: 0
-      Y: 0
+      X: 434.51039428475747
+      Y: 992.89436588753858
 filters:
   RockFormationGen:
     filter: RidgedMultiFractal
-    lacunarity: 0
     frequency: 8
+    lacunarity: 0
     octaves: 1
     offset: 0
     gain: 0
+    exponent: 1
     name: RockFormationGen
     pos:
+      X: -659.38858080055354
+      Y: -261.08738603952554
+transformers:
+  Turbulence:
+    transformerType: Displace
+    rotation:
       X: 0
       Y: 0
+    name: Turbulence
+    pos:
+      X: -144.83679809491935
+      Y: 684.16329626415813
+selectors: {}
 modifiers:
   CaveStripes:
     modifyType: Scale2d
@@ -170,63 +175,52 @@ modifiers:
       Y: 20
     name: CaveStripes
     pos:
-      X: 0
-      Y: 0
+      X: -363.99774258065236
+      Y: 356.3747532072357
   ClampCaveLimiter:
     modifyType: Clamp
-    lower: 0.05
-    upper: 1.05
+    lower: 0.0500000007
+    upper: 1.04999995
+    scale2d:
+      X: 0
+      Y: 0
     name: ClampCaveLimiter
     pos:
-      X: 0
-      Y: 0
-  ClampResultOverlapper:
-    modifyType: Clamp
-    lower: 0
-    upper: 2
-    name: ClampResultOverlapper
-    pos:
-      X: 0
-      Y: 0
+      X: 106.72185122783526
+      Y: 585.06443440973976
   CaveSolidStretcher:
     modifyType: Scale2d
     scale2d:
-      X: 0.4
+      X: 0.400000006
       Y: 1
     name: CaveSolidStretcher
     pos:
-      X: 0
-      Y: 0
-transformers:
-  Turbulence:
-    transformerType: Displace
-    name: Turbulence
-    pos:
-      X: 0
-      Y: 0
+      X: -356.37475320723513
+      Y: -93.381619824355852
 combiners:
   Multiplier:
     combineType: Multiply
     name: Multiplier
     pos:
-      X: 0
-      Y: 0
+      X: -594.59317112651058
+      Y: 712.7495064144714
   Multiply10k:
     combineType: Multiply
     name: Multiply10k
     pos:
-      X: 0
-      Y: 0
+      X: 636.51961268030323
+      Y: 787.07365280528484
   Add:
     combineType: Add
     name: Add
     pos:
-      X: 0
-      Y: 0
+      X: 423.07591022463259
+      Y: 689.88053829422051
   Max:
     combineType: Max
     name: Max
     pos:
-      X: 0
-      Y: 0
-
+      X: 889.98400934641154
+      Y: 285.86210150313008
+floats: {}
+controlpoints: {}

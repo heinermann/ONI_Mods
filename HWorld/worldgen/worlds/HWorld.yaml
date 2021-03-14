@@ -23,6 +23,7 @@ subworldFiles:
   - name: subworlds/heinermann/Dump
   - name: subworlds/heinermann/Mesa
   - name: subworlds/heinermann/DarkCave
+  - name: subworlds/heinermann/SaltyTundra
 
 startSubworldName: subworlds/sandstone/SandstoneStart
 startingBaseTemplate: sandstoneBase
@@ -48,6 +49,7 @@ unknownCellsAllowedSubworlds:
       - subworlds/heinermann/Dump
       - subworlds/heinermann/Mesa
       - subworlds/heinermann/DarkCave
+      - subworlds/heinermann/SaltyTundra
   - tagcommand: AtTag
     tag: AtDepths
     command: Replace

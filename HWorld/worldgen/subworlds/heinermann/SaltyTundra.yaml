@@ -9,7 +9,15 @@ sampleBehaviour: UniformSquare
 biomes:
   - name: biomes/heinermann/SaltyTundra/Dry
     weight: 1
-    tags: []
+    tags:
+      - SaltPlant
+      - SaltPlantSeed
+      - SqueakyPuft
+      - BeanPlant
+      - BeanPlantSeed
+      - ColdBreatherSparse
+      - ColdBreatherSeed
+      - BleachStone
 tags:
 - IgnoreCaveOverride
 featureTemplates: {}

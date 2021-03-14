@@ -9,62 +9,86 @@ settings:
     X: 8
     Y: 8
   name: Mesa
+  pos:
+    X: 0
+    Y: 0
 links:
-- source0:
-    type: Primitive
-    name: StartNoise
-  target:
+- target:
     type: Modifier
     name: HorizontalLines
-- source0:
-    type: Modifier
-    name: HorizontalLines
-  target:
-    type: Filter
-    name: Fuzzify
-
-- source0:
+  source0:
     type: Primitive
     name: StartNoise
-  target:
-    type: Filter
-    name: CavernGen
-
-- source0:
-    type: Filter
-    name: CavernGen
-  target:
+- target:
     type: Modifier
     name: Inverter
-
-- source0:
+  source0:
+    type: Filter
+    name: CavernGen
+- target:
+    type: Modifier
+    name: HoleClamper
+  source0:
+    type: Combiner
+    name: Multiply
+- target:
+    type: Modifier
+    name: SandClamper
+  source0:
+    type: Transformer
+    name: Displace
+- target:
+    type: Filter
+    name: Fuzzify
+  source0:
+    type: Modifier
+    name: HorizontalLines
+- target:
+    type: Filter
+    name: CavernGen
+  source0:
+    type: Primitive
+    name: StartNoise
+- target:
+    type: Combiner
+    name: Add
+  source0:
     type: Modifier
     name: Inverter
   source1:
     type: Primitive
     name: ConstMinus10
-  target:
+- target:
     type: Combiner
-    name: Add
-
-- source0:
+    name: Multiply
+  source0:
     type: Combiner
     name: Add
   source1:
     type: Primitive
     name: Const10k
-  target:
+- target:
     type: Combiner
-    name: Multiply
-
-- source0:
-    type: Combiner
-    name: Multiply
-  target:
+    name: Max2
+  source0:
+    type: Modifier
+    name: SandClamper
+  source1:
     type: Modifier
     name: HoleClamper
-
-- source0:
+- target:
+    type: Combiner
+    name: Max
+  source0:
+    type: Filter
+    name: Fuzzify
+  source1:
+    type: Combiner
+    name: Max2
+- target:
+    type: Transformer
+    name: Displace
+  source0:
     type: Combiner
     name: Multiply
   source1:
@@ -76,44 +100,12 @@ links:
   source3:
     type: Primitive
     name: Const2
-  target:
-    type: Transformer
-    name: Displace
-
-- source0:
-    type: Transformer
-    name: Displace
-  target:
-    type: Modifier
-    name: SandClamper
-
-- source0:
-    type: Modifier
-    name: SandClamper
-  source1:
-    type: Modifier
-    name: HoleClamper
-  target:
-    type: Combiner
-    name: Max2
-
-- source0:
-    type: Filter
-    name: Fuzzify
-  source1:
-    type: Combiner
-    name: Max2
-  target:
-    type: Combiner
-    name: Max
-
-- source0:
-    type: Combiner
-    name: Max
-  target:
+- target:
     type: Terminator
     name: TERMINATOR
-
+  source0:
+    type: Combiner
+    name: Max
 primitives:
   StartNoise:
     primative: SimplexPerlin
@@ -121,62 +113,74 @@ primitives:
     seed: 0
     name: StartNoise
     pos:
-      X: 0
-      Y: 0
+      X: -1057.6897755615814
+      Y: 177.23450293194063
   Const10k:
     primative: Constant
     quality: Fast
     offset: 10000
     name: Const10k
     pos:
-      X: 0
-      Y: 0
+      X: -415.45292085121582
+      Y: 1011.9518393210806
   ConstMinus10:
     primative: Constant
     quality: Fast
     offset: 4
     name: ConstMinus10
     pos:
-      X: 0
-      Y: 0
+      X: -657.48283345719938
+      Y: 933.81619824355812
   Const2:
     primative: Constant
     quality: Fast
     offset: 2
     name: Const2
     pos:
-      X: 0
-      Y: 0
+      X: -141.02530340821068
+      Y: 567.91270831955171
   Const0:
     primative: Constant
     quality: Fast
     offset: 0
     name: Const0
     pos:
-      X: 0
-      Y: 0
+      X: -141.02530340821113
+      Y: 411.64142616450761
 filters:
   Fuzzify:
     filter: SumFractal
-    lacunarity: 2
     frequency: 5
+    lacunarity: 2
     octaves: 8
+    exponent: 1
     name: Fuzzify
     pos:
-      X: 0
-      Y: 0
+      X: 95.391157634874048
+      Y: -15.917139745786074
   CavernGen:
     filter: HybridMultiFractal
+    frequency: 0.0599999987
     lacunarity: 1
-    frequency: 0.06
     octaves: 8
-    offset: 0.8
+    offset: 0.800000012
     gain: 3
+    exponent: 1
     name: CavernGen
     pos:
+      X: -881.58625030143048
+      Y: 581.45649132380345
+transformers:
+  Displace:
+    transformerType: Displace
+    rotation:
       X: 0
       Y: 0
-
+    name: Displace
+    pos:
+      X: 52.047209195375672
+      Y: 431.77292219708727
+selectors: {}
 modifiers:
   HorizontalLines:
     modifyType: Scale2d
@@ -185,67 +189,63 @@ modifiers:
       Y: 1
     name: HorizontalLines
     pos:
-      X: 0
-      Y: 0
+      X: -212.77827990957383
+      Y: -19.843543152065564
   Inverter:
     modifyType: Invert
-    name: Inverter
-    pos:
+    scale2d:
       X: 0
       Y: 0
+    name: Inverter
+    pos:
+      X: -641.14339674616974
+      Y: 661.21806838701309
   HoleClamper:
     modifyType: Clamp
     lower: -10
     upper: 5
-    name: HoleClamper
-    pos:
+    scale2d:
       X: 0
       Y: 0
+    name: HoleClamper
+    pos:
+      X: 317.82707739903128
+      Y: 861.70691956092264
   SandClamper:
     modifyType: Clamp
     lower: -10
     upper: 4
-    name: SandClamper
-    pos:
+    scale2d:
       X: 0
       Y: 0
-
+    name: SandClamper
+    pos:
+      X: 309.79953665493304
+      Y: 506.28420061337488
 combiners:
   Multiply:
     combineType: Multiply
     name: Multiply
     pos:
-      X: 0
-      Y: 0
+      X: -217.25519714237896
+      Y: 768.01617937174228
   Add:
     combineType: Add
     name: Add
     pos:
-      X: 0
-      Y: 0
-  Add2:
-    combineType: Add
-    name: Add2
-    pos:
-      X: 0
-      Y: 0
+      X: -423.07591022463282
+      Y: 710.84375907111678
   Max:
     combineType: Max
     name: Max
     pos:
-      X: 0
-      Y: 0
+      X: 832.37741855204592
+      Y: 603.01119655103764
   Max2:
     combineType: Max
     name: Max2
     pos:
-      X: 0
-      Y: 0
-
-transformers:
-  Displace:
-    transformerType: Displace
-    name: Displace
-    pos:
-      X: 0
-      Y: 0
+      X: 623.97477598123703
+      Y: 771.95298372382297
+floats: {}
+controlpoints: {}
