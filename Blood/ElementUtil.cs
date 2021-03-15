@@ -14,9 +14,12 @@ namespace Heinermann.Blood
     // Note: As of 2021-03-14
     // Needed for vanilla as it does not map anims into a dictionary until after elements have been loaded
     // Therefore don't use Assets.GetAnim here.
-    public static KAnimFile FindAnim(HashedString name)
+    public static KAnimFile FindAnim(string name)
     {
-      return Assets.Anims.Find((anim) => anim.name == name);
+      KAnimFile result = Assets.Anims.Find((anim) => anim.name == name);
+      if (result == null)
+        Debug.LogError($"Failed to find KAnim: {name}");
+      return result;
     }
 
     public static void AddSubstance(Substance substance)
