@@ -16,7 +16,7 @@ namespace Heinermann.Blood
       ElementUtil.CreateRegisteredSubstance(
         name: BLOOD_ID,
         state: Element.State.Liquid,
-        kanim: Assets.GetAnim("liquid_tank_kanim"),
+        kanim: ElementUtil.FindAnim("liquid_tank_kanim"),
         material: Assets.instance.substanceTable.liquidMaterial,
         colour: BLOOD_RED
       );
@@ -56,7 +56,7 @@ namespace Heinermann.Blood
       ElementUtil.CreateRegisteredSubstance(
         name: FROZENBLOOD_ID,
         state: Element.State.Solid,
-        kanim: Assets.GetAnim("frozenblood_kanim"),
+        kanim: ElementUtil.FindAnim("frozenblood_kanim"),
         material: CreateFrozenBloodMaterial(ice.material),
         colour: BLOOD_RED
       );

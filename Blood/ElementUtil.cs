@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Heinermann.Blood
 {
@@ -10,6 +9,14 @@ namespace Heinermann.Blood
       string upperElemId = elementId.ToUpper();
       Strings.Add($"STRINGS.ELEMENTS.{upperElemId}.NAME", STRINGS.UI.FormatAsLink(name, upperElemId));
       Strings.Add($"STRINGS.ELEMENTS.{upperElemId}.DESC", description);
+    }
+
+    // Note: As of 2021-03-14
+    // Needed for vanilla as it does not map anims into a dictionary until after elements have been loaded
+    // Therefore don't use Assets.GetAnim here.
+    public static KAnimFile FindAnim(HashedString name)
+    {
+      return Assets.Anims.Find((anim) => anim.name == name);
     }
 
     public static void AddSubstance(Substance substance)
