@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BloodElement.cs" />
+    <Compile Include="ElementUtil.cs" />
     <Compile Include="Patches\ElementLoader.cs" />
     <Compile Include="Patches\Health.cs" />
     <Compile Include="Patches\SimHashes.cs" />
@@ -67,6 +68,9 @@
     <Compile Include="Util.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="anim\assets\frozenblood\frozenblood_0.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="preview.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -79,6 +83,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="elements\blood.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="anim\assets\frozenblood\frozenblood_anim.bytes">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="anim\assets\frozenblood\frozenblood_build.bytes">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

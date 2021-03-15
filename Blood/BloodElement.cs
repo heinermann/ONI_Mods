@@ -1,35 +1,24 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
-using System.Linq;
+﻿using UnityEngine;
 
 namespace Heinermann.Blood
 {
   public static class BloodElement
   {
     public static readonly Color32 BLOOD_RED = new Color32(77, 7, 7, 255);
+    public const string BLOOD_ID = "Blood";
+    public const string FROZENBLOOD_ID = "FrozenBlood";
 
-    public static readonly SimHashes BloodSimHash = (SimHashes)Hash.SDBMLower("Blood");
-    public static readonly SimHashes FrozenBloodSimHash = (SimHashes)Hash.SDBMLower("FrozenBlood");
+    public static readonly SimHashes BloodSimHash = (SimHashes)Hash.SDBMLower(BLOOD_ID);
+    public static readonly SimHashes FrozenBloodSimHash = (SimHashes)Hash.SDBMLower(FROZENBLOOD_ID);
 
-    public static readonly Dictionary<SimHashes, string> SimHashNameLookup = new Dictionary<SimHashes, string>
+    public static void RegisterBloodSubstance()
     {
-      { BloodSimHash, "Blood" },
-      { FrozenBloodSimHash, "FrozenBlood" }
-    };
-
-    public static readonly Dictionary<string, object> ReverseSimHashNameLookup =
-      SimHashNameLookup.ToDictionary(x => x.Value, x => x.Key as object);
-
-    public static Substance CreateBloodSubstance(Substance source)
-    {
-      return ModUtil.CreateSubstance(
-        name: "Blood",
+      ElementUtil.CreateRegisteredSubstance(
+        name: BLOOD_ID,
         state: Element.State.Liquid,
-        kanim: source.anim,
-        material: source.material,
-        colour: BLOOD_RED,
-        ui_colour: BLOOD_RED,
-        conduit_colour: BLOOD_RED
+        kanim: Assets.GetAnim("liquid_tank_kanim"),
+        material: Assets.instance.substanceTable.liquidMaterial,
+        colour: BLOOD_RED
       );
     }
 
@@ -60,16 +49,16 @@ namespace Heinermann.Blood
       return frozenBloodMaterial;
     }
 
-    public static Substance CreateFrozenBloodSubstance(Material sourceMaterial, KAnimFile sourceAnim)
+    public static void RegisterFrozenBloodSubstance()
     {
-      return ModUtil.CreateSubstance(
-        name: "FrozenBlood",
+      Substance ice = Assets.instance.substanceTable.GetSubstance(SimHashes.Ice);
+
+      ElementUtil.CreateRegisteredSubstance(
+        name: FROZENBLOOD_ID,
         state: Element.State.Solid,
-        kanim: sourceAnim,
-        material: CreateFrozenBloodMaterial(sourceMaterial),
-        colour: BLOOD_RED,
-        ui_colour: BLOOD_RED,
-        conduit_colour: BLOOD_RED
+        kanim: Assets.GetAnim("frozenblood_kanim"),
+        material: CreateFrozenBloodMaterial(ice.material),
+        colour: BLOOD_RED
       );
     }
   }
