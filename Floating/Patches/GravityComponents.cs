@@ -10,6 +10,17 @@ namespace Heinermann.Floating.Patches
     private const float MIN_X_VELOCITY = 2.5f;
     private const float MAX_X_VELOCITY = 5f;
 
+    private static readonly GravityComponent NULL_COMPONENT = new GravityComponent
+    {
+      elapsedTime = -1,
+      landOnFakeFloors = false,
+      onLanded = null,
+      transform = null,
+      velocity = Vector2.zero,
+      extents = Vector2.zero,
+      yOffset = 0
+    };
+
     private static float RandomXVelocity()
     {
       float sign = Mathf.Round(UnityEngine.Random.Range(0f, 1f)) * 2 - 1;
@@ -53,29 +64,18 @@ namespace Heinermann.Floating.Patches
       }
     }
 
-    private static void Exchange<T>(ref T a, ref T b)
-    {
-      T temp = a;
-      a = b;
-      b = temp;
-    }
-
-    private static List<GravityComponent> processAsNormalGravity = new List<GravityComponent>(1024);
-    private static List<GravityComponent> originalGravityList;
+    private static Dictionary<int, GravityComponent> gravComponentState = new Dictionary<int, GravityComponent>(1024);
 
     // TODO: Check for potential bug with 1-tile width water
-    static void Prefix(ref GravityComponents __instance, ref List<GravityComponent> ___data, float dt)
+    static void Prefix(List<GravityComponent> ___data, float dt)
     {
-      processAsNormalGravity.Clear();
+      //processAsNormalGravity.Clear();
+      gravComponentState.Clear();
 
       for (int i = 0; i < ___data.Count; i++)
       {
         GravityComponent grav = ___data[i];
-        if (!Helpers.ShouldFloat(grav.transform))
-        {
-          processAsNormalGravity.Add(grav);
-          continue;
-        }
+        if (!Helpers.ShouldFloat(grav.transform)) continue;
 
         ApplyXVelocityChanges(ref grav, dt);
         ApplyYVelocityChanges(ref grav, dt);
@@ -94,16 +94,18 @@ namespace Heinermann.Floating.Patches
 
         grav.transform.SetPosition(newPosition);
         grav.elapsedTime += dt;
+
+        gravComponentState.Add(i, grav);
+        ___data[i] = NULL_COMPONENT;
       }
-      originalGravityList = ___data;
-      ___data = processAsNormalGravity;
-      //Exchange(ref ___data, ref processAsNormalGravity);
     }
 
-    static void Postfix(ref List<GravityComponent> ___data)
+    static void Postfix(List<GravityComponent> ___data)
     {
-      //Exchange(ref ___data, ref processAsNormalGravity);
-      ___data = originalGravityList;
+      foreach(var newGrav in gravComponentState)
+      {
+        ___data[newGrav.Key] = newGrav.Value;
+      }
     }
   }
 }
