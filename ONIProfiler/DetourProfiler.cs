@@ -1,5 +1,5 @@
 ﻿
-using Harmony;
+using HarmonyLib;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -24,14 +24,16 @@ namespace Heinermann.ONIProfiler
     static readonly long MILLISECONDS_PER_DUMP = 30000;
 
 
-    public override void DoOnLoad()
+    public override void DoOnLoad(Harmony harmony)
     {
       Debug.Log($"[ONIProfiler] TICKS_PER_MS = {TICKS_PER_MS}");
       Debug.Log($"[ONIProfiler] TICKS_PER_TRACE = {TICKS_PER_TRACE}");
       Debug.Log($"[ONIProfiler] MILLISECONDS_PER_DUMP = {MILLISECONDS_PER_DUMP}");
+
+      DoPrePatch(harmony);
     }
 
-    public override void DoPrePatch(HarmonyInstance harmony)
+    private void DoPrePatch(Harmony harmony)
     {
       Stopwatch timer = Stopwatch.StartNew();
       traceTimer.Value.Reset();

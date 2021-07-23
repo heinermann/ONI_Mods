@@ -1,0 +1,3 @@
+﻿title: Reset Build Priority
+description: Changes the behaviour of the build priority setting to reset to 5 if you leave the menu.
+staticID: HeinResetBuildPriority

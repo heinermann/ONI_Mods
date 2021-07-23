@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Heinermann.ResetBuildPriority</RootNamespace>
     <AssemblyName>ResetBuildPriority</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
@@ -63,6 +63,7 @@
   <ItemGroup>
     <Compile Include="Patches\PlanScreen.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResetBuildPriority.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="mod_info.yaml">
@@ -74,6 +75,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="preview.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="mod.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

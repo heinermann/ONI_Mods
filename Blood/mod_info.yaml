@@ -1,2 +1,4 @@
-supportedContent: EXPANSION1_ID
-lastWorkingBuild: 455425
+supportedContent: ALL
+minimumSupportedBuild: 472345
+APIVersion: 2
+version: "2.0.0"

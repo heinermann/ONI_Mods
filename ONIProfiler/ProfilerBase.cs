@@ -1,4 +1,4 @@
-﻿using Harmony;
+﻿using HarmonyLib;
 using System.IO;
 using System.Reflection;
 using System.Threading;
@@ -17,7 +17,6 @@ namespace Heinermann.ONIProfiler
       return $"{dumpDirectory}/{dumpTimePrefix}_{threadName}_profile.folded";
     }
 
-    public abstract void DoOnLoad();
-    public abstract void DoPrePatch(HarmonyInstance harmony);
+    public abstract void DoOnLoad(Harmony harmony);
   }
 }

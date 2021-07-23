@@ -1,4 +1,4 @@
-﻿using Harmony;
+﻿using HarmonyLib;
 using UnityEngine;
 
 namespace Heinermann.CritterTraits.Patches
