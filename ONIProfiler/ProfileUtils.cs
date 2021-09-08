@@ -41,7 +41,9 @@ namespace Heinermann.ONIProfiler
       "System.IO.Compression.",
       "System.Net.",
       "System.CodeDom.",
-      "Microsoft."
+      "Microsoft.",
+      "UnityEngine.Debug",
+      "DebugUtil"
     };
 
     static readonly string[] PROFILED_ASSEMBLIES = {
@@ -67,8 +69,24 @@ namespace Heinermann.ONIProfiler
           !type.IsImport &&
           !type.IsInterface &&
           !type.IsSecurityCritical &&
-          !BANNED_TYPES.Any(type.FullName.StartsWith)
-        );
+          !BANNED_TYPES.Any(type.FullName.StartsWith) &&
+          !typeof(IGlobalAsyncLoader).IsAssignableFrom(type) &&
+          !typeof(IEntityConfig).IsAssignableFrom(type) &&
+          !typeof(IBuildingConfig).IsAssignableFrom(type) &&
+          !typeof(IOreConfig).IsAssignableFrom(type) &&
+          !typeof(IMultiEntityConfig).IsAssignableFrom(type) &&
+          !typeof(KScreen).IsAssignableFrom(type) &&
+          !typeof(Resource).IsAssignableFrom(type)
+        ).Where(type => {
+          foreach (object attr in type.GetCustomAttributes(false))
+          {
+            if (attr is UnityEngine.AddComponentMenu)
+            {
+              return false;
+            }
+          }
+          return true;
+        });
 
       var assemblyMethods = assemblyTypes
         .SelectMany(type => AccessTools.GetDeclaredMethods(type))
@@ -86,7 +104,15 @@ namespace Heinermann.ONIProfiler
             }
           }
 
-          if (method.GetMethodBody() == null || method.Name.Equals("ReadUInt64")) return false;
+          if (method.GetMethodBody() == null || 
+            method.Name.Equals("ReadUInt64") ||
+            method.Name.Equals("OnPrefabInit") ||
+            method.Name.Equals("InitializeComponent") ||
+            method.Name.Equals("Awake") ||
+            method.Name.Equals("GetInstanceID") ||
+            method.Name.Equals("Clone") ||
+            method.Name.Equals("GetInt")
+          ) return false;
 
           return !method.ContainsGenericParameters &&
           !method.IsAbstract &&
@@ -96,6 +122,7 @@ namespace Heinermann.ONIProfiler
           !method.GetMethodImplementationFlags().HasFlag(MethodImplAttributes.InternalCall) &&
           !method.Attributes.HasFlag(MethodAttributes.PinvokeImpl) &&
           !method.Attributes.HasFlag(MethodAttributes.Abstract) &&
+          !method.Attributes.HasFlag(MethodAttributes.Virtual) &&
           !method.Attributes.HasFlag(MethodAttributes.UnmanagedExport);
         });
         

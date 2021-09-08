@@ -1,5 +1,6 @@
 ﻿
 using HarmonyLib;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,6 +12,7 @@ using System.Threading;
 
 namespace Heinermann.ONIProfiler
 {
+  using Debug = UnityEngine.Debug;
   using ProfileDict = Dictionary<string, ulong>;
 
   public class DetourProfiler : ProfilerBase
@@ -26,25 +28,12 @@ namespace Heinermann.ONIProfiler
 
     public override void DoOnLoad(Harmony harmony)
     {
-      Debug.Log($"[ONIProfiler] TICKS_PER_MS = {TICKS_PER_MS}");
-      Debug.Log($"[ONIProfiler] TICKS_PER_TRACE = {TICKS_PER_TRACE}");
-      Debug.Log($"[ONIProfiler] MILLISECONDS_PER_DUMP = {MILLISECONDS_PER_DUMP}");
-
-      DoPrePatch(harmony);
-    }
-
-    private void DoPrePatch(Harmony harmony)
-    {
       Stopwatch timer = Stopwatch.StartNew();
       traceTimer.Value.Reset();
 
       HarmonyMethod postfix = new HarmonyMethod(typeof(DetourProfiler), nameof(DetourPostfix));
 
       List<MethodBase> targetMethods = ProfileUtils.GetTargetMethods().ToList();
-      PatchProcessor processor = new PatchProcessor(harmony, targetMethods, null, postfix);
-      processor.Patch();
-
-      /*
       foreach (MethodBase method in targetMethods)
       {
         try
@@ -53,9 +42,9 @@ namespace Heinermann.ONIProfiler
         }
         catch (Exception e)
         {
-          Debug.LogError(e.ToString());
+          Debug.LogWarning($"Failed to patch {method.DeclaringType.FullName}.{method.Name}\n" + e.ToString());
         }
-      }*/
+      }
 
       Debug.Log($"[ONIProfiler] PrePatch took {timer.ElapsedMilliseconds}ms. Patched {targetMethods.Count} methods.");
       traceTimer.Value.Start();
@@ -68,7 +57,7 @@ namespace Heinermann.ONIProfiler
         traceTimer.Value.Restart();
 
         string traceStr = GetFlatStackTrace();
-        
+
         profileData.Value.TryGetValue(traceStr, out ulong count);
         profileData.Value[traceStr] = count + 1;
 
@@ -93,7 +82,7 @@ namespace Heinermann.ONIProfiler
         string methodDescription = method.FullDescription();
         result.Add(methodDescription);
       }
-      
+
       return string.Join(";", result.Cast<string>().Reverse());
     }
 
@@ -113,16 +102,17 @@ namespace Heinermann.ONIProfiler
     static void DumpData()
     {
       Stopwatch timer = Stopwatch.StartNew();
-      
+
       string dumpPath = getDumpPath();
       Debug.Log($"[ONIProfiler] Dumping data to {dumpPath}");
 
       try   // This can fail with a Sharing violation if another app opens it
       {
         File.WriteAllText(dumpPath, CreateFlatFile());
-      } catch
+      }
+      catch
       {
-        Debug.LogError($"[ONIProfiler] Failed to write dump: {dumpPath}");
+        Debug.LogWarning($"[ONIProfiler] Failed to write dump: {dumpPath}");
       }
 
       Debug.Log($"[ONIProfiler] Dump took {timer.ElapsedMilliseconds}ms");
