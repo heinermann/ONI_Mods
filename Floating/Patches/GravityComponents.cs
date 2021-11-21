@@ -10,16 +10,7 @@ namespace Heinermann.Floating.Patches
     private const float MIN_X_VELOCITY = 2.5f;
     private const float MAX_X_VELOCITY = 5f;
 
-    private static readonly GravityComponent NULL_COMPONENT = new GravityComponent
-    {
-      elapsedTime = -1,
-      landOnFakeFloors = false,
-      onLanded = null,
-      transform = null,
-      velocity = Vector2.zero,
-      extents = Vector2.zero,
-      yOffset = 0
-    };
+    private static readonly GravityComponent NULL_COMPONENT = default(GravityComponent);
 
     private static float RandomXVelocity()
     {
