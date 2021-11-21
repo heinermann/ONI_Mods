@@ -22,7 +22,7 @@ namespace Heinermann.ONIProfiler
     static ThreadLocal<Stopwatch> dumpTimer = new ThreadLocal<Stopwatch>(() => Stopwatch.StartNew());
 
     static readonly long TICKS_PER_MS = Stopwatch.Frequency / 1000;
-    static readonly long TICKS_PER_TRACE = 50 /* ms */ * TICKS_PER_MS;
+    static readonly long TICKS_PER_TRACE = 10 /* ms */ * TICKS_PER_MS;
     static readonly long MILLISECONDS_PER_DUMP = 30000;
 
 
