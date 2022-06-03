@@ -9,11 +9,11 @@ namespace Heinermann.ResetBuildPriority.Patches
     [HarmonyPatch(typeof(PlanScreen), "CloseCategoryPanel")]
     public static class PlanScreen_CloseCategoryPanel
     {
-      static void Prefix(ref ProductInfoScreen ___productInfoScreen, bool playSound)
+      static void Prefix(PlanScreen __instance, bool playSound)
       {
         if (!ignoreCategoryClose || playSound)
         {
-          ___productInfoScreen?.materialSelectionPanel?.PriorityScreen?.ResetPriority();
+          __instance.ProductInfoScreen?.materialSelectionPanel?.PriorityScreen?.ResetPriority();
         }
       }
     }
