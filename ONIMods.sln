@@ -17,6 +17,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ONIProfiler", "ONIProfiler\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PerfOptimizations", "PerfOptimizations\PerfOptimizations.csproj", "{EBC01544-02E8-4A10-9B2C-5A2114DC7E0F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClusterioBridge", "ClusterioBridge\ClusterioBridge.csproj", "{B4C624F1-CE89-468B-A9FC-EE304C21B90C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItemDump", "ItemDump\ItemDump.csproj", "{72A199BB-880A-4C71-8683-6694C8688FA4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +55,14 @@ Global
 		{EBC01544-02E8-4A10-9B2C-5A2114DC7E0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EBC01544-02E8-4A10-9B2C-5A2114DC7E0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EBC01544-02E8-4A10-9B2C-5A2114DC7E0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4C624F1-CE89-468B-A9FC-EE304C21B90C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4C624F1-CE89-468B-A9FC-EE304C21B90C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4C624F1-CE89-468B-A9FC-EE304C21B90C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4C624F1-CE89-468B-A9FC-EE304C21B90C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72A199BB-880A-4C71-8683-6694C8688FA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72A199BB-880A-4C71-8683-6694C8688FA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72A199BB-880A-4C71-8683-6694C8688FA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72A199BB-880A-4C71-8683-6694C8688FA4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
