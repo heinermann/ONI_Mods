@@ -46,6 +46,9 @@
       <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\OxygenNotIncluded\OxygenNotIncluded_Data\Managed\Assembly-CSharp-firstpass.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Fleck, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Fleck.1.2.0\lib\net45\Fleck.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -64,7 +67,16 @@
   <ItemGroup>
     <Compile Include="Patches.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Updater.cs" />
+    <Compile Include="SubspaceStorage\EnergyExporter.cs" />
+    <Compile Include="SubspaceStorage\EnergyImporter.cs" />
+    <Compile Include="SubspaceStorage\FluidExporter.cs" />
+    <Compile Include="SubspaceStorage\FluidImporter.cs" />
+    <Compile Include="SubspaceStorage\GasExporter.cs" />
+    <Compile Include="SubspaceStorage\GasImporter.cs" />
+    <Compile Include="SubspaceStorage\Item.cs" />
+    <Compile Include="SubspaceStorage\ItemExporter.cs" />
+    <Compile Include="SubspaceStorage\ItemImporter.cs" />
+    <Compile Include="SubspaceStorage\StorageHelpers.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="mod.yaml">
@@ -73,6 +85,7 @@
     <None Include="mod_info.yaml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
