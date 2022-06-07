@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClusterioBridge", "Clusteri
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItemDump", "ItemDump\ItemDump.csproj", "{72A199BB-880A-4C71-8683-6694C8688FA4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClusterioLib", "ClusterioLib\ClusterioLib.csproj", "{5814E063-F80C-4E43-BB89-2401347D9B18}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +65,10 @@ Global
 		{72A199BB-880A-4C71-8683-6694C8688FA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72A199BB-880A-4C71-8683-6694C8688FA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72A199BB-880A-4C71-8683-6694C8688FA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5814E063-F80C-4E43-BB89-2401347D9B18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5814E063-F80C-4E43-BB89-2401347D9B18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5814E063-F80C-4E43-BB89-2401347D9B18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5814E063-F80C-4E43-BB89-2401347D9B18}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
