@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Events;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace ClusterioLib
     RESUMING
   }
 
-  public struct Message
+  public class Message
   {
     public ulong? seq { get; set; }
     public string type { get; set; }
@@ -35,7 +36,7 @@ namespace ClusterioLib
     }
   }
 
-  public abstract class WebSocketBaseConnector
+  public abstract class WebSocketBaseConnector : EventEmitter
   {
     protected int? sessionTimeout;
     protected ConnectionState state;
@@ -54,6 +55,11 @@ namespace ClusterioLib
     {
       reset();
       this.sessionTimeout = sessionTimeout;
+    }
+
+    public void On(string emitter, EventEmitterEventHandler handler)
+    {
+      AddListener(emitter, handler);
     }
 
     protected void reset()
@@ -216,12 +222,12 @@ namespace ClusterioLib
       if (state == ConnectionState.CONNECTED || socket != null)
       {
         socket.Close(code, reason);
-        //await events.once(this, "close")
+        //await events.once(this, "close") // TODO
       }
       else
       {
         reset();
-        //this.emit("close")
+        Emit("close");
       }
     }
 
@@ -239,7 +245,7 @@ namespace ClusterioLib
       else
       {
         reset();
-        //this.emit("close");
+        Emit("close");
       }
     }
 
@@ -250,7 +256,7 @@ namespace ClusterioLib
 
       doConnect();
 
-      //await events.once(this, "connect");
+      //await events.once(this, "connect"); // TODO
     }
 
     protected void doConnect()
@@ -284,7 +290,7 @@ namespace ClusterioLib
         logger.Error("Connector | Session timed out trying to resume");
         reset();
         state = ConnectionState.CONNECTING;
-        //this.emit("invalidate");
+        Emit("invalidate");
       }
       logger.Debug($"Connector | waiting {(Math.Round(delay / 10.0) / 100)} seconds for reconnect");
       reconnectId = new Timer(delay);
@@ -294,7 +300,6 @@ namespace ClusterioLib
       };
       reconnectId.AutoReset = false;
       reconnectId.Enabled = true;
-      // this._reconnectTime = Date.now() + delay; // unused?
     }
 
     protected void attachSocketHandlers()
@@ -326,7 +331,7 @@ namespace ClusterioLib
           }
           else
           {
-            //this.emit("message", message);
+            Emit("message", message);
           }
 
           break;
@@ -361,7 +366,7 @@ namespace ClusterioLib
       // Authentication failed
       if (e.Code == 4003)
       {
-        //this.emit("error", new libErrors.AuthenticationFailed(event.reason));
+        Emit("error", new AuthenticationFailed(e.Reason));
         closing = true;
       }
 
@@ -372,14 +377,14 @@ namespace ClusterioLib
         if (closing)
         {
           reset();
-          //this.emit("close");
+          Emit("close");
         }
         else
         {
           state = ConnectionState.RESUMING;
           startedResuming = DateTime.UtcNow;
           reconnect();
-          //this.emit("drop");
+          Emit("drop");
         }
       }
       else
@@ -387,7 +392,7 @@ namespace ClusterioLib
         if (closing)
         {
           reset();
-          //this.emit("close");
+          Emit("close");
         }
         else
         {
@@ -419,7 +424,7 @@ namespace ClusterioLib
       {
         case "hello":
           logger.Debug($"Connector | received hello from master version {message.data.version}");
-          //this.emit("hello", message.Data);
+          Emit("hello", message.data);
           if (sessionToken != null)
           {
             logger.Debug("Connector | Attempting resume");
@@ -438,7 +443,7 @@ namespace ClusterioLib
           heartbeatInterval = message.data.heartbeat_interval;
           startHeartbeat();
           sendBuffer.ForEach(SendMessage);
-          //this.emit("connect", message.Data);
+          Emit("connect", message.data);
           break;
         case "continue":
           logger.Info("Connector | resuming existing session");
@@ -449,7 +454,7 @@ namespace ClusterioLib
           dropSendBufferSeq(message.data.last_seq);
           sendBuffer.ForEach(SendMessage);
           startedResuming = null;
-          //this.emit("resume");
+          Emit("resume");
           break;
         case "invalidate":
           logger.Warn("Connector | session invalidated by master");
@@ -460,7 +465,7 @@ namespace ClusterioLib
           sessionTimeout = null;
           sendBuffer.Clear();
           startedResuming = null;
-          //this.emit("invalidate");
+          Emit("invalidate");
           register();
           break;
       }

@@ -8,6 +8,7 @@ namespace ClusterioLib
   
   public class InvalidMessage : Exception
   {
+    public InvalidMessage(string msg) : base(msg) { }
     public InvalidMessage(string msg, object errors) : base(msg)
     {
       //TODO errors?
@@ -19,7 +20,11 @@ namespace ClusterioLib
     public SessionLost(string message) : base(message) { }
   }
 
-  public class AuthenticationFailed : Exception { }
+  public class AuthenticationFailed : Exception
+  {
+    public AuthenticationFailed(string message) : base(message) { }
+  }
+
   public class StartupError : Exception { }
   public class EnvironmentError : Exception { }
   
