@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ItemDump", "ItemDump\ItemDu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClusterioLib", "ClusterioLib\ClusterioLib.csproj", "{5814E063-F80C-4E43-BB89-2401347D9B18}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SoftFail", "SoftFail\SoftFail.csproj", "{65B72452-0565-4E08-AB00-669AF5F9E991}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{5814E063-F80C-4E43-BB89-2401347D9B18}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5814E063-F80C-4E43-BB89-2401347D9B18}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5814E063-F80C-4E43-BB89-2401347D9B18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{65B72452-0565-4E08-AB00-669AF5F9E991}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{65B72452-0565-4E08-AB00-669AF5F9E991}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{65B72452-0565-4E08-AB00-669AF5F9E991}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{65B72452-0565-4E08-AB00-669AF5F9E991}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

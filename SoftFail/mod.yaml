@@ -1,0 +1,3 @@
+title: "Soft Failure" 
+description: "Wraps some functions to prevent them from failing hard in some cases when they don't need to."
+staticID: "SoftFail" 
