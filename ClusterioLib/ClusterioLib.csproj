@@ -53,10 +53,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Connectors.cs" />
+    <Compile Include="Link\Connectors.cs" />
     <Compile Include="Errors.cs" />
+    <Compile Include="Link\Link.cs" />
+    <Compile Include="NodeLibs\EventEmitterEx.cs" />
     <Compile Include="ExponentialBackoff.cs" />
-    <Compile Include="Messages.cs" />
+    <Compile Include="Link\Messages.cs" />
+    <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Slave.cs" />
     <Compile Include="SlaveConfig.cs" />

@@ -1,4 +1,6 @@
-﻿namespace ClusterioLib
+﻿using ClusterioLib.Link;
+
+namespace ClusterioLib
 {
   public class SlaveConnector : WebSocketClientConnector
   {

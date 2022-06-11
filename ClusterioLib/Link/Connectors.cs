@@ -1,13 +1,12 @@
-﻿using Events;
+﻿using ClusterioLib.NodeLibs;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Timers;
 using WebSocketSharp;
 
-namespace ClusterioLib
+namespace ClusterioLib.Link
 {
   public enum ConnectionState
   {
@@ -36,7 +35,7 @@ namespace ClusterioLib
     }
   }
 
-  public abstract class WebSocketBaseConnector : EventEmitter
+  public abstract class WebSocketBaseConnector : EventEmitterEx
   {
     protected int? sessionTimeout;
     protected ConnectionState state;
@@ -55,11 +54,6 @@ namespace ClusterioLib
     {
       reset();
       this.sessionTimeout = sessionTimeout;
-    }
-
-    public void On(string emitter, EventEmitterEventHandler handler)
-    {
-      AddListener(emitter, handler);
     }
 
     protected void reset()
@@ -214,7 +208,7 @@ namespace ClusterioLib
       new Message(null, type, data).Send(socket);
     }
 
-    public async Task close(ushort code, string reason)
+    public async void close(ushort code, string reason)
     {
       if (state == ConnectionState.CLOSED) return;
       
@@ -222,7 +216,7 @@ namespace ClusterioLib
       if (state == ConnectionState.CONNECTED || socket != null)
       {
         socket.Close(code, reason);
-        //await events.once(this, "close") // TODO
+        await Once("close");
       }
       else
       {
@@ -249,14 +243,14 @@ namespace ClusterioLib
       }
     }
 
-    public async Task connect()
+    public async void connect()
     {
       check(ConnectionState.CLOSED);
       state = ConnectionState.CONNECTING;
 
       doConnect();
 
-      //await events.once(this, "connect"); // TODO
+      await Once("connect");
     }
 
     protected void doConnect()
@@ -266,6 +260,7 @@ namespace ClusterioLib
       logger.Debug($"Connector | connecting to {targetUrl}");
 
       socket = new WebSocket(targetUrl.AbsoluteUri);
+      
       // TODO: use tlsca
 
       attachSocketHandlers();
@@ -347,16 +342,18 @@ namespace ClusterioLib
 
     private void Socket_OnError(object sender, ErrorEventArgs e)
     {
+      string code = e.Exception == null ? "" : $", code: ${e.Exception}";
+      string message = $"Connector | Socket error: ${e.Message ?? "unknown error"}${code}";
       if (state == ConnectionState.CONNECTED)
       {
-        logger.Error(e.Message);
+        logger.Error(message);
       }
       else
       {
-        logger.Debug(e.Message);
+        logger.Debug(message);
       }
 
-      // TODO wut, how do I tell which error it is?
+      // TODO determine if certificate validation failed
     }
 
     private void Socket_OnClose(object sender, CloseEventArgs e)
