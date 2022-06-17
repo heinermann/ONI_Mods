@@ -36,7 +36,7 @@
    * - save_list_update
    * - player_event
    */
-  class Messages
+  public class Messages
   {
   }
 }

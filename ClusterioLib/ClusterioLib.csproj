@@ -40,6 +40,9 @@
     <Reference Include="Newtonsoft.Json.Schema, Version=3.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.Schema.3.0.14\lib\net45\Newtonsoft.Json.Schema.dll</HintPath>
     </Reference>
+    <Reference Include="SharpPromise, Version=1.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpPromise.1.7.0\lib\netstandard2.0\SharpPromise.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -61,7 +64,8 @@
     <Compile Include="Link\Messages.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Slave.cs" />
+    <Compile Include="Slave\Instance.cs" />
+    <Compile Include="Slave\Slave.cs" />
     <Compile Include="SlaveConfig.cs" />
     <Compile Include="SlaveConnector.cs" />
   </ItemGroup>

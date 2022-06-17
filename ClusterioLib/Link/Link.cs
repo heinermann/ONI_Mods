@@ -1,4 +1,5 @@
 ﻿using Events;
+using SharpPromise;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,13 +10,11 @@ namespace ClusterioLib.Link
 {
   public class Waiter
   {
-    public Task promise { get; set; }
-    public ResolveCB resolve { get; set; }
-    public RejectCB reject { get; set; }
+    public Promise<Message> promise { get; set; }
+    public Action<Message> resolve { get; set; }
+    public Action<Exception> reject { get; set; }
 
-    public delegate void ResolveCB(Message message);
-    public delegate void RejectCB(Exception exception);
-    //public delegate void PromiseCB(ResolveCB resolve, RejectCB reject);
+    public Dictionary<string, dynamic> data { get; set; } = new Dictionary<string, dynamic>();
   }
 
   public class Link
@@ -110,6 +109,97 @@ namespace ClusterioLib.Link
       {
         throw new InvalidMessage($"Unhandled message {message.type}");
       }
+    }
+
+    private bool processHandler(Message message)
+    {
+      bool hasHandler = handlers.TryGetValue(message.type, out HandlerCB handler);
+      if (hasHandler) {
+        handler(message);
+      }
+      return hasHandler;
+    }
+
+    private bool dataMatches(dynamic data, dynamic matches)
+    {
+      IDictionary<string, dynamic> compareData = (IDictionary<string, dynamic>)data;
+      IDictionary<string, dynamic> matchData = (IDictionary<string, dynamic>)matches;
+      // TODO: Possibly not accurate, will likely compare the instance addresses instead of deep compare
+      // Consider https://github.com/GregFinzer/Compare-Net-Objects ?
+      return matchData.All(compareData.Contains);
+    }
+
+    private bool processWaiters(Message message)
+    {
+      // TODO might have to lock this because of waitFor
+      bool hasWaiters = this.waiters.TryGetValue(message.type, out List<Waiter> waiters);
+      if (!hasWaiters || waiters.Count == 0) return false;
+
+      var matched = new List<int>();
+      for (int index = 0; index < waiters.Count; index++)
+      {
+        Waiter waiter = waiters[index];
+        if (!dataMatches(message.data, waiter.data))
+        {
+          continue;
+        }
+
+        waiter.resolve(message);
+        matched.Add(index);
+      }
+
+      matched.Reverse();
+      matched.ForEach(waiters.RemoveAt);
+      return matched.Count > 0;
+    }
+
+    public void setHandler(string type, HandlerCB handler, ValidatorCB validator)
+    {
+      if (handlers.ContainsKey(type)) throw new Exception($"{type} already has a handler");
+      if (validator == null) throw new Exception("validator is required");
+
+      setValidator(type, validator);
+      handlers.Add(type, handler);
+    }
+
+    public void setValidator(string type, ValidatorCB validator)
+    {
+      if (validators.ContainsKey(type)) throw new Exception($"{type} already has a validator");
+      validators.Add(type, validator);
+    }
+
+    async Task<Message> waitFor(string type, dynamic data)
+    {
+      if (!validators.ContainsKey(type)) throw new Exception($"No validator for {type} on {source}-{target}");
+
+      var waiter = new Waiter() { data = data };
+      waiter.promise = new Promise<Message>((resolve, reject) => {
+        // TODO: Consider locking because of processWaiters
+        waiter.resolve = resolve;
+        waiter.reject = reject;
+        if (!waiters.ContainsKey(type))
+        {
+          waiters.Add(type, new List<Waiter> { waiter });
+        }
+        else
+        {
+          waiters[type].Add(waiter);
+        }
+      });
+      return await waiter.promise.AsTask();
+    }
+
+    async void prepareDisconnectRequestHandler()
+    {
+      var promises = new List<IPromise>();
+      foreach (var waiterType in waiters.Values)
+      {
+        foreach (var waiter in waiterType)
+        {
+          promises.Add(waiter.promise.Then(() => { }, () => { }));
+        }
+      }
+      await Promise.All(promises);
     }
   }
 }

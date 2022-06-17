@@ -1,4 +1,4 @@
-﻿namespace ClusterioLib
+﻿namespace ClusterioLib.Slave
 {
   public class Slave
   {
