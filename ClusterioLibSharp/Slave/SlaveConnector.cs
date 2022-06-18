@@ -1,11 +1,11 @@
-﻿using ClusterioLib.Link;
+﻿using ClusterioLibSharp.Link;
 
-namespace ClusterioLib
+namespace ClusterioLibSharp.Slave
 {
   public class SlaveConnector : WebSocketClientConnector
   {
     SlaveConfig slaveConfig;
-    object pluginInfos;
+    object pluginInfos; // TODO
 
     public SlaveConnector(SlaveConfig slaveConfig, object tlsCa, object pluginInfos)
       : base(slaveConfig.slave.master_url, slaveConfig.slave.max_reconnect_delay, tlsCa)

@@ -1,0 +1,20 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"title": "Heartbeat",
+	"description": "Heartbeat sent over link",
+	"type": "object",
+	"additionalProperties": false,
+	"required": ["seq", "type", "data"],
+	"properties": {
+		"seq": { "const": null },
+		"type": { "const": "heartbeat" },
+		"data": {
+			"type": "object",
+			"additionalProperties": false,
+			"required": ["seq"],
+			"properties": {
+				"seq": { "type": ["integer", "null"] }
+			}
+		}
+	}
+}

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ClusterioLib
+namespace ClusterioLibSharp.Slave
 {
   public class SlaveConfig
   {

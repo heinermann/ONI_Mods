@@ -1,12 +1,14 @@
-﻿using ClusterioLib.NodeLibs;
+﻿using ClusterioLibSharp.NodeLibs;
+using Events;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Timers;
 using WebSocketSharp;
 
-namespace ClusterioLib.Link
+namespace ClusterioLibSharp.Link
 {
   public enum ConnectionState
   {
@@ -14,25 +16,6 @@ namespace ClusterioLib.Link
     CONNECTING,
     CONNECTED,
     RESUMING
-  }
-
-  public class Message
-  {
-    public ulong? seq { get; set; }
-    public string type { get; set; }
-    public dynamic data { get; set; }
-
-    public Message(ulong? seq, string type, dynamic data)
-    {
-      this.seq = seq;
-      this.type = type;
-      this.data = data;
-    }
-
-    public void Send(WebSocket socket)
-    {
-      socket.Send(JsonConvert.SerializeObject(this));
-    }
   }
 
   public abstract class WebSocketBaseConnector : EventEmitterEx
@@ -243,14 +226,14 @@ namespace ClusterioLib.Link
       }
     }
 
-    public async void connect()
+    public async Task<EventEmitterEventArgs> connect()
     {
       check(ConnectionState.CLOSED);
       state = ConnectionState.CONNECTING;
 
       doConnect();
 
-      await Once("connect");
+      return await Once("connect");
     }
 
     protected void doConnect()

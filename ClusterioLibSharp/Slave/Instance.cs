@@ -1,4 +1,4 @@
-﻿namespace ClusterioLib.Slave
+﻿namespace ClusterioLibSharp.Slave
 {
   public class Instance
   {

@@ -3,7 +3,7 @@ using System.Security;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ClusterioLib.NodeLibs
+namespace ClusterioLibSharp.NodeLibs
 {
   public static class EventEmitterArgs {
     public static readonly EventEmitterEventArgs Empty = new EventEmitterEventArgs(new object[] { });

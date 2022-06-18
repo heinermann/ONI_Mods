@@ -1,10 +1,16 @@
 ﻿using System;
 
-namespace ClusterioLib
+namespace ClusterioLibSharp
 {
   public class CommandError : Exception { }
-  public class RequestError : Exception { }
-  public class PermissionError : RequestError { }
+  public class RequestError : Exception
+  {
+    public RequestError(string message) : base(message) { }
+  }
+
+  public class PermissionError : RequestError {
+    public PermissionError(string message) : base(message) { }
+  }
   
   public class InvalidMessage : Exception
   {

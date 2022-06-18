@@ -1,0 +1,6 @@
+﻿namespace ClusterioLibSharp
+{
+  class Messages
+  {
+  }
+}

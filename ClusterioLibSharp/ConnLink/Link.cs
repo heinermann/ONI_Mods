@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using WebSocketSharp;
 
-namespace ClusterioLib.Link
+namespace ClusterioLibSharp.Link
 {
   public class Waiter
   {
@@ -19,9 +19,9 @@ namespace ClusterioLib.Link
 
   public class Link
   {
-    string source;
-    string target;
-    WebSocketBaseConnector connector;
+    public string source;
+    public string target;
+    public WebSocketClientConnector connector;
 
     public delegate void HandlerCB(Message message);
     public delegate bool ValidatorCB(Message message);
@@ -32,7 +32,7 @@ namespace ClusterioLib.Link
 
     protected readonly Logger logger = new Logger(LogLevel.Debug);
 
-    public Link(string source, string target, WebSocketBaseConnector connector)
+    public Link(string source, string target, WebSocketClientConnector connector)
     {
       this.source = source;
       this.target = target;
@@ -168,7 +168,7 @@ namespace ClusterioLib.Link
       validators.Add(type, validator);
     }
 
-    async Task<Message> waitFor(string type, dynamic data)
+    public async Task<Message> waitFor(string type, dynamic data)
     {
       if (!validators.ContainsKey(type)) throw new Exception($"No validator for {type} on {source}-{target}");
 
@@ -189,7 +189,7 @@ namespace ClusterioLib.Link
       return await waiter.promise.AsTask();
     }
 
-    async void prepareDisconnectRequestHandler()
+    public async void prepareDisconnectRequestHandler()
     {
       var promises = new List<IPromise>();
       foreach (var waiterType in waiters.Values)

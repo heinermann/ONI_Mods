@@ -1,4 +1,7 @@
-﻿namespace ClusterioLib
+﻿using Newtonsoft.Json;
+using WebSocketSharp;
+
+namespace ClusterioLibSharp.Link
 {
   /**
    * Messages to implement (most can just be stubbed):
@@ -36,7 +39,9 @@
    * - save_list_update
    * - player_event
    */
-  public class Messages
+
+  public static class Messages
   {
+
   }
 }

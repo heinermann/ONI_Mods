@@ -1,4 +1,4 @@
-﻿namespace ClusterioLib
+﻿namespace ClusterioLibSharp
 {
   public class ParsedArgs
   {
