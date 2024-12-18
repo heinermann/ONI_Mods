@@ -80,7 +80,7 @@ namespace Heinermann.Floating
 
       if (prefab.HasAnyTags(nonFloatableTags) || !prefab.HasTag(GameTags.Pickupable)) return false;
 
-      if (prefab.HasTag(GameTags.Minion) && !prefab.HasTag(GameTags.Corpse)) return false;
+      if (prefab.HasTag(GameTags.BaseMinion) && !prefab.HasTag(GameTags.Corpse)) return false;
 
       return true;
     }
